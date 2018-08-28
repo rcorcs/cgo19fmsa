@@ -1,0 +1,137 @@
+\section{Introduction}
+\label{sec:introduction}
+
+
+In recent years, resource constrained devices are becoming increasingly important.
+The rise of the Internet of Things (IoT), with many cutting-edge technologies,
+depends heavily on tiny and efficient devices.
+Some of these devices can have as little as only a few kilobytes of
+memory~\cite{yelamarthi17,plaza18}.
+At the same time, low-end devices have been playing an important role in driving
+innovation in poor countries~\cite{hart02,etzo10}.
+As a result, there is an increasing focus on the development of programs
+tailored for these low-end devices with limited memory sizes~\cite{androidGo,hahm16}.
+Memories typically occupy the largest fraction of the chip area in embedded
+system, contributing to most of the overall cost.
+As a consequence, any reduction in code size translates directly to equivalent
+savings of die area, where even modest savings can lead to a substantial overall
+cost reduction, in large scales~\cite{edler10}.
+
+For programs with always increasing complexity, memory size can be a showstopper.
+In particular considering that some of these programs for embedded systems can
+have binaries of several mega bytes in size.
+Moreover, savings in code size can enable more features to be included without
+exceeding a size restrictions, as increasing the memory size is not always a
+viable solution given the impacts on power consumption and overall costs.
+In these constrained scenarios, code-size optimizations are essential~\cite{schultz03,varma04,sehgal12,kwan12,keoh14,auler17}.
+
+With a lack of more powerful code-size optimizations, valuable resources are
+wasted with unnecessarily large binaries.
+Weaver~and~McKee~\cite{weaver09} demonstrated that, by hand-optimizing the
+assembly of a small Linux program, its size could be reduced by at least a factor
+of three when compared to the best compilation settings.
+However, hand-optimizing the assembly of every program is impractical and better
+code-size optimizations are needed.
+
+One important code-size optimization that reduces redundant code is function
+merging~\cite{tallam10,edler14}.
+Function merging is an interprocedural optimization that combines multiple
+similar functions into a single function, reducing replicated code.
+The merged function must retain the semantics from each one of the functions
+orignally involved in the merge operation.
+In order to maximize merging opportunities, this optimization is ideally
+executed on the whole-program during link-time.
+Even in its most simplistic form, i.e., by merging only identical functions,
+function merging optimization is crucial for making high-level abstractions
+feasible, such as some C++ ABIs and templates, otherwise these abstractions
+could cause sufficient explosion in code size that they would be almost
+unusable for production software~\cite{tallam10,kwan12}.
+
+Most industrial-strength compilers, such as GCC~\cite{gcc}, LLVM~\cite{llvm},
+and MSVC~\cite{msvc-icf}, implement variants of this optimization that are
+capable of merging only identical functions~\cite{tallam10,kwan12,livska14}.
+The state-of-the-art technique is able to merge similar but not necessarily
+identical functions by leveraging structural similarity~\cite{edler14}.
+However, it is only capable to deal with small differences within
+corresponding basic blocks in identical control-flow graphs (CFGs).
+
+In this paper, we propose a novel technique for merging functions
+that addresses many major limitations of the state-of-the-art, using a
+fundamentally different approach from the existing ones.
+Our function-merging technique provides the following improvements over
+the state-of-the-art:
+\begin{itemize}[noitemsep,topsep=0pt]
+  \item It is capable of merging functions with different signature, i.e.,
+  different return type or list of parameters.
+  \item It is also capable of merging functions with different CFGs.
+  \item While the state-of-the-art is able to only merge instructions within
+  corresponding basic blocks in structurally identical CFGs,
+  our technique can merge instructions spanning across multiple basic blocks.
+\end{itemize}
+As a result, the proposed function merging optimization is
+more than three times better than the state-of-the-art optimization.
+Our optimization is able to reduce size of the compiled programs by up to
+22\% over the already highly optimized baseline, with an average code-size
+reduction of about 5.6\%.
+We also propose an ranking-based exploration mechanism so that we can focus
+the optimization on promising pairs of functions.
+With this framework, our prototype introduces an average compilation-time
+overhead of only 20\%.
+Moreover, aided by profiling information, these optimization can be carried on
+without any significant impact on performance.
+
+
+
+%Most of the classic optimizations try to find semantically equivalent programs
+%that require fewer instructions to execute, such as dead code elimination,
+%common subexpression elimination, and others~\cite{cocke70,massalin87,knoop94}.
+%Although initially motivated by performance, these optimizations achieve better
+%performance by focusing on code-size reduction.
+
+%However, we distinguish the optimizations that focus on code-size reduction in
+%two main categories:
+%  (1) optimizations that find a smaller number instructions
+%  that are required to execute in order to perform the same computation, e.g.,
+%  common subexpression elimination, superoptimization, peephole optimization,
+%  etc.~\cite{cocke70,massalin87,cooper99,tanenbaum82}.
+%  (2) optimizations that change the representation of the same sequence of
+%  instructions in a more compact manner, e.g., code compression, 
+%  code factoring, function merging,
+%  etc.~\cite{ernst97,debray00,chen03,loki04,edler14}.
+
+%Code-size reduction is especially important for embedded or
+%low-end devices~\cite{schultz03,varma04,sehgal12,keoh14,auler17}, as some
+%of these devices can have only a few kilobytes of memory~\cite{plaza18}.
+
+%However, even in high-end devices, on-chip memory is very limited in size, and
+%if well utilized can result in good performance. 
+%Moreover, there has been many attempts towards high-performance computation at
+%low costs~\cite{phelan03}.
+
+
+%For example, Android Go is a tailored Android distribution for low-end devices
+%that has a major focus on code size reduction for both the operating system itself
+%and the applications, suitable for devices with 1~GiB
+%of RAM or less~\cite{androidGo}.
+
+%However, we argue that even when storage and memory resources are abundant,
+%compilers should ideally heavily optimize cold code for size reduction while
+%optimizing hot code for performance.
+%This idea is evident in many attempts, in both research and industry, of
+%performing high-performance computation at low cost.
+
+%\cite{weaver09}
+%\cite{steenkiste89}
+%\cite{zmily06}
+
+%Differently from most of the optimizations that perform code-size
+%reduction~\cite{cocke70,massalin87,cooper99}, which reduces the number of
+%instructions that need to be \textit{executed} in order to perform the same
+%computation, there are other optimizations that perform code-size
+%reduction by reducing the number of instructions necessary to \textit{represent}
+%the same computation.
+%Note that in the second case, the actual number of instructions executed
+%may not differ or, sometimes, even increase.
+%One such optimization is function merging, which 
+
+

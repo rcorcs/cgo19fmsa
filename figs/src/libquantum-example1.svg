@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 744.09448819 1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="libquantum-example.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="416.85116"
+     inkscape:cy="926.42773"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1533"
+     inkscape:window-height="845"
+     inkscape:window-x="67"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       y="131.12079"
+       x="128.5536"
+       height="17.777779"
+       width="17.887365"
+       id="rect4196"
+       style="opacity:1;fill:#b8ecb2;fill-opacity:1;fill-rule:nonzero;stroke:#59b939;stroke-width:1.39999998;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.76699036" />
+    <rect
+       style="opacity:1;fill:#b8ecb2;fill-opacity:1;fill-rule:nonzero;stroke:#59b939;stroke-width:1.32590473;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.76699036"
+       id="rect4489"
+       width="297.65543"
+       height="26.952978"
+       x="49.406162"
+       y="105.80993"
+       ry="0" />
+    <rect
+       style="opacity:1;fill:#b8ecb2;fill-opacity:1;fill-rule:nonzero;stroke:#59b939;stroke-width:1.3125;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.76699036"
+       id="rect4604"
+       width="22.28064"
+       height="16.258568"
+       x="485.38428"
+       y="132.18169" />
+    <g
+       id="g4514"
+       transform="translate(14.625,4.8266869)">
+      <text
+         xml:space="preserve"
+         style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, Normal';text-indent:0;text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:middle;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+         x="382.88641"
+         y="54.738312"
+         id="text4204"><tspan
+           id="tspan4433"
+           sodipodi:role="line"
+           x="382.88641"
+           y="54.738312"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start;fill:#000000"><tspan
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#0000b6;fill-opacity:1"
+   id="tspan4564">void</tspan> q_cond_phase_inv(</tspan><tspan
+           sodipodi:role="line"
+           x="382.88641"
+           y="68.800812"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start;fill:#000000"
+           id="tspan919"><tspan
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#0000b6;fill-opacity:1"
+   id="tspan921">int</tspan> control, <tspan
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#0000b6;fill-opacity:1"
+   id="tspan4568">int</tspan> target, qreg *reg){</tspan><tspan
+           id="tspan4435"
+           sodipodi:role="line"
+           x="382.88641"
+           y="82.863312"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start;fill:#000000"><tspan
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#0000b6;fill-opacity:1"
+   id="tspan4570">  int</tspan> i;</tspan><tspan
+           id="tspan4439"
+           sodipodi:role="line"
+           x="382.88641"
+           y="96.925812"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start;fill:#000000">  COMPLEX_FLOAT z;</tspan><tspan
+           id="tspan4441"
+           sodipodi:role="line"
+           x="382.88641"
+           y="110.98831"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start;fill:#000000"> </tspan><tspan
+           id="tspan4445"
+           sodipodi:role="line"
+           x="382.88641"
+           y="125.05081"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start;fill:#000000"> </tspan><tspan
+           id="tspan4449"
+           sodipodi:role="line"
+           x="382.88641"
+           y="139.11331"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start;fill:#000000">  z = q_cexp(-pi / (<tspan
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#ff55dd;fill-opacity:1"
+   id="tspan4600">1</tspan> &lt;&lt; (control - target)));</tspan><tspan
+           id="tspan4453"
+           sodipodi:role="line"
+           x="382.88641"
+           y="153.17581"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start;fill:#000000"><tspan
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#0000b6;fill-opacity:1"
+   id="tspan4572">  <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:monospace;-inkscape-font-specification:'monospace Bold';fill:#d00000;fill-opacity:1"
+   id="tspan924">for</tspan></tspan>(i=<tspan
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#ff55dd;fill-opacity:1"
+   id="tspan4602">0</tspan>; i&lt;reg-&gt;size; i++) {</tspan><tspan
+           id="tspan4457"
+           sodipodi:role="line"
+           x="382.88641"
+           y="167.23831"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start;fill:#000000"><tspan
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#0000b6;fill-opacity:1"
+   id="tspan4574">    <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:monospace;-inkscape-font-specification:'monospace Bold';fill:#d00000;fill-opacity:1"
+   id="tspan930">if</tspan></tspan>(reg-&gt;node[i].state &amp; (<tspan
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#ff55dd;fill-opacity:1"
+   id="tspan4598">1</tspan> &lt;&lt; control)) {</tspan><tspan
+           id="tspan4459"
+           sodipodi:role="line"
+           x="382.88641"
+           y="181.30081"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start;fill:#000000"><tspan
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#0000b6;fill-opacity:1"
+   id="tspan4576">      <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:monospace;-inkscape-font-specification:'monospace Bold';fill:#d00000;fill-opacity:1"
+   id="tspan936">if</tspan></tspan>(reg-&gt;node[i].state &amp; (<tspan
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#ff55dd;fill-opacity:1"
+   id="tspan4596">1</tspan> &lt;&lt; target))</tspan><tspan
+           id="tspan4461"
+           sodipodi:role="line"
+           x="382.88641"
+           y="195.36331"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start;fill:#000000">        reg-&gt;node[i].amplitude *= z;</tspan><tspan
+           id="tspan4463"
+           sodipodi:role="line"
+           x="382.88641"
+           y="209.42581"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start;fill:#000000">    }</tspan><tspan
+           id="tspan4467"
+           sodipodi:role="line"
+           x="382.88641"
+           y="223.48831"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start;fill:#000000">  }</tspan><tspan
+           id="tspan4469"
+           sodipodi:role="line"
+           x="382.88641"
+           y="237.55081"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start;fill:#000000">  q_decohere(reg);</tspan><tspan
+           id="tspan4477"
+           sodipodi:role="line"
+           x="382.88641"
+           y="251.61331"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start;fill:#000000">}</tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, Normal';text-indent:0;text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:middle;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       x="41.66449"
+       y="59.564999"
+       id="text4136"><tspan
+         sodipodi:role="line"
+         x="41.66449"
+         y="59.564999"
+         id="tspan4140"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"><tspan
+   id="tspan4536"
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#0000b6;fill-opacity:1">void</tspan> q_cond_phase(</tspan><tspan
+         sodipodi:role="line"
+         x="41.66449"
+         y="73.627502"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"
+         id="tspan876"><tspan
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#0000b6;fill-opacity:1"
+   id="tspan878">int</tspan> control, <tspan
+   id="tspan4550"
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#0000b6;fill-opacity:1">int</tspan> target, qreg *reg){</tspan><tspan
+         sodipodi:role="line"
+         x="41.66449"
+         y="87.690002"
+         id="tspan4142"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"><tspan
+   id="tspan4552"
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#0000b6;fill-opacity:1">  int</tspan> i;</tspan><tspan
+         sodipodi:role="line"
+         x="41.66449"
+         y="101.7525"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"
+         id="tspan4202">  COMPLEX_FLOAT z;</tspan><tspan
+         sodipodi:role="line"
+         x="41.66449"
+         y="115.815"
+         id="tspan4148"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"><tspan
+   id="tspan4554"
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#0000b6;fill-opacity:1">  <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:monospace;-inkscape-font-specification:'monospace Bold';fill:#d00000;fill-opacity:1"
+   id="tspan881">if</tspan></tspan>(q_objc_put(COND_PHASE, control, target))</tspan><tspan
+         sodipodi:role="line"
+         x="41.66449"
+         y="129.8775"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"
+         id="tspan4198"><tspan
+   id="tspan4556"
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#0000b6;fill-opacity:1">    <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:monospace;-inkscape-font-specification:'monospace Bold';fill:#d00000;fill-opacity:1"
+   id="tspan887">return</tspan></tspan>;</tspan><tspan
+         sodipodi:role="line"
+         x="41.66449"
+         y="143.94"
+         id="tspan4156"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start">  z = q_cexp(pi / (<tspan
+   id="tspan4590"
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#ff55dd;fill-opacity:1">1</tspan> &lt;&lt; (control - target)));</tspan><tspan
+         sodipodi:role="line"
+         x="41.66449"
+         y="158.0025"
+         id="tspan4160"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"><tspan
+   id="tspan4558"
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#0000b6;fill-opacity:1">  <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:monospace;-inkscape-font-specification:'monospace Bold';fill:#d00000;fill-opacity:1"
+   id="tspan893">for</tspan></tspan>(i=<tspan
+   id="tspan4578"
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#ff55dd;fill-opacity:1">0</tspan>; i&lt;reg-&gt;size; i++) {</tspan><tspan
+         sodipodi:role="line"
+         x="41.66449"
+         y="172.065"
+         id="tspan4164"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"><tspan
+   id="tspan4560"
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#0000b6;fill-opacity:1">    <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:monospace;-inkscape-font-specification:'monospace Bold';fill:#d00000;fill-opacity:1"
+   id="tspan899">if</tspan></tspan>(reg-&gt;node[i].state &amp; (<tspan
+   id="tspan4592"
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#ff55dd;fill-opacity:1">1</tspan> &lt;&lt; control)) {</tspan><tspan
+         sodipodi:role="line"
+         x="41.66449"
+         y="186.1275"
+         id="tspan4166"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"><tspan
+   id="tspan4562"
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#0000b6;fill-opacity:1">      <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:monospace;-inkscape-font-specification:'monospace Bold';fill:#d00000;fill-opacity:1"
+   id="tspan905">if</tspan></tspan>(reg-&gt;node[i].state &amp; (<tspan
+   id="tspan4594"
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#ff55dd;fill-opacity:1">1</tspan> &lt;&lt; target))</tspan><tspan
+         sodipodi:role="line"
+         x="41.66449"
+         y="200.19"
+         id="tspan4168"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start">        reg-&gt;node[i].amplitude *= z;</tspan><tspan
+         sodipodi:role="line"
+         x="41.66449"
+         y="214.2525"
+         id="tspan4170"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start">    }</tspan><tspan
+         sodipodi:role="line"
+         x="41.66449"
+         y="228.315"
+         id="tspan4174"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start">  }</tspan><tspan
+         sodipodi:role="line"
+         x="41.66449"
+         y="242.3775"
+         id="tspan4176"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start">  q_decohere(reg);</tspan><tspan
+         sodipodi:role="line"
+         x="41.66449"
+         y="256.44"
+         id="tspan4184"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start">}</tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,70 @@
+\section{Background} \label{sec:background}
+
+Google developed an optimization for the \textit{gold} linker that merges
+identical functions on a bit-level~\cite{tallam10,kwan12}.
+After placing each function in a separate ELF section, they identify function
+sections that have their \textit{text} section bit-identical and also their
+relocations point to sections that are identical.
+%A simpler version of this optimization was also offered by the MSVC linker~\cite{msvc-icf};
+
+A similar optimization for merging identical functions, but implemented at the
+intermediate representation (IR) level, is also offered by both GCC and
+LLVM~\cite{llvm-fm,livska14}.
+%The function merging optimization currently offered by LLVM is only able to
+%merge identical functions.
+This optimization is only flexible enough to accommodate simple type mismatches
+provided they can be bitcasted in a losslessly way.
+%Similarly to the technique proposed by Edler von Koch~et~al.~\cite{edler14},
+%LLVM's optimization also exploits structural similarity among functions.
+%However, the current implementation does not allow instructions to differ in
+%their opcodes or in the number and type of their input operands.
+%Although very restrictive, this optimization guarantees that any pair of
+%mergeable functions will result in code size reduction with no performance
+%overhead.
+%Its simplicity also benefits compilation time, as the actual merge operation
+%is trivial.
+Its simplicity allows for an efficient exploration approach based on computing
+the hash of the functions and then using a tree structure to group equivalent
+functions based on their hash values.
+
+The state-of-the-art function-merging technique, proposed by Edler von
+Koch~et~al.~\cite{edler14}, exploits the structural similarity among functions.
+Their optimization is able to merge similar functions that are not necessarily
+identical.
+%It is a fast but very limited technique which is able to merge only nearly
+%identical functions.
+Two functions are structurally similar if both their function types and
+CFGs are equivalent.
+%Functions have equivalent signatures
+Two function types are equivalent
+if they agree in the number, order, and types of their parameters as well as
+their return types, linkage type, and other compiler-specific properties.
+CFGs are equivalent if and only if they are isomorphic graphs, i.e., there is a
+directed edge-preserving bijection between the vertex-set of the two graphs.
+In addition to the structural similarity among functions, they also consider
+that corresponding basic blocks of isomorphic CFGs have exactly the same number
+of instructions and that corresponding instructions must have equivalent
+resulting types but may differ in their opcodes or in the number and type of
+their input operands.
+If two corresponding instructions have different opcodes, they split the basic
+block and insert a switch branch to select which instruction to execute
+depending on a new integer parameter that represents the function identifier.
+Two instructions have equivalent resulting types if they have exactly
+the same type or if they can be bitcasted in a losslessly way.
+
+Because the state-of-the-art is limited to merge functions with identical CFGs
+and function types, once it merges a pair of functions, a third
+\textit{similar} function cannot be merged with the resulting merged function
+since they will differ in both CFGs and their lists of parameters.
+Due to this limiting factor, the state-of-the-art has to first collect all
+mergeable functions and merge them simultaneously.
+
+Although the state-of-the-art technique improves over LLVM's identical
+function merging, all existing techniques still have several limitations to
+their ability of merging functions.
+%regarding which functions they are able to merge.
+%In this paper, we propose a novel function-merging technique that is
+%fundamentally different from the existing ones, addressing most of their major
+%limitations.
+In the next section, we show examples where the existing techniques fail to
+merge the functions and how we can solve them.

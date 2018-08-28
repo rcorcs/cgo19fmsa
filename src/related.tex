@@ -1,0 +1,46 @@
+\section{Related Work}
+
+Throughout the years, there have been increasing efforts towards code-size
+optimizations.
+%Most of the classic optimizations try to find semantically equivalent programs
+%that require fewer instructions to execute, such as dead code elimination,
+%common subexpression elimination, and others~\cite{cocke70,massalin87,knoop94}.
+Compiler optimizations for code-size reduction exist since the very begining
+of optimizing compilers.
+These optimizations can be divided in two main categories:
+those that replace a piece of code by a smaller but semantically equivalent code,
+changing the instructions and operations performed~\cite{massalin87,tanenbaum82};
+and those that remove or combine redundant code~\cite{cocke70,knoop94,ernst97,
+                                              cooper99,debray00,chen03,loki04}.
+One important optimization from this second category is function
+merging~\cite{tallam10,edler14}.
+In Section~\ref{sec:background}, we present a detailed description of the
+related work on function-merging.
+
+
+%\subsection{Code Factoring}
+
+%Function merging and code factoring are different techniques for solving the
+%same fundamental problem of duplicated code.
+Code factoring is a different technique for solving the same fundamental problem
+of duplicated code.
+%While the former works by merging similar functions, the latter works by
+%factoring out duplicated code~\cite{loki04}.
+Instead of merging similar functions, code factoring works by factoring out
+duplicated code into separate functions~\cite{loki04}.
+Local factoring, also known as local code motion, moves identical instructions
+from multiple basic blocks to either their common predecessor or successor,
+whenever valid~\cite{knoop94,briggs94,loki04}.
+Procedural abstraction, also known as function outlining, finds identical code
+that can be extracted into a separate function, replacing all replicated
+occurrences with a function call~\cite{loki04,dreweke07}.
+
+Procedural abstraction differs from function merging as it usually works on
+single basic blocks or single-entry single-exit regions.
+Moreover, it only works for identical segments of code, and every identical
+segment of code is extracted into a separately new function.
+Function merging, on the other hand, works on whole functions, which can be
+identical or just partially similar, producing a single merged function.
+
+However, all these techniques are orthogonal to the proposed optimization and
+could complement each other at different stages of the compilation pipeline.

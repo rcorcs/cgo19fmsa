@@ -1,0 +1,122 @@
+%-----------------------------------------------------------------------------
+%
+%               Template for sigplanconf LaTeX Class
+%
+% Name:         sigplanconf-template.tex
+%
+% Purpose:      A template for sigplanconf.cls, which is a LaTeX 2e class
+%               file for SIGPLAN conference proceedings.
+%
+% Guide:        Refer to "Author's Guide to the ACM SIGPLAN Class,"
+%               sigplanconf-guide.pdf
+%
+% Author:       Paul C. Anagnostopoulos
+%               Windfall Software
+%               978 371-2316
+%               paul@windfall.com
+%
+% Created:      15 February 2005
+%
+%-----------------------------------------------------------------------------
+
+
+\documentclass[10pt,reprint]{sigplanconf}
+
+
+% CGO Format:                                                                                   
+% 10 Pages including everything                                                                 
+% 10pt Font
+
+\input{src/preamble}
+\usepackage{amsmath}
+
+\newcommand{\cL}{{\cal L}}
+
+%% This removes the copyright space from the first page.
+%% TODO: remove this for camera ready.
+\makeatletter
+\def \@copyrightspace {\relax}
+\makeatother
+
+\begin{document}
+
+\special{papersize=8.5in,11in}
+\setlength{\pdfpageheight}{\paperheight}
+\setlength{\pdfpagewidth}{\paperwidth}
+
+\conferenceinfo{CONF 'yy}{Month d--d, 20yy, City, ST, Country} 
+\copyrightyear{20yy} 
+\copyrightdata{978-1-nnnn-nnnn-n/yy/mm} 
+\doi{nnnnnnn.nnnnnnn}
+
+
+\hypersetup{
+  colorlinks,
+  breaklinks=true,
+  linkcolor=black,
+  urlcolor=black,
+  anchorcolor=black,
+  citecolor=black,
+  pdftitle={Function Merging by Sequence Alignment},
+  pdfauthor={}
+}
+
+%% \titlebanner{banner above paper title}        % These are ignored unless
+%% \preprintfooter{short description of paper}   % 'preprint' option specified.
+\title{Function Merging by Sequence Alignment}
+\subtitle{An Interprocedural Code-Size Optimization\vspace{-8ex}}
+
+\authorinfo{}%Rodrigo Rocha, Pavlos Petoumenos, Murray Cole, Zheng Wang, Hugh Leather}
+           {}
+           {}
+%Rodrigo C. O. Rocha, University of Edinburgh, UK \url{r.rocha@ed.ac.uk}
+
+\maketitle
+
+
+
+\input{src/abstract}
+
+
+%% \category{CR-number}{subcategory}{third-level}
+
+% general terms are not compulsory anymore, 
+% you may leave them out
+%% \terms
+%% term1, term2
+
+\keywords                                                                                    
+Function Merging, Code Size, Sequence Alignment
+
+\input{src/introduction}
+\input{src/background}
+\input{src/motivation}
+\input{src/proposed}
+\input{src/results}
+\input{src/related}
+\input{src/conclusion}
+
+%% Leave some space for the Acknowledgments, that I (Rodrigo) am required to mention.
+%% \section*{Acknowledgments}
+%% This work was supported blah blah.
+
+%% Acknowledgments, if needed.
+
+% We recommend abbrvnat bibliography style.
+
+\bibliographystyle{abbrvnat}
+
+
+% The bibliography should be embedded for final submission.
+
+%% \begin{thebibliography}{}
+%% \softraggedright
+
+%% \bibitem[Smith et~al.(2009)Smith, Jones]{smith02}
+%% P. Q. Smith, and X. Y. Jones. ...reference text...
+
+\bibliography{bib/refs.bib}
+%% \end{thebibliography}
+
+
+\end{document}
