@@ -191,8 +191,8 @@ First, it builds a \textit{similarity matrix}, based on a scoring scheme, which
 assigns weights for matches, mismatches, and \textit{gaps} (blank characters).
 Afterwards, a backward traversal is performed on the similarity matrix, in order
 to reconstruct the final alignment by maximizing the total score.
-We use a simple scoring scheme that rewards matches and penalizes mismatches and
-gaps.
+We use a standard scoring scheme for the Needleman-Wunsh algorithm that rewards
+matches and equally penalizes mismatches and gaps.
 
 %\todo{Remove this paragraph.}
 %When producing the final aligned sequence, there may be several possible optimal
@@ -214,9 +214,9 @@ equivalence between labels.
 Labels can represent both normal basic blocks and landing blocks, which are used
 in exception handling code.
 Labels of normal basic blocks are always considered equivalent but
-landing blocks must have exactly the same landingpad instructions.
+landing blocks must have identical landingpad instructions.
 
-Two instructions are equivalent if: $(1)$ their opcode are semantically
+Two instructions are equivalent if: $(1)$ their opcodes are semantically
 equivalent, but not necessarily the same; $(2)$ they both have equivalent types;
 and $(3)$ they have pairwise operands with equivalent types.
 Types are considered equivalent if they can be bitcasted in a losslessly way
@@ -226,8 +226,9 @@ alignment when handling pointers.
 No additional restriction is imposed on the operands of the two instructions
 being compared for equivalence.
 Whenever two operands cannot be statically proved to represent the same value,
-a select instruction is used to distinguish between the execution of two
-functions being merged.
+a select instruction is used to ensure that the correct value will be used in
+the computation.
+%distinguish between the execution of two functions being merged.
 For function calls, the type equivalence requires that both instructions have
 identical function types, i.e., both called functions must have an identical
 return type and an identical list of parameter types. 
