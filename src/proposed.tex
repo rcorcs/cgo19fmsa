@@ -235,10 +235,17 @@ return type and an identical list of parameter types.
 
 \subsubsection{Handling Exception Handling Code}
 
+In this section, we describe restrictions imposed by exception handling code and
+their equivalence relation.
 Most modern compilers implement the zero-cost Itanium ABI for exception
 handling~\cite{dinechin00}, including GCC and LLVM, sometimes called the
-\textit{landing-pad} model. In this section, we describe restrictions imposed
-by exception handling code and their equivalence relation.
+\textit{landing-pad} model.
+In this model, landing-pad instructions are used to encode which action is taken
+when an exception has been thrown.
+%The type of equivalent landing-pad instructions must be identical as its value
+%is crucial in deciding what action to take when the landing block is entered,
+%and corresponds to the return value of the personality function, which must also
+%be identical for the two functions being merged.
 
 The invoke instruction co-operates tightly with its landing block, i.e., the
 basic block pointed by the exception branch of an invoke instruction.
@@ -255,10 +262,6 @@ All clauses are defined by the landing-pad instruction, which encodes the list o
 all exception and cleanup handlers.
 Landing-pad instructions are equivalent if they have exactly the same type and
 also encode identical lists of exception and cleanup handlers.
-The type of equivalent landing-pad instructions must be identical as its value
-is crucial in deciding what action to take when the landing block is entered,
-and corresponds to the return value of the personality function, which must also
-be identical for the two functions being merged.
 
 %The return value of the landing-pad instruction is crucial in deciding what
 %action to take when the landing block is entered, and corresponds to the return
