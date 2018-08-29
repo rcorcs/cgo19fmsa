@@ -214,7 +214,7 @@ equivalence between labels.
 Labels can represent both normal basic blocks and landing blocks, which are used
 in exception handling code.
 Labels of normal basic blocks are always considered equivalent but
-landing blocks must have identical landingpad instructions.
+landing blocks must have identical landing-pad instructions.
 
 Two instructions are equivalent if: $(1)$ their opcodes are semantically
 equivalent, but not necessarily the same; $(2)$ they both have equivalent types;
@@ -242,34 +242,34 @@ by exception handling code and their equivalence relation.
 
 The invoke instruction co-operates tightly with its landing block, i.e., the
 basic block pointed by the exception branch of an invoke instruction.
-The landing block must landingpad instruction as its first non-$\phi$
+The landing block must have a landing-pad instruction as its first non-$\phi$
 instruction.
 Given this restriction, two equivalent invoke instructions must also have
-landing blocks with equivalent landingpad instructions.
-This is easy to check since the landingpad instruction is always the first
-instruction in a landing block. 
+landing blocks with identical landing-pad instructions.
+This restriction can be easily checked since the landing-pad instruction is
+always the first instruction in a landing block. 
 
-Landing blocks are responsible for handling all catch clauses of the
-higher-level programming language covering the particular callsite.
-All clauses are defined by the landingpad instruction, which encodes the list of
+Landing blocks are responsible for handling all catch clauses covering the
+particular call site, in the high-level code.
+All clauses are defined by the landing-pad instruction, which encodes the list of
 all exception and cleanup handlers.
-Landingpad instructions are equivalent if they have the exactly same type and
-also encode an identical lists of exception and cleanup handlers.
-The type of equivalent landingpad instructions must be identical as its value
+Landing-pad instructions are equivalent if they have exactly the same type and
+also encode identical lists of exception and cleanup handlers.
+The type of equivalent landing-pad instructions must be identical as its value
 is crucial in deciding what action to take when the landing block is entered,
 and corresponds to the return value of the personality function, which must also
 be identical for the two functions being merged.
 
-%The return value of the landingpad instruction is crucial in deciding what
+%The return value of the landing-pad instruction is crucial in deciding what
 %action to take when the landing block is entered, and corresponds to the return
 %value of the personality function.
 
 %In other words, when the unwinder executes the personality function (which
-%is part of the language runtime), it stores its return value, and provides this return value in the result of the landingpad
-%instruction. Since the personality function has access to the part of the unwind tables generated from the landingpad
+%is part of the language runtime), it stores its return value, and provides this return value in the result of the landing-pad
+%instruction. Since the personality function has access to the part of the unwind tables generated from the landing-pad
 %instruction, it can communicate information encoded in the unwind table to the landing block itself. In the libc++ runtime,
 %the personality function returns a tuple consisting of a pointer to the exception object itself, and a “handler switch value”, an
-%integer which corresponds to the index of a relevant “catch” clause of the landingpad instruction, or a special value (−1)
+%integer which corresponds to the index of a relevant “catch” clause of the landing-pad instruction, or a special value (−1)
 %when no catch clauses match but a cleanup needs to be performed.
 
 %The LLVM IR generated for the landing block then checks the handler switch value computed by the personality function,
@@ -277,7 +277,7 @@ be identical for the two functions being merged.
 
 %Finally, if the selected handler is a cleanup handler, the
 %exception propagation (stack unwinding) needs to be resumed after the cleanup is done. This is achieved by the resume
-%instruction, which expects as a parameter the same value that was returned by the corresponding landingpad instruction
+%instruction, which expects as a parameter the same value that was returned by the corresponding landing-pad instruction
 %which interrupted the exception propagation.
 %Interestingly, there are no LLVM instructions for raising (throwing) exceptions. This is left entirely in the management
 %of the language runtime, which needs to closely co-operate with the stack unwinding library anyway (the interface of the
@@ -379,8 +379,8 @@ dependences.
 %         BBLabel = CFG.NewBlock()
 %         ValMap[Entry[0]] = BBLabel
 %         ValMap[Entry[1]] = BBLabel
-%         if Entry has landingPad:
-%           create landingpad for BBLabel
+%         if Entry has landing-pad:
+%           create landing-pad for BBLabel
 %         MergedBB = BBLabel
 %      if Entry is of instructions:
 %         I0, I1 = Entry[0], Entry[1]
@@ -430,7 +430,7 @@ dependences.
 First, for each entry in the aligned sequence, we either create a new basic
 block for labels or we add a cloned instruction to the appropriate basic
 block.
-If the label represents a landing block, a landingpad instruction is also added
+If the label represents a landing block, a landing-pad instruction is also added
 to the new baisc block.
 During this process, we keep a mapping from the instructions and labels in the
 original functions to their corresponding values in the new merged function.
@@ -459,7 +459,7 @@ selected based on the function identifier.
 However, if the operands are labels, instead of adding a select instruction,
 the operand selection is performed in a control-flow manner, using a new basic
 block and a conditional branch based on the function-identifier parameter.
-When the two labels represents landing blocks, we hoist the landingpad
+When the two labels represents landing blocks, we hoist the landing-pad
 instruction to the new common basic block, converting it to a landing block and
 converting the two landing blocks to normal basic blocks.
 This is required for the correctness of the landing-pad model.
