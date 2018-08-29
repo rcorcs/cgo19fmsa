@@ -289,7 +289,7 @@ also encode identical lists of exception and cleanup handlers.
 \subsection{Code Generation}
 
 The code generation phase is responsible for producing a new function from the
-result of the aligned sequences.
+result of the sequence alignment.
 This phase has three main concerns: merging the two lists of parameters;
 %from both functions;
 generating the necessary select instructions in order to
@@ -299,11 +299,18 @@ constructing the CFG of the merged function.
 
 %\subsubsection{Merged Parameters}
 
-The merged list of parameters must be able to represent all parameters from
-both functions, where the each individual parameter in the merged list of
-parameters can represent at most one parameter of both functions.
-An extra binary parameter is also added to the merged list of parameters in
-order to distinguish between the two merged functions.
+If the lists of parameters are different, we can merge them so that we are able
+to uniquely represent all parameters from both functions.
+
+The merged list of parameters must contain exactly one parameter that uniquely
+represents each one of the parameters from both functions, without necessarily
+maintaining the same order.
+%The merged list of parameters must be able to represent all parameters from
+%both functions, where the each individual parameter in the merged list of
+%parameters can represent at most one parameter of both functions.
+An extra binary parameter, called the function identifier, is also added to the
+merged list of parameters.
+This extra parameter is required to distinguish between the two merged functions.
 Figure~\ref{fig:merged-params} depicts how we merge the list of parameters of
 two functions.
 First, we create the binary parameter that represents the function identifier, 
@@ -314,10 +321,11 @@ parameters.
 Finally, for each parameter of the second function, we either reuse an existing
 and available parameter of identical type from the first function or we add a
 new parameter.  
-We then keep track of the mapping bewteen the lists of parameters and the
-function identifiers, so that we are able to update the function calls later.
-When updating the function calls to the new merged function, parameters that are
-not used by the original function being called will receive undefined values.
+We then keep track of the mapping bewteen the lists of parameters of the
+original functions and the merged function so that, later, we are able to
+replace the function calls.
+When replacing the function calls to the new merged function, parameters that
+are not used by the original function being called will receive undefined values.
 %For this reason, it is important to be careful when merging the two functions
 %in order to avoid creating unsafe computation on undefined values, which
 %results in undefined behavior.
@@ -332,7 +340,6 @@ reducing the number of values required to be communicated between functions.
 (2) if the reused parameters have similar usage by both functions, it may reduce
 the number of select instructions that are needed to distinguish between the
 merged functions.
-
 
 \begin{figure}[h]
   \centering
