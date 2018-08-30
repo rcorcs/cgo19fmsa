@@ -62,8 +62,8 @@ corresponding basic blocks in identical control-flow graphs (CFGs).
 In this paper, we propose a novel technique for merging functions
 that addresses many major limitations of the state-of-the-art, using a
 fundamentally different approach from the existing ones.
-Our function-merging technique provides the following improvements over
-the state-of-the-art:
+Our function-merging technique is able to merge any two functions, i.e., it
+provides the following improvements over the state-of-the-art:
 \begin{itemize}[noitemsep,topsep=0pt]
   \item It is capable of merging functions with different signature, i.e.,
   different return type or list of parameters.
@@ -73,16 +73,19 @@ the state-of-the-art:
   our technique can merge instructions spanning across multiple basic blocks.
 \end{itemize}
 As a result, the proposed function merging optimization is
-more than three times better than the state-of-the-art optimization.
+more than three times better than the state-of-the-art optimization for
+code-size reduction.
 Our optimization is able to reduce size of the compiled programs by up to
 22\% over the already highly optimized baseline, with an average code-size
 reduction of about 5.6\%.
-We also propose an ranking-based exploration mechanism so that we can focus
+These optimization can be carried on without any significant impact on
+performance, when aided by profiling information.
+%Moreover, aided by profiling information, these optimization can be carried on
+%without any significant impact on performance.
+We also propose a ranking-based exploration mechanism so that we can focus
 the optimization on promising pairs of functions.
-With this framework, our prototype introduces an average compilation-time
-overhead of only 20\%.
-Moreover, aided by profiling information, these optimization can be carried on
-without any significant impact on performance.
+With this framework, our prototype introduces an average overhead of only 20\%
+in compilation time.
 
 
 
