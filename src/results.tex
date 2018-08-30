@@ -26,6 +26,13 @@ We also use the Intel platform to cross-compile all benchmarks to the ARM
 platform.
 For this reason, we only show compilation-time results for the Intel platform.
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.8\linewidth]{figs/opt-pipeline.pdf}
+  \caption{The compilation pipeline using a monolithic link-time optimization (LTO).}
+  \label{fig:opt-pipeline}
+\end{figure}
+
 Figure~\ref{fig:opt-pipeline} shows an overview of the compilation pipeline used
 throughout our evaluation.
 First, we apply early code-size optimizations per compilation-unit.
@@ -36,14 +43,6 @@ instead of being generated per compilation-unit, which enables more powerful
 optimizations based on whole-program analyses.
 The baseline uses exactly the same compilation pipeline, except for not having
 any function-merging optimization.
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.8\linewidth]{figs/opt-pipeline.pdf}
-  \caption{The compilation pipeline using a monolithic link-time optimization (LTO).}
-  \label{fig:opt-pipeline}
-\end{figure}
-
 
 During our evaluation, we refer to LLVM's identical function merging as
 \textit{Identical}, the state-of-the-art as \textit{SoA}, and the proposed
