@@ -17,12 +17,16 @@ As a consequence, any reduction in code size translates directly to equivalent
 savings of die area, where even modest savings can lead to a substantial overall
 cost reduction, in large scales~\cite{edler10}.
 
-For programs with always increasing complexity, memory size can be a showstopper.
-In particular considering that some of these programs for embedded systems can
-have binaries of several mega bytes in size.
-Moreover, savings in code size can enable more features to be included without
-exceeding a size restrictions, as increasing the memory size is not always a
-viable solution given the impacts on power consumption and overall costs.
+Some programs for embedded systems can have binaries of several mega bytes in
+size, with always increasing complexity.
+For these programs, memory size can be a showstopper.
+%For programs with always increasing complexity, memory size can be a showstopper.
+%In particular, considering that some of these programs for embedded systems can
+%have binaries of several mega bytes in size.
+Therefore, savings in code size can enable more features to be included without
+exceeding size restrictions, as increasing the memory size is not always a
+viable solution, given its potential impact on power consumption and overall
+costs.
 In these constrained scenarios, code-size optimizations are essential~\cite{schultz03,varma04,sehgal12,kwan12,keoh14,auler17}.
 
 With a lack of more powerful code-size optimizations, valuable resources are
@@ -40,19 +44,19 @@ similar functions into a single function, reducing replicated code.
 The merged function must retain the semantics from each one of the functions
 orignally involved in the merge operation.
 In order to maximize merging opportunities, this optimization is ideally
-executed on the whole-program during link-time.
+executed on the whole program during link-time optimization.
 Even in its most simplistic form, i.e., by merging only identical functions,
 function merging optimization is crucial for making high-level abstractions
-feasible, such as some C++ ABIs and templates, otherwise these abstractions
-could cause sufficient explosion in code size that they would be almost
-unusable for production software~\cite{tallam10,kwan12}.
+feasible, such as some C++ ABIs and templates.
+Otherwise, these abstractions could cause sufficient explosion in code size that
+they would be unusable for production software~\cite{tallam10,kwan12}.
 
 Most industrial-strength compilers, such as GCC~\cite{gcc}, LLVM~\cite{llvm},
 and MSVC~\cite{msvc-icf}, implement variants of this optimization that are
 capable of merging only identical functions~\cite{tallam10,kwan12,livska14}.
-The state-of-the-art technique is able to merge similar but not necessarily
-identical functions by leveraging structural similarity~\cite{edler14}.
-However, it is only capable to deal with small differences within
+The state-of-the-art, on the other hand, is able to merge similar but not
+necessarily identical functions by leveraging structural similarity~\cite{edler14}.
+However, it is still limited to dealing with small differences within
 corresponding basic blocks in identical control-flow graphs (CFGs).
 
 In this paper, we propose a novel technique for merging functions
