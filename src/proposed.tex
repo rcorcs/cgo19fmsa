@@ -54,8 +54,10 @@ in this paper, we refer to a simpler definition.}
 of a function consits in specifying an ordering of the basic blocks based on a
 traversal of the CFG and then producing a sequence of basic block labels and
 instructions, similar to a textual representation of the function.
-Although this operation is trivial, the specific ordering of the basic blocks
-chosen can have an impact on the merging operation.
+The exact ordering chosen will not compromise the correctness of the results
+but it can have an impact on the quality of the merge operation.
+%Although this operation is trivial, the specific ordering of the basic blocks
+%chosen can have an impact on the merging operation.
 
 %For the linearization, we assume that every basic block has an entry label and
 %a terminator instruction which refers explicitly to the successor basic blocks,
