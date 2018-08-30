@@ -1,22 +1,16 @@
-\section{Function Merging} \label{sec:fm}
+\section{Our Approach} \label{sec:fm}
 
-In this section, we describe the proposed function-merging technique.
-Contrary to the state-of-the-art, our technique is able to merge any two
-functions.
-If the two functions are equivalent, i.e., identical, then the two functions
-can be completely merged into a single identical function.
-However, if the two functions differ at any point, an extra parameter is
-required, so that the caller is able to distinguish between the functions. 
-The two functions can differ in any possible way, including their list of
-parameters or return types.
-If the lists of parameters are different, we can merge them so that we are able
-to uniquely represent all parameters from both functions.
-If the return types are different, we can use an aggregate type to return values
-of both types or return just the non-void type if the other one is void.
+In this section, we describe the proposed function-merging technique. Contrary to the state-of-the-art, our technique is able to merge two
+arbitrary functions. If the two functions are equivalent, i.e., identical, then they can be completely merged into a single function.
+However, if the two functions differ at any point, an extra parameter is required, so that the caller is able to distinguish between the
+functions. The two functions can differ in any possible way, including their list of parameters or return types. If the lists of parameters
+are different, we can merge them so that we are able to uniquely represent all parameters from both functions. If the return types are
+different, we can use an aggregate type to return values of both types or return just the non-void type if the other one is void.
+\fixme{ZW: Should refer to the motivation example here.}
 %However, in our current implementation, the only restriction is that both
 %functions must have equivalent return types or one of them must be \textit{void}.
 
-\begin{figure}[h]
+\begin{figure}[t!]
   \centering
   %\vspace{-1ex}
   \includegraphics[width=0.85\linewidth]{figs/func-merge-overview.pdf}
@@ -27,7 +21,7 @@ of both types or return just the non-void type if the other one is void.
 
 The proposed technique consists of three major steps, as depicted in
 Figure~\ref{fig:func-merge-overview}.
-First, we linearize each function, representing the CFG as a sequence of 
+First, we linearize each function, representing the CFG as a sequence of
 labels and instructions.
 The second step consists in applying a sequence alignment algorithm, borrowed
 from bioinformatics, which identifies regions of similarity between sequences.
@@ -37,25 +31,22 @@ they differ from one another.
 The final step performs the code generation, actually merging the two functions
 into a single function based on the aligned sequences.
 Aligned segments with equivalent code are merged, avoiding redundancy, %redundant code,
-and the remaining segments where the two functions differ have their code
-guarded by a function identifier.
-At this point, we also create a merged list of parameters where parameters of
-the same type are shared between the functions, without necessarily keeping
-their original order.
-This new function can then be used to replace the original functions, as they
-are semantically equivalent, given the appropriate function-identifier
-parameter.
+and the remaining segments where the two functions differ have their code guarded by a function identifier. At this point, we also create a
+merged list of parameters where parameters of the same type are shared between the functions, without necessarily keeping their original
+order. This new function can then be used to replace the original functions, as they are semantically equivalent, given the appropriate
+function-identifier parameter. \fixme{ZW: It is weird sequence alignment is introduced here. We need to explain why using sequence
+alignment.}
 
 \subsection{Linearization}
 
 The \textit{linearization}\footnote{Although linearization of CFGs
 usually refers to a predicated representation, % resulting from an if-conversion,
-in this paper, we refer to a simpler definition.}
-of a function consits in specifying an ordering of the basic blocks based on a
-traversal of the CFG and then producing a sequence of basic block labels and
-instructions, similar to a textual representation of the function.
-The exact ordering chosen will not compromise the correctness of the results
-but it can have an impact on the quality of the merge operation.
+in this paper, we refer to a simpler definition.} of a function consits in specifying an ordering of the basic blocks based on a traversal
+of the CFG and then producing a sequence of basic block labels and instructions, similar to a textual representation of the function. The
+exact ordering chosen will not compromise the correctness of the results but it can have an impact on the quality of the merge operation.
+\fixme{ZW: Can we have an example here and then use it to illustrate your sequence alignment method in
+Figure~\ref{fig:func-merge-overview}?}
+
 %Although this operation is trivial, the specific ordering of the basic blocks
 %chosen can have an impact on the merging operation.
 
@@ -67,20 +58,14 @@ but it can have an impact on the quality of the merge operation.
 In our implementation, the linearization uses a reverse post-order~(RPO) of the
 basic blocks, following a canonical ordering of the successors.
 %, e.g., \textit{true} branches before \textit{false} ones.
-%Figure~\ref{fig:branch-linearization} shows an example of the linearization 
+%Figure~\ref{fig:branch-linearization} shows an example of the linearization
 %using the canonical RPO.
-The RPO guarantees that the linearization starts with the entry basic block and
-then proceeds favoring definitions before uses, except in the presence of loops.
-Although the specifc ordering produced by the canonical linearization may not
-be optimal, it is common practice for compilers to rely on prior
-canonicalizations, e.g., 
-canonical loops, canonical induction variables, canonical reassociation, etc.
-For contrast, if, instead, we use an RPO linearization with a uniformly
-randomized ordering of the successor basic blocks, the final code-size reduction
-of the function-merging optimization can drop up to 10\% for individual
-benchmarks.
-Note that our decision for using the canonical RPO is purely pragmatic and
-other orderings of the basic blocks could also be used, as long as it produces
+The RPO guarantees that the linearization starts with the entry basic block and then proceeds favoring definitions before uses, except in
+the presence of loops. Although the specifc ordering produced by the canonical linearization may not be optimal, it is common practice for
+compilers to rely on prior canonicalizations, e.g., canonical loops, canonical induction variables, canonical reassociation,
+etc~\fixme{\cite{}}. By contrast, if, instead, we use an RPO linearization with a uniformly randomized ordering of the successor basic
+blocks, the final code-size reduction of the function-merging optimization can drop up to 10\% for individual benchmarks. Note that our
+decision for using the canonical RPO is purely pragmatic and other orderings of the basic blocks could also be used, as long as it produces
 a sequence of labels followed by instructions.
 
 %\begin{figure}[h]
@@ -115,7 +100,7 @@ Figure~\ref{fig:opcode-align} shows an example of the sequence alignment
 between two linearized functions extracted from the \text{400.perlbench} benchmark
 in SPEC CPU2006~\cite{spec}.
 
-\begin{figure}[h]
+\begin{figure}[t!]
   \centering
   \includegraphics[width=0.85\linewidth]{figs/opcode-align.pdf}
   %\caption{An example of a sequence alignment between two real functions extracted from the \text{400.perlbench} benchmark.}
@@ -132,7 +117,7 @@ $S_i = (a_1^{(i)}, \ldots, a_{k_1}^{(i)})$, for all $i\in\{1,\ldots,m\}$.
 %\begin{equation*}
 %\begin{align*}
 %S_1 = (a_1^{(1)}, \ldots, a_{k_1}^{(1)})\\
-%\dots\\ 
+%\dots\\
 %S_m = (a_1^{(m)}, \ldots, a_{k_m}^{(m)})
 %\end{align*}
 %\end{equation*}
@@ -180,13 +165,13 @@ We explain the equivalence relation used for this alphabet in the next section.
 %functions being merged.
 %For function calls, the type equivalence requires that both instructions have
 %identical function types, i.e., both called functions must have an identical
-%return type and an identical list of parameter types. 
+%return type and an identical list of parameter types.
 
 There is a vast literature on algorithms for performing sequence alignment,
 especially in the context of molecular biology.
 These algorithms range from optimal algorithms based on dynamic programming to
 probabilistic models that does not guarantee
-optimality~\cite{needleman70,smith81,carrillo88,hickey11}. 
+optimality~\cite{needleman70,smith81,carrillo88,hickey11}.
 In this paper, we use the Needleman-Wunsh algorithm~\cite{needleman70}.
 This algorithm is based on dynamic programming and consists of two main steps.
 First, it builds a \textit{similarity matrix}, based on a scoring scheme, which
@@ -200,7 +185,7 @@ matches and equally penalizes mismatches and gaps.
 %When producing the final aligned sequence, there may be several possible optimal
 %alignments.
 %However, different aligned sequences can affect the code generation in different
-%ways that may be both beneficial or undesirable. 
+%ways that may be both beneficial or undesirable.
 %For this reason, we prioritize alignments that tend to group the blank
 %characters together, avoiding to frequently alternate between the two sequences
 %during long segments of mismatches and gaps.
@@ -233,7 +218,7 @@ the computation.
 %distinguish between the execution of two functions being merged.
 For function calls, the type equivalence requires that both instructions have
 identical function types, i.e., both called functions must have an identical
-return type and an identical list of parameter types. 
+return type and an identical list of parameter types.
 
 \subsubsection{Handling Exception Handling Code}
 
@@ -256,7 +241,7 @@ instruction.
 Given this restriction, two equivalent invoke instructions must also have
 landing blocks with identical landing-pad instructions.
 This restriction can be easily checked since the landing-pad instruction is
-always the first instruction in a landing block. 
+always the first instruction in a landing block.
 
 Landing blocks are responsible for handling all catch clauses covering the
 particular call site, in the high-level code.
@@ -315,14 +300,14 @@ merged list of parameters.
 This extra parameter is required to distinguish between the two merged functions.
 Figure~\ref{fig:merged-params} depicts how we merge the list of parameters of
 two functions.
-First, we create the binary parameter that represents the function identifier, 
+First, we create the binary parameter that represents the function identifier,
 one of the functions will be identified by the value \textit{true} and the other
 by value \textit{false}.
 We then add all the parameters of one of the functions to the new list of
 parameters.
 Finally, for each parameter of the second function, we either reuse an existing
 and available parameter of identical type from the first function or we add a
-new parameter.  
+new parameter.
 We then keep track of the mapping bewteen the lists of parameters of the
 original functions and the merged function so that, later, we are able to
 replace the function calls.
@@ -423,7 +408,7 @@ dependencies.
 %      if Entry is of instructions:
 %         I0, I1 = Entry[0], Entry[1]
 %         I = ValMap[I0]
-%         
+%
 %         for each (Op0, Op1) in I0 and I1:
 %           Op0Val = ValMap[Op0]
 %           Op1Val = ValMap[Op1]
@@ -516,7 +501,7 @@ also a more challenging decision problem.
 
 For every function, ideally, we would like to try to merge it with all other
 functions and choose the pair that maximizes the reduction in code size.
-However, this quadratic exploration over all pairs of functions results in 
+However, this quadratic exploration over all pairs of functions results in
 compilation-time overheads that are usually unacceptable for real-world
 scenarios.
 In order to avoid the quadratic exploration of all possible merges, we propose
@@ -601,17 +586,17 @@ and size of the functions.
 When a profitable candidate is found, then we first replace the body of the two
 original functions to a single call to the merged function.
 Afterwards, if the original functions can be completely removed, we update the
-call graph, replacing the calls to the original functions by calls to the 
+call graph, replacing the calls to the original functions by calls to the
 merged function.
 When compiling the whole program, during link-time optimization, we can be more
 aggressive when removing the original functions.
 However, if the optimization is applied per compilation unit, then extra
 conditions must be guaranteed, e.g., the function must not be externally visible
-to other compilation units. 
+to other compilation units.
 Finally, the new function is added to the optimization working list.
 Because of this feedback loop, merge operations can also be performed on
 functions that resulted from previous merge operations.
- 
+
 \subsection{Profitability Cost Model}
 
 After generating the code of the merged function, we need to estimate the
@@ -648,4 +633,3 @@ Our implementation makes use of the code-size costs provided by LLVM's
 target-transformation interface (TTI), which is widely used in the decision
 %making by most of the LLVM's optimizations.
 making of most optimizations.
-

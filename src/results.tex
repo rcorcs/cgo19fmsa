@@ -1,5 +1,5 @@
 \section{Experimental Evaluation}
-\begin{figure*}[b]
+\begin{figure*}[t!]
   \centering
   %\subfigure[Intel platform.]{\includegraphics[width=\linewidth]{figs/reduction-obj-intel-label.pdf}}
   %\subfigure[ARM platform.]{\includegraphics[width=\linewidth]{figs/reduction-obj-arm-label.pdf}}
@@ -26,7 +26,7 @@ We also use the Intel platform to cross-compile all benchmarks to the ARM
 platform.
 For this reason, we only show compilation-time results for the Intel platform.
 
-\begin{figure}[h]
+\begin{figure}[t!]
   \centering
   \includegraphics[width=0.8\linewidth]{figs/opt-pipeline.pdf}
   \caption{The compilation pipeline using a monolithic link-time optimization (LTO).}
@@ -90,10 +90,10 @@ differences in the instruction set architecture (ISA), compiler backend, etc.
 Our optimization, FMSA, significantly improves over the state-of-the-art (SoA).
 For the Intel platform, FMSA could achieve an average code-size reduction of up
 to 5.8\% (or 5.3\% with the lower configuration), while the SoA and Identical
-had an average reduction of 1.8\% and 0.9\%, respectively. 
+had an average reduction of 1.8\% and 0.9\%, respectively.
 Similarly, for the ARM platform, FMSA could achieve an average code-size
 reduction of up to 5.1\% (or 4.6\% with the lower configuration), while the SoA
-and Identical had an average reduction of 2\% and 1.1\%, respectively. 
+and Identical had an average reduction of 2\% and 1.1\%, respectively.
 For several of the benchmarks, the proposed technique shows some impressive
 code-size reductions compared to the other optimizations.
 Table~\ref{tab:reduction} highlights some of these results for both platforms.
@@ -118,8 +118,8 @@ function-merging optimizations, usually by a significant margin.
 \multicolumn{1}{|c|}{\textbf{Benchmarks}} & \textbf{Identical} & \textbf{SoA}  & \textbf{FMSA {[}t=1{]}} \\ \hline
 %%%400.perlbench                             & 0.09 / 0.09        & 1.03 / 1.15   & 3.13 / 2.40             \\ \hline
 401.bzip2                                 & 0.15 / 0.16        & 0.15 / 0.16   & 2.67 / 2.09             \\ \hline
-%%%403.gcc                                   & 0.36 / 0.43        & 2.48 / 2.89   & 4.71 / 5.59             \\ \hline 
-%%%429.mcf                                   & 0 / 0              & 0.41 / 1.29    & 1.66 / 2.11             \\ \hline 
+%%%403.gcc                                   & 0.36 / 0.43        & 2.48 / 2.89   & 4.71 / 5.59             \\ \hline
+%%%429.mcf                                   & 0 / 0              & 0.41 / 1.29    & 1.66 / 2.11             \\ \hline
 433.milc                                  & 0 / 0              & 1.08 / 0.46   & 5.09 / 5.12             \\ \hline
 %%%444.namd                                  & 0.10 / 0.14        & 0 / 0         & 0.20 / 0.17             \\ \hline
 447.dealII                                & 11.77 / 14.83      & 12.59 / 19.12 & 20.57 / 24.08           \\ \hline
@@ -160,7 +160,7 @@ account that the other techniques have no real impact on these benchmarks.
 %quantum\_cond\_phase and quantum\_cond\_phase\_inv.}
 %from the 462.libquantum benchmark that are merged by the proposed optimization.
 %The proposed function-merging technique is the \textit{first} technique able to
-%merge these two functions. 
+%merge these two functions.
 %Although they are very similar functions, the state-of-the-art is unable to
 %merge them since their CFGs are not structurally identical.
 %For the proposed optimization, however, these two functions receive a similarity
@@ -177,7 +177,7 @@ account that the other techniques have no real impact on these benchmarks.
 %447.dealII program in the SPEC CPU2006~\cite{spec} benchmark suite.
 %Although these two functions are not identical at the source level, they become
 %identical after a template specialization and some optimizations are applied, in
-%particular, constant propagation, constant folding, and dead-code elimination. 
+%particular, constant propagation, constant folding, and dead-code elimination.
 %Specializing \verb|dim| to $1$ enables to completely remove the loop in the
 %function \verb|PolynomialSpace|.
 %Similarly, specializing \verb|dim| to $1$ results in only the first iteration
@@ -222,7 +222,7 @@ implementation not yet highly tuned for compilation-time.
 For this reason, we believe that the compilation-time overhead can be reduced
 even further with enough egineering effort.
 Nevertheless, the proposed ranking infrastructure is already able to reduce the
-compilation-time overhead of the oracle by up to two orders of magnitude, 
+compilation-time overhead of the oracle by up to two orders of magnitude,
 resulting in  an average compilation-time overhead of only 20\% compared to the
 baseline, while still achieving a significant code-size reduction, very close to
 the oracle.
@@ -238,7 +238,7 @@ breakdown.
 For each major step of the proposed optimization, we present the accumulated
 time spent across the whole program.
 In order to better understand the overhead of each one of the steps, we use
-an exploration threshold of one ($t = 1$). 
+an exploration threshold of one ($t = 1$).
 Because the ranking mechanism performs a quadratic operation on the number of
 functions, computing the similarity between all pairs of functions, it is
 expected that ranking would be amongst the most costly steps.
