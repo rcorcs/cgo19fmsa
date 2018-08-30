@@ -25,11 +25,12 @@ performance when profiling information is used.
 
 For future work, we plan to focus on improving the ranking mechanism to reduce
 compilation time even further.
-%A better compilation time can be achieved by improving the ranking heuristic
-%and also by integrating the function merging to a summary-based parallel
-%link-time optimization framework, such as ThinLTO in LLVM.
+A better compilation time can also be achieved by integrating the
+function-merging optimization to a summary-based parallel link-time optimization
+framework, such as ThinLTO in LLVM.
 We also plan to work on the linearization of the candidate functions, allowing
 instruction reordering to maximize the number of matches between the functions.
 %Have a linearization of the candidates based on the current function:
 %Lin(F1) = canonical linearization of F1, then linearize F2 based on Lin(F1).
+
 
