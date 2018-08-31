@@ -51,6 +51,20 @@ Function merging reduces the total number of machine instructions of the two fun
 %%one of the functions using the function identifier added to the list of parameters. \fixme{ZW: Again, here we need to give the intuition on
 %%why we can merge them and what's the benefit for doing so. I think we should avoid talking about our technique here because at this point
 %%the reviewer won't understand how our technique works.}
+%=======
+%Figure~\ref{fig:libquantum-example} shows two complete functions extracted from the SPEC CPU2006 \texttt{462.libquantum} benchmark.
+%Although these two functions have the same signature, i.e., the same return type and list of parameters, they differ in some parts,
+%including their CFGs. The existing techniques are unable to merge them due mainly to the structural differences in their CFGs, as we have
+%described in Section~\ref{sec:background}.
+%Similar to the previous example, we could merge these two functions, as shown at the bottom of Figure~\ref{fig:libquantum-example}. Basically, we just need to guard the execution of the code that is unique to
+%one of the functions using the function identifier added to the list of parameters.
+%Inspecting the compiled assembly of all three functions, we can see a reduction of 27\% in the total number of machine instructions.
+%%Similar to the previous example, the proposed optimization is also able to merge these two
+%%functions, as shown at the bottom of Figure~\ref{fig:libquantum-example}. Basically, we guard the execution of the code that are unique to
+%%one of the functions using the function identifier added to the list of parameters. \fixme{ZW: Again, here we need to give the intuition on
+%%why we can merge them and what's the benefit for doing so. I think we should avoid talking about our technique here because at this point
+%%the reviewer won't understand how our technique works.}
+%>>>>>>> e85b1a68ed569a46dd18b4379769346de63fc8f8
 
 \begin{figure}[t!]
   \centering
