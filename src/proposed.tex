@@ -1,7 +1,6 @@
 \section{Our Approach} \label{sec:fm}
 
-In this section, we describe the proposed function-merging technique. Contrary to the state-of-the-art, our technique is able to merge two
-arbitrary functions. If the two functions are equivalent, i.e., identical, then they can be completely merged into a single function.
+In this section, we describe the proposed function-merging technique. Contrary to all existing techniques, our technique is able to merge two arbitrary functions. If the two functions are equivalent, i.e., identical, then they can be completely merged into a single function.
 However, if the two functions differ at any point, an extra parameter is required, so that the caller is able to distinguish between the
 functions. The two functions can differ in any possible way, including their list of parameters or return types. If the lists of parameters
 are different, we can merge them so that we are able to uniquely represent all parameters from both functions. If the return types are
