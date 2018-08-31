@@ -16,7 +16,7 @@ As a motivation, consider two SPEC CPU2006 benchmark examples shown in Figures~\
 Figure~\ref{fig:sphinx-example} shows two functions from the \texttt{482.sphinx3}. Although these two functions seem identical, their
 function arguments are of different types, namely, \textit{float32} and \textit{float64}. In the diagram, we highlight the segments where
 the data operation differ from each other. None of the the existing function-merging techniques would merge these two functions, as they
-all require both functions toe have exactly the same list of parameters, with the same types and in the same order. As shown at the bottom
+all require both functions to have exactly the same list of parameters, with the same types and in the same order. As shown at the bottom
 of Figure~\ref{fig:sphinx-example}, these functions can be merged using two strategies. Firstly, we can expand the function argument list
 to include the two parameters of different types. Then, we use a function identifier, \texttt{func\_id}, to indicate which of the two
 functions is called. Function merging reduces the total number of machine instructions of the two functions by 18\%.
