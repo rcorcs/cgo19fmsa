@@ -1,19 +1,20 @@
 \begin{abstract}
 
-Resource constrained devices are becoming increasingly important, where
-valuable resources are wasted with unnecessarily large binaries due to
-the lack of more powerful code-size optimizations.
+Resource constrained devices are becoming increasingly important. However,
+valuable resources are still wasted as a result of unnecessarily large 
+binaries caused by the weakness of current code-size optimizations.
 Most industrial-strength compilers offer an important code-size optimization
 that reduces redundant code by merging similar functions.
 In this paper, we propose a novel technique for merging functions
 that addresses major limitations of the state-of-the-art
-with a fundamentally different approach.
-Our optimization is more than $3\times$ better than the state-of-the-art,
-reducing code size of programs by up to 22\%, with an overall average of 5.6\%.
-Moreover, aided by profiling information, this optimization can be carried on
-without any significant impact on performance.
-We also propose a ranking-based exploration mechanism so that we can focus
+with a fundamentally different approach. We embed this technique in
+a ranking-based exploration mechanism so that we can focus
 the optimization on promising pairs of functions.
-With this framework, our prototype introduces an average compilation-time
-overhead of only 20\%.
+Our approach is more than $3\times$ better than the state-of-the-art,
+reducing code size of programs by up to 22\%, with an overall average of 5.6\%,
+while introducing an average compilation-time overhead of only 20\%.
+Moreover, aided by profiling information, this optimization can be deployed
+without any significant impact on the performance of the generated code.
+
+
 \end{abstract}
