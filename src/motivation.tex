@@ -10,17 +10,17 @@
 %Note that, although we present the examples at the source level, the
 %optimizations are actually implemented at the IR level.
 
-As a motivation example, consider Figure~\ref{fig:sphinx-example} which shows to functions from the SPEC CPU2006 \texttt{482.sphinx3}
-benchmark. Although these two functions seem identical, their function arguments are of different types, namely, \textit{float32} and
-\textit{float64}. Here, we highlight the segments where the data operation differ from each other. As we have described in
-Section~\ref{sec:background}, all the existing function-merging techniques require that both functions have exactly the same list of
-parameters, with the same types and the same order. Moreover, this also means that the two functions contain instructions with different
-types. As a result, no one of the existing techniques would be able to merge these two nearly identical functions.
-However, these functions could be merged, as show at the bottom of Figure~\ref{fig:sphinx-example}.
-First, we could merge the list of parameters, where we include the two parameters of different types.
-Then, an extra parameter could be used as a function identifier to guard the execution of the instructions that
-are unique to one of the functions.
-If we inspect the compiled assembly code of all three functions, we can see a reduction of 18\% in the total number of machine instructions.
+As a motivation, consider two SPEC CPU2006 benchmark examples shown in Figures~\ref{fig:sphinx-example} and \ref{fig:libquantum-example}.
+
+
+Figure~\ref{fig:sphinx-example} shows two functions from the \texttt{482.sphinx3}. Although these two functions seem identical, their
+function arguments are of different types, namely, \textit{float32} and \textit{float64}. In the diagram, we highlight the segments where
+the data operation differ from each other. None of the the existing function-merging techniques would merge these two functions, as they
+all require both functions to have exactly the same list of parameters, with the same types and in the same order. As shown at the bottom
+of Figure~\ref{fig:sphinx-example}, these functions can be merged using two strategies. Firstly, we can expand the function argument list
+to include the two parameters of different types. Then, we use a function identifier, \texttt{func\_id}, to indicate which of the two
+functions is called. Function merging reduces the total number of machine instructions of the two functions by 18\%.
+
 %If we compile all three functions, we can see that the each one of the two original functions have 14 machine instructions, while the merged function has 23 machine instructions.
 %This represents a reduction of 18\% in the total number of instructions.
 %However, the proposed optimization is able to merge them as shown at the bottom of Figure~\ref{fig:sphinx-example}. First, we merge both lists of parameters,
@@ -36,22 +36,44 @@ If we inspect the compiled assembly code of all three functions, we can see a re
 \end{figure}
 
 
-Figure~\ref{fig:libquantum-example} shows two complete functions extracted from the SPEC CPU2006 \texttt{462.libquantum} benchmark.
-Although these two functions have the same signature, i.e., the same return type and list of parameters, they differ in some parts,
-including their CFGs. The existing techniques are unable to merge them due mainly to the structural differences in their CFGs, as we have
-described in Section~\ref{sec:background}.
-Similar to the previous example, we could merge these two functions, as shown at the bottom of Figure~\ref{fig:libquantum-example}. Basically, we just need to guard the execution of the code that is unique to
-one of the functions using the function identifier added to the list of parameters.
-Inspecting the compiled assembly of all three functions, we can see a reduction of 27\% in the total number of machine instructions.
-%Similar to the previous example, the proposed optimization is also able to merge these two
-%functions, as shown at the bottom of Figure~\ref{fig:libquantum-example}. Basically, we guard the execution of the code that are unique to
-%one of the functions using the function identifier added to the list of parameters. \fixme{ZW: Again, here we need to give the intuition on
-%why we can merge them and what's the benefit for doing so. I think we should avoid talking about our technique here because at this point
-%the reviewer won't understand how our technique works.} 
+Figure~\ref{fig:libquantum-example} gives another two functions extracted from \texttt{462.libquantum}. Although these two functions have
+the same signature, i.e., the same return type and list of parameters, they differ in some parts, including their CFGs. None of the
+existing techniques can merge the two functions because of the difference in the CFGs. As shown at the bottom of
+Figure~\ref{fig:libquantum-example}, these two functions in fact can be merged by simply using a function identifier, \texttt{func\_id}.
+Function merging reduces the total number of machine instructions of the two functions by 23\%.
+
+%The existing techniques are unable to merge them due mainly to the structural differences in their CFGs, as we have described in
+%Section~\ref{sec:background}. Similar to the previous example, we could merge these two functions, as shown at the bottom of
+%Figure~\ref{fig:libquantum-example}. Again, this can be done by using a function identifier. Inspecting the compiled assembly of all three
+%functions, we can see a reduction of 27\% in the total number of machine instructions.
+%%Similar to the previous example, the proposed optimization is also able to merge these two
+%%functions, as shown at the bottom of Figure~\ref{fig:libquantum-example}. Basically, we guard the execution of the code that are unique to
+%%one of the functions using the function identifier added to the list of parameters. \fixme{ZW: Again, here we need to give the intuition on
+%%why we can merge them and what's the benefit for doing so. I think we should avoid talking about our technique here because at this point
+%%the reviewer won't understand how our technique works.}
+%=======
+%Figure~\ref{fig:libquantum-example} shows two complete functions extracted from the SPEC CPU2006 \texttt{462.libquantum} benchmark.
+%Although these two functions have the same signature, i.e., the same return type and list of parameters, they differ in some parts,
+%including their CFGs. The existing techniques are unable to merge them due mainly to the structural differences in their CFGs, as we have
+%described in Section~\ref{sec:background}.
+%Similar to the previous example, we could merge these two functions, as shown at the bottom of Figure~\ref{fig:libquantum-example}. Basically, we just need to guard the execution of the code that is unique to
+%one of the functions using the function identifier added to the list of parameters.
+%Inspecting the compiled assembly of all three functions, we can see a reduction of 27\% in the total number of machine instructions.
+%%Similar to the previous example, the proposed optimization is also able to merge these two
+%%functions, as shown at the bottom of Figure~\ref{fig:libquantum-example}. Basically, we guard the execution of the code that are unique to
+%%one of the functions using the function identifier added to the list of parameters. \fixme{ZW: Again, here we need to give the intuition on
+%%why we can merge them and what's the benefit for doing so. I think we should avoid talking about our technique here because at this point
+%%the reviewer won't understand how our technique works.}
+%>>>>>>> e85b1a68ed569a46dd18b4379769346de63fc8f8
 
 \begin{figure}[t!]
   \centering
   \includegraphics[width=\linewidth]{figs/libquantum-example.pdf}
   \caption{Functions with different CFGs.}
+  \fixme{ZW: I think we should number each part of the diagram. I.e., (a), (b), and (c) for the first, second and merged functions.}
   \label{fig:libquantum-example}
 \end{figure}
+
+These examples show that the state-of-the-art function merging methods impose over-restricted constraints on the code structures, and thus
+miss massive opportunities. Our work aims to develop a better approach to lift the constraints to merge similar code of any two arbitrary
+functions.
