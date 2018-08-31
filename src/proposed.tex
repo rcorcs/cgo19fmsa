@@ -62,7 +62,7 @@ The RPO guarantees that the linearization starts with the entry basic block and 
 the presence of loops. Although the specifc ordering produced by the canonical linearization may not be optimal, it is common practice for
 compilers to rely on prior canonicalizations, e.g., canonical loops, canonical induction variables, canonical reassociation,
 etc.~\cite{briggs94,liu96}. By contrast, if, instead, we use an RPO linearization with a uniformly randomized ordering of the successor basic
-blocks, the final code-size reduction of the function-merging optimization can drop up to 10\% for individual benchmarks.
+blocks, the final code-size reduction of the function-merging optimization can deteriorate by 10\% for individual benchmarks.
 %Note that our decision for using the canonical RPO is purely pragmatic and other orderings of the basic blocks could also be used, as long as it produces a sequence of labels followed by instructions.
 
 %\begin{figure}[h]
@@ -148,7 +148,7 @@ which $b_j^{(i)}$ is not a blank character.
 Note that two aligned sequences may contain both non-blank and non-equivalent
 characters at any given position, in which case it contains a mismatch.
 
-Particularly for the function-merging, we are concerned with the alphabet
+Specifically for function-merging, we are concerned with the alphabet
 consisting of all possible typed instructions and labels.
 Every linearized function represents a sequence derived from this alphabet.
 We explain the equivalence relation used for this alphabet in the next section.
@@ -433,7 +433,7 @@ First, for each entry in the aligned sequence, we either create a new basic
 block for labels or we add a cloned instruction to the appropriate basic
 block.
 If the label represents a landing block, a landing-pad instruction is also added
-to the new baisc block.
+to the new basic block.
 During this process, we keep a mapping from the instructions and labels in the
 original functions to their corresponding values in the new merged function.
 This mapping is required to appropriately create the use-definition
@@ -515,7 +515,7 @@ optimization.
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.7\linewidth]{figs/func-merge-opt-arch.pdf}
-  \caption{Overview of the optimization.}
+  \caption{Overview of the exploration framework.}
   \label{fig:func-merge-opt-arch}
 \end{figure}
 

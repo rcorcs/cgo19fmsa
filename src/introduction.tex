@@ -12,7 +12,7 @@ innovation in developing countries~\cite{hart02,etzo10}.
 As a result, there is an increasing focus on the development of programs
 tailored for these low-end devices with limited memory sizes~\cite{androidGo,hahm16}.
 Memories typically occupy the largest fraction of the chip area in embedded
-system, contributing to most of the overall cost.
+systems, contributing in most of the overall cost.
 As a consequence, any reduction in code size translates directly to equivalent
 savings of die area, where even modest savings can lead to a substantial overall
 cost reduction, in large scales~\cite{edler10}.
@@ -54,8 +54,8 @@ they would be unusable for production software~\cite{tallam10,kwan12}.
 Most industrial-strength compilers, such as GCC~\cite{gcc}, LLVM~\cite{llvm},
 and MSVC~\cite{msvc-icf}, implement variants of this optimization that are
 capable of merging only identical functions~\cite{tallam10,kwan12,livska14}.
-The state-of-the-art, on the other hand, is able to merge similar but not
-necessarily identical functions by leveraging structural similarity~\cite{edler14}.
+The state-of-the-art~\cite{edler14}, on the other hand, is able to merge similar
+but not necessarily identical functions by leveraging structural similarity.
 However, it is still limited to dealing with small differences within
 corresponding basic blocks in identical control-flow graphs (CFGs).
 
