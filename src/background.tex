@@ -1,13 +1,16 @@
 \section{Background on Function Merging} \label{sec:background}
-\fixme{ZW: It is weird to read this related-work-like section after introduction. I suggest to place the motivation section here and move
-some of the content of this section to the related work section.}
+%\fixme{ZW: It is weird to read this related-work-like section after introduction.
+%I suggest to place the motivation section here and move some of the content of
+%this section to the related work section.}
 
+In this section, for a good understanding of this paper, we provide a brief 
+description of the existing techniques for function merging.
+Specifically, we describe both the state-of-the-art~\cite{edler14} and the
+technique offered by major compilers~\cite{llvm-fm,livska14}.
+%e.g., GCC and LLVM~\cite{llvm-fm,livska14}.
 
-A similar optimization for merging identical functions, but implemented at the
-intermediate representation (IR) level, is also offered by both GCC and
-LLVM~\cite{llvm-fm,livska14}.
-%The function merging optimization currently offered by LLVM is only able to
-%merge identical functions.
+The function merging optimization currently offered by GCC and LLVM is
+only able to merge identical functions.
 This optimization is only flexible enough to accommodate simple type mismatches
 provided they can be bitcasted in a losslessly way.
 %Similarly to the technique proposed by Edler von Koch~et~al.~\cite{edler14},
@@ -30,13 +33,13 @@ identical.
 %It is a fast but very limited technique which is able to merge only nearly
 %identical functions.
 Two functions are structurally similar if both their function types and
-CFGs are equivalent.
+isomorphic CFGs.
 %Functions have equivalent signatures
 Two function types are equivalent
 if they agree in the number, order, and types of their parameters as well as
 their return types, linkage type, and other compiler-specific properties.
-CFGs are equivalent if and only if they are isomorphic graphs, i.e., there is a
-directed edge-preserving bijection between the vertex-set of the two graphs.
+%CFGs are equivalent if and only if they are isomorphic graphs, i.e., there is a
+%directed edge-preserving bijection between the vertex-set of the two graphs.
 In addition to the structural similarity among functions, they also consider
 that corresponding basic blocks of isomorphic CFGs have exactly the same number
 of instructions and that corresponding instructions must have equivalent
@@ -45,8 +48,8 @@ their input operands.
 If two corresponding instructions have different opcodes, they split the basic
 block and insert a switch branch to select which instruction to execute
 depending on a new integer parameter that represents the function identifier.
-Two instructions have equivalent resulting types if they have exactly
-the same type or if they can be bitcasted in a losslessly way.
+%Two instructions have equivalent resulting types if they have exactly
+%the same type or if they can be bitcasted in a losslessly way.
 
 Because the state-of-the-art is limited to merge functions with identical CFGs
 and function types, once it merges a pair of functions, a third

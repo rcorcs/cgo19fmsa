@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="326.81031"
-     inkscape:cy="502.92372"
+     inkscape:cx="169.75889"
+     inkscape:cy="483.80276"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -44,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -73,10 +73,10 @@
        width="22.28064"
        height="16.258568"
        x="169.66998"
-       y="340.32455" />
+       y="332.32455" />
     <g
        id="g4514"
-       transform="translate(-341.22192,226.96954)">
+       transform="translate(-341.22192,218.96954)">
       <text
          xml:space="preserve"
          style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, Normal';text-indent:0;text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;writing-mode:lr-tb;baseline-shift:baseline;text-anchor:middle;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
@@ -309,43 +309,43 @@
        width="23.408796"
        height="17.584927"
        x="169.29288"
-       y="607.21722" />
+       y="587.21722" />
     <rect
        ry="0"
-       y="553.83527"
+       y="533.12097"
        x="49.78867"
        height="56.187969"
        width="372.60471"
        id="rect4214"
-       style="opacity:1;fill:#d9f5d6;fill-opacity:1;fill-rule:nonzero;stroke:#77cc5a;stroke-width:1.4;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.76862745" />
+       style="opacity:1;fill:#d9f5d6;fill-opacity:1;fill-rule:nonzero;stroke:#77cc5a;stroke-width:1.39999998;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.76862745" />
     <rect
-       y="496.7847"
+       y="476.7847"
        x="122.10986"
        height="14.940117"
        width="91.420326"
        id="rect4309"
-       style="opacity:1;fill:#d9f5d6;fill-opacity:1;fill-rule:nonzero;stroke:#77cc5a;stroke-width:1.39999998;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.76862746" />
+       style="opacity:1;fill:#d9f5d6;fill-opacity:1;fill-rule:nonzero;stroke:#77cc5a;stroke-width:1.39999998;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.76862745" />
     <text
        sodipodi:linespacing="0%"
        id="text4216"
-       y="507.565"
+       y="487.565"
        x="41.66449"
        style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, Normal';text-indent:0;text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;writing-mode:lr-tb;baseline-shift:baseline;text-anchor:middle;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
        xml:space="preserve"><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"
          id="tspan4218"
-         y="507.565"
+         y="487.565"
          x="41.66449"
          sodipodi:role="line"><tspan
    style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#0000b6;fill-opacity:1"
-   id="tspan4220">void</tspan> <tspan
+   id="tspan4220">void </tspan><tspan
    style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:'monospace Italic'"
    id="tspan4307">merged</tspan>(<tspan
    style="fill:#0000b6;fill-opacity:1"
    id="tspan4299">bool</tspan> func_id,</tspan><tspan
          id="tspan4222"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"
-         y="521.6275"
+         y="501.6275"
          x="41.66449"
          sodipodi:role="line"><tspan
    id="tspan4224"
@@ -354,54 +354,54 @@
    id="tspan4226">int</tspan> target, quantum_reg *reg){</tspan><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"
          id="tspan4228"
-         y="535.69"
+         y="515.69"
          x="41.66449"
          sodipodi:role="line"><tspan
    style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#0000b6;fill-opacity:1"
    id="tspan4230">  int</tspan> i;</tspan><tspan
          id="tspan4232"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"
-         y="549.7525"
+         y="529.7525"
          x="41.66449"
          sodipodi:role="line">  COMPLEX_FLOAT z;</tspan><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"
-         y="563.815"
+         y="543.815"
          x="41.66449"
          sodipodi:role="line"
-         id="tspan4288">  <tspan
+         id="tspan4288"><tspan
    style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:monospace;-inkscape-font-specification:'monospace Bold';fill:#d00000;fill-opacity:1"
-   id="tspan4303">if</tspan>(func_id)</tspan><tspan
+   id="tspan4303">  if</tspan>(func_id)</tspan><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"
          id="tspan4234"
-         y="577.8775"
+         y="557.8775"
          x="41.66449"
          sodipodi:role="line"><tspan
    style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:'monospace Bold';fill:#d00000;fill-opacity:1"
    id="tspan4236">    if</tspan>(quantum_objcode_put(COND_PHASE, control, target))</tspan><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"
-         y="591.94"
+         y="571.94"
          x="41.66449"
          sodipodi:role="line"
          id="tspan4290"><tspan
    style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:'monospace Bold';fill:#d00000;fill-opacity:1"
    id="tspan4242">      return</tspan>;</tspan><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"
-         y="606.0025"
+         y="586.0025"
          x="41.66449"
          sodipodi:role="line"
-         id="tspan4297">  <tspan
+         id="tspan4297"><tspan
    style="fill:#0000b6;fill-opacity:1"
-   id="tspan4301">float</tspan> var = (func_id)?pi:(-pi);</tspan><tspan
+   id="tspan4301">  float</tspan> var = (func_id)?pi:(-pi);</tspan><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"
          id="tspan4246"
-         y="620.065"
+         y="600.065"
          x="41.66449"
          sodipodi:role="line">  z = quantum_cexp(var / (<tspan
    style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:monospace;fill:#ff55dd;fill-opacity:1"
    id="tspan4248">1</tspan> &lt;&lt; (control - target)));</tspan><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"
          id="tspan4250"
-         y="634.1275"
+         y="614.1275"
          x="41.66449"
          sodipodi:role="line"><tspan
    style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:'monospace Bold';fill:#d00000;fill-opacity:1"
@@ -410,7 +410,7 @@
    id="tspan4256">0</tspan>; i&lt;reg-&gt;size; i++) {</tspan><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"
          id="tspan4258"
-         y="648.19"
+         y="628.19"
          x="41.66449"
          sodipodi:role="line"><tspan
    style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:'monospace Bold';fill:#d00000;fill-opacity:1"
@@ -419,7 +419,7 @@
    id="tspan4264">1</tspan> &lt;&lt; control)) {</tspan><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"
          id="tspan4266"
-         y="662.2525"
+         y="642.2525"
          x="41.66449"
          sodipodi:role="line"><tspan
    style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:11.25px;font-family:monospace;-inkscape-font-specification:'monospace Bold';fill:#d00000;fill-opacity:1"
@@ -428,62 +428,63 @@
    id="tspan4272">1</tspan> &lt;&lt; target))</tspan><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"
          id="tspan4274"
-         y="676.315"
+         y="656.315"
          x="41.66449"
          sodipodi:role="line">        reg-&gt;node[i].amplitude *= z;</tspan><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"
          id="tspan4276"
-         y="690.3775"
+         y="670.3775"
          x="41.66449"
          sodipodi:role="line">    }</tspan><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"
          id="tspan4278"
-         y="704.44"
+         y="684.44"
          x="41.66449"
          sodipodi:role="line">  }</tspan><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"
          id="tspan4280"
-         y="718.5025"
+         y="698.5025"
          x="41.66449"
          sodipodi:role="line">  quantum_decohere(reg);</tspan><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"
          id="tspan4282"
-         y="732.565"
+         y="712.565"
          x="41.66449"
          sodipodi:role="line">}</tspan><tspan
          id="tspan4284"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"
-         y="746.6275"
+         y="726.6275"
          x="41.66449"
          sodipodi:role="line" /><tspan
          id="tspan4286"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.25px;line-height:1.25;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start"
-         y="760.69"
+         y="740.69"
          x="41.66449"
          sodipodi:role="line" /></text>
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.98939288;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:5.93635717, 5.93635717;stroke-dashoffset:0;stroke-opacity:1"
-       d="m 44.694948,481.14623 374.882992,0"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 42.232701,467.14623 379.666669,0"
        id="path4228"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
     <rect
        style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.39999998;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect4230"
-       width="107.14179"
-       height="20.708128"
-       x="178.56555"
-       y="470.79218" />
+       width="105.35609"
+       height="11.779556"
+       x="179.38799"
+       y="461.25644" />
     <text
        xml:space="preserve"
        style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:125%;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, Normal';text-indent:0;text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;baseline-shift:baseline;text-anchor:middle;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
-       x="232.03085"
-       y="484.50122"
+       x="231.96043"
+       y="470.50122"
        id="text4221"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4223"
-         x="232.03085"
-         y="484.50122"
+         x="231.96043"
+         y="470.50122"
          style="font-size:13.75px">Merged Function</tspan></text>
   </g>
 </svg>
