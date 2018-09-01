@@ -3,13 +3,6 @@
 some of the content of this section to the related work section.}
 
 
-Google developed an optimization for the \textit{gold} linker that merges
-identical functions on a bit-level~\cite{tallam10,kwan12}.
-After placing each function in a separate ELF section, they identify function
-sections that have their \textit{text} section bit-identical and also their
-relocations point to sections that are identical.
-%A simpler version of this optimization was also offered by the MSVC linker~\cite{msvc-icf};
-
 A similar optimization for merging identical functions, but implemented at the
 intermediate representation (IR) level, is also offered by both GCC and
 LLVM~\cite{llvm-fm,livska14}.

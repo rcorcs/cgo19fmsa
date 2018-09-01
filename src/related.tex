@@ -14,6 +14,17 @@ and those that remove or combine redundant code~\cite{cocke70,knoop94,ernst97,
                                               cooper99,debray00,chen03,loki04}.
 One important optimization from this second category is function
 merging~\cite{tallam10,edler14}.
+
+Google developed an optimization for the \textit{gold} linker that merges
+identical functions on a bit-level~\cite{tallam10,kwan12}.
+After placing each function in a separate ELF section, they identify function
+sections that have their \textit{text} section bit-identical and also their
+relocations point to sections that are identical.
+%A simpler version of this optimization was also offered by the MSVC linker~\cite{msvc-icf};
+A similar optimization for merging identical functions, but implemented at the
+intermediate representation (IR) level, is also offered by both GCC and
+LLVM~\cite{llvm-fm,livska14}.
+
 In Section~\ref{sec:background}, we present a detailed description of the
 related work on function-merging.
 
