@@ -1,13 +1,15 @@
 \section{Our Approach} \label{sec:fm}
 
-In this section, we describe the proposed function-merging technique. Contrary to all existing techniques, our technique is able to merge two arbitrary functions. If the two functions are equivalent, i.e., identical, then they can be completely merged into a single function.
-However, if the two functions differ at any point, an extra parameter is required, so that the caller is able to distinguish between the
-functions. The two functions can differ in any possible way, including their list of parameters or return types. If the lists of parameters
-are different, we can merge them so that we are able to uniquely represent all parameters from both functions. If the return types are
+In this section, we describe our proposed function-merging technique, and how it is able to solve the motivating examples as one would expect. Contrary to all existing techniques, ours is able to merge any two arbitrary functions. If the two functions are equivalent, i.e., identical, then they can be completely merged into a single function.
+However, if the two functions differ at any point, an extra parameter is required, so that the caller is able to distinguish between the functions.
+%The two functions can differ in any possible way, including their list of parameters or return types.
+If the lists of parameters are different, we can merge them so that we are able to uniquely represent all parameters from both functions. If the return types are
 different, we can use an aggregate type to return values of both types or return just the non-void type if the other one is void.
-\fixme{ZW: Should refer to the motivation example here.}
+%\fixme{ZW: Should refer to the motivation example here.}
 %However, in our current implementation, the only restriction is that both
 %functions must have equivalent return types or one of them must be \textit{void}.
+
+Intuitively, when we are manually merging two functions, in a textual format, we try to visualize them side by side, identifying the equivalent segments of code and the non-equivalent ones. Then, we use this understanding to create the merged function.
 
 \begin{figure}[t!]
   \centering
