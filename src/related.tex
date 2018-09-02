@@ -12,21 +12,19 @@ those that replace a piece of code by a smaller but semantically equivalent code
 changing the instructions and operations performed~\cite{massalin87,tanenbaum82};
 and those that remove or combine redundant code~\cite{cocke70,knoop94,ernst97,
                                               cooper99,debray00,chen03,loki04}.
-One important optimization from this second category is function
-merging~\cite{tallam10,edler14}.
+One optimization from this second category is function
+merging.
 
 Google developed an optimization for the \textit{gold} linker that merges
 identical functions on a bit-level~\cite{tallam10,kwan12}.
 After placing each function in a separate ELF section, they identify function
 sections that have their \textit{text} section bit-identical and also their
-relocations point to sections that are identical.
+relocations point to identical sections.
 %A simpler version of this optimization was also offered by the MSVC linker~\cite{msvc-icf};
-A similar optimization for merging identical functions, but implemented at the
-intermediate representation (IR) level, is also offered by both GCC and
-LLVM~\cite{llvm-fm,livska14}.
-
+A similar optimization for merging identical functions %, but implemented at the IR level,
+is also offered by both GCC and LLVM~\cite{llvm-fm,livska14}.
 In Section~\ref{sec:background}, we present a detailed description of the
-related work on function-merging.
+related work on function-merging, including the state-of-the-art~\cite{edler14}.
 
 
 %\subsection{Code Factoring}
@@ -37,12 +35,13 @@ Code factoring is a different technique for solving the same fundamental problem
 of duplicated code.
 %While the former works by merging similar functions, the latter works by
 %factoring out duplicated code~\cite{loki04}.
-Instead of merging similar functions, code factoring works by factoring out
-duplicated code into separate functions~\cite{loki04}.
+%Instead of merging similar functions, code factoring works by factoring out
+%duplicated code into separate functions~\cite{loki04}.
+Code factoring can be applied at different levels of the program~\cite{loki04}.
 Local factoring, also known as local code motion, moves identical instructions
 from multiple basic blocks to either their common predecessor or successor,
 whenever valid~\cite{knoop94,briggs94,loki04}.
-Procedural abstraction, also known as function outlining, finds identical code
+Procedural abstraction (or outlining) finds identical code
 that can be extracted into a separate function, replacing all replicated
 occurrences with a function call~\cite{loki04,dreweke07}.
 

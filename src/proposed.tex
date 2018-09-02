@@ -153,7 +153,7 @@ characters at any given position, in which case it contains a mismatch.
   \centering
   \includegraphics[width=0.75\linewidth]{figs/opcode-align.pdf}
   %\caption{An example of a sequence alignment between two real functions extracted from the \text{400.perlbench} benchmark.}
-  \caption{The sequence alignment between two functions.}
+  \caption{The sequence alignment between two functions, identifying the equivalent segments of code (green in the center) and the non-equivalent ones (red at the sides).}
   \label{fig:opcode-align}
 \end{figure}
 
@@ -185,7 +185,7 @@ for multi-sequences.
 There is a vast literature on algorithms for performing sequence alignment,
 especially in the context of molecular biology.
 These algorithms range from optimal algorithms based on dynamic programming to
-probabilistic models that does not guarantee
+probabilistic models that do not guarantee
 optimality~\cite{needleman70,smith81,carrillo88,hickey11}.
 In this paper, we use the Needleman-Wunsh algorithm~\cite{needleman70}.
 This algorithm is based on dynamic programming and consists of two main steps.
@@ -209,7 +209,9 @@ matches and equally penalizes mismatches and gaps.
 
 \subsection{Equivalence Relation}
 
-We describe the equivalence relation between values in two
+In order to merge functions we first need to define what makes two pieces of
+code equivalent and therefore mergeable.
+In this section, we describe how we define the equivalence relation between values in two
 separate cases, namely, the equivalence between instructions and the
 equivalence between labels.
 
@@ -222,8 +224,8 @@ We describe exception handling code in more detail in the next section.
 Two instructions are equivalent if: $(1)$ their opcodes are semantically
 equivalent, but not necessarily the same; $(2)$ they both have equivalent types;
 and $(3)$ they have pairwise operands with equivalent types.
-Types are considered equivalent if they can be bitcasted in a losslessly way
-from on to the other.
+Types are considered equivalent if they can be bitcasted in a lossless way
+from one to the other.
 It is also important to make sure that there is no conflict regarding memory
 alignment when handling pointers.
 No additional restriction is imposed on the operands of the two instructions
@@ -489,13 +491,15 @@ select or extra branch instruction will be added.
 As a result, we can remove the extra parameter that represents the function
 identifier.
 
-\section{A Framework for the Function Merging Optimization}
+\section{The Exploration Framework}
 \label{sec:framework}
 
-In this section, we describe our implementation of the function merging
-optimization, which combines the proposed function-merging technique with an
-efficient exploration infrastructure.
+%In this section, we describe our implementation of the function merging
+%optimization, which combines the proposed function-merging technique with an
+%efficient exploration infrastructure.
 
+In this section, we describe our exploration infrastructure for the 
+function merging optimization.
 Although the proposed technique is able to merge any two functions, it is not
 always profitable to merge them.
 In fact, as it is only profitable to merge functions that are sufficiently
@@ -526,7 +530,7 @@ optimization.
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.65\linewidth]{figs/func-merge-opt-arch.pdf}
-  \caption{Overview of the exploration framework.}
+  \caption{Overview of our exploration framework.}
   \label{fig:func-merge-opt-arch}
 \end{figure}
 
@@ -585,7 +589,8 @@ the merge operation is finally commited.
   \centering
   \includegraphics[width=0.8\linewidth]{figs/average-cdf-exploration-threshold.pdf}
   \caption{Average CDF for the exploration threshold and the percentage of merged operations covered.
-           A merge operation happens with the topmost candidate in about 89\% of the cases.}
+           89\% of the merge operations happen with the topmost candidate.}
+           %A merge operation happens with the topmost candidate in about 89\% of the cases.}
   \label{fig:average-cdf-exploration-threshold}
 \end{figure}
 

@@ -3,8 +3,10 @@
   \centering
   %\subfigure[Intel platform.]{\includegraphics[width=\linewidth]{figs/reduction-obj-intel-label.pdf}}
   %\subfigure[ARM platform.]{\includegraphics[width=\linewidth]{figs/reduction-obj-arm-label.pdf}}
-  \includegraphics[width=\linewidth]{figs/reduction-obj-intel-label.pdf}
+  \includegraphics[width=\linewidth]{figs/reduction-obj-intel-label.pdf} \\
+  \vspace{-1.8ex}  
   \includegraphics[width=\linewidth]{figs/reduction-obj-arm-label.pdf}
+  \vspace{-4ex}
   \caption{Reduction on the object file for both the Intel (top) and ARM (bottom) platforms.}
   \label{fig:reduction-obj}
 \end{figure*}
@@ -52,9 +54,20 @@ the results for a range of those values.
 In addition, we also show the results for the oracle exploration strategy,
 which instead of using a rank-based greedy approach, actually executes the merge operation with all candidates and then chooses the
 best one.
-The oracle represents the results assuming a perfect ranking strategy.
-However, the oracle has a very costly quadratic exploration, as explained in
+%The oracle represents the results assuming a perfect ranking strategy.
+%However, the oracle has a very costly quadratic exploration, as explained in
+%Section~\ref{sec:framework}.
+The oracle represents the results assuming a perfect ranking strategy, which
+requires a very costly quadratic exploration, as explained in
 Section~\ref{sec:framework}.
+
+\begin{figure*}[b]
+  \centering
+  \includegraphics[width=\linewidth]{figs/compilation-time.pdf}
+  \vspace{-4ex}
+  \caption{Compilation-time overhead on the Intel platform. The oracle has an average overhead of 25$\times$.}
+  \label{fig:compilation-time}
+\end{figure*}
 
 \subsection{Code-Size Reduction}
 
@@ -203,12 +216,15 @@ account that the other techniques have no real impact on these benchmarks.
 
 \subsection{Compilation Time}
 
-\begin{figure*}[th]
+\begin{figure}[th]
   \centering
-  \includegraphics[width=\linewidth]{figs/compilation-time.pdf}
-  \caption{Compilation-time overhead on the Intel platform.}
-  \label{fig:compilation-time}
-\end{figure*}
+  %\hspace{-2ex}
+  \includegraphics[width=1.0\linewidth]{figs/compilation-time-breakdown-sqrd.pdf}
+  \vspace{-8.5ex}
+  \caption{A compilation-time breakdown isolating the percentage for each major
+           step of the optimization, with an exploration threshold of one.}
+  \label{fig:compilation-time-breakdown}
+\end{figure}
 
 Figure~\ref{fig:compilation-time} shows the compilation-time overhead for all
 optimizations.
@@ -258,15 +274,6 @@ compilation-time overhead.
 This analysis suggests that optimizing the sequence alignment algorithm and
 the ranking mechanism is key to reduce, even further, the overall
 compilation-time overhead.
-
-\begin{figure}[th]
-  %\centering
-  \hspace{-2ex}
-  \includegraphics[width=1.05\linewidth]{figs/compilation-time-breakdown-sqrd.pdf}
-  \caption{A compilation-time breakdown isolating the percentage for each major
-           step of the optimization, with an exploration threshold of one.}
-  \label{fig:compilation-time-breakdown}
-\end{figure}
 
 
 \subsection{Performance Impact}
