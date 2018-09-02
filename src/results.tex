@@ -45,13 +45,12 @@ The baseline uses exactly the same compilation pipeline, except for not having
 any function-merging optimization.
 
 During our evaluation, we refer to LLVM's identical function merging as
-\textit{Identical}, the state-of-the-art as \textit{SoA}, and the proposed
+\textit{Identical}, the state-of-the-art as \textit{SoA}, and our proposed
 function merging as \textit{FMSA}.
 For the proposed optimization, we vary the exploration threshold and we present
-the results for multiple of those values.
+the results for a range of those values.
 In addition, we also show the results for the oracle exploration strategy,
-which instead of using a rank-based greedy approach, the oracle actually
-executes the merge operation with all candidates and then chooses the
+which instead of using a rank-based greedy approach, actually executes the merge operation with all candidates and then chooses the
 best one.
 The oracle represents the results assuming a perfect ranking strategy.
 However, the oracle has a very costly quadratic exploration, as explained in
@@ -141,8 +140,12 @@ function-merging optimizations, usually by a significant margin.
          for both platforms (\textit{Intel / ARM}). }
 \end{table}
 
-These results show that, although it has little compilation-time overhead,
-merging identical functions, in most cases, has a rather small impact on
+
+%These results show that, although it has
+%little compilation-time overhead,
+%merging identical functions, in most cases, has a rather small impact on
+These results show that, although the LLVM's identical function merging has 
+little compilation-time overhead, in most cases, has a rather small impact on
 code-size reduction, with an average reduction of less than 1\%.
 The only few cases where it has a noticeable impact are on some of the C++
 benchmarks, namely, 447.dealII, 450.soplex, and 471.omnetpp, which is mostly
@@ -274,14 +277,14 @@ Nevertheless, it is also important to understand its impact on the programs'
 execution time and the trade-offs between performance and code-size reduction.
 Overall, our optimization has an impact of about 3\% on code performance.
 For most of the programs, in the benchmark suite, there are no
-statistical difference between the version optimized with the proposed function
+statistical differences between the version optimized with the proposed function
 merging or the baseline.
 There are only three cases with a noticeable performance impact, namely,
 433.milc, 462.libquantum, and 464.h264ref.
 In particular, the 462.libquantum benchmark shows a performance degradation of
 about \todo{20\%}.
 
-As a case of study, we analyze the performance impact on the \text{462.libquantum}
+As a case study, we analyze the performance impact on the \text{462.libquantum}
 benchmark.
 After a detailed inspection of the program's execution with profiling
 information, we identified only two functions that contain the hottest basic

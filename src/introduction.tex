@@ -1,41 +1,37 @@
 \section{Introduction}
 \label{sec:introduction}
 
+In recent years, resource-constrained devices are becoming increasingly important.
+At the same time, some programs for these devices can have binaries of several megabytes in size, with ever-increasing complexity.
+For these programs, memory size can be a showstopper~\cite{plaza18}.
+In these constrained scenarios, code-size optimizations are essential~\cite{schultz03,varma04,sehgal12,kwan12,keoh14,auler17}.
 
-In recent years, resource constrained devices are becoming increasingly important.
-The rise of the Internet of Things (IoT), with many cutting-edge technologies,
-depends heavily on tiny and efficient devices.
-Some of these devices can have as little as only a few kilobytes of
-memory~\cite{yelamarthi17,plaza18}.
-At the same time, low-end devices have been playing an important role in driving
-innovation in developing countries~\cite{hart02,etzo10}.
-As a result, there is an increasing focus on the development of programs
-tailored for these low-end devices with limited memory sizes~\cite{androidGo,hahm16}.
-Memories typically occupy the largest fraction of the chip area in embedded
-systems, contributing in most of the overall cost.
+In many embedded systems, memories typically occupy the largest fraction of the chip area, contributing in most of the overall cost.
 As a consequence, any reduction in code size translates directly to equivalent
 savings of die area, where even modest savings can lead to a substantial overall
 cost reduction, in large scales~\cite{edler10}.
-
-Some programs for embedded systems can have binaries of several mega bytes in
-size, with ever-increasing complexity.
-For these programs, memory size can be a showstopper.
-%For programs with always increasing complexity, memory size can be a showstopper.
 %In particular, considering that some of these programs for embedded systems can
 %have binaries of several mega bytes in size.
 Therefore, savings in code size can enable more features to be included without
 exceeding size restrictions, as increasing the memory size is not always a
 viable solution, given its potential impact on power consumption and overall
 costs.
-In these constrained scenarios, code-size optimizations are essential~\cite{schultz03,varma04,sehgal12,kwan12,keoh14,auler17}.
+However, with a lack of more powerful code-size optimizations, these valuable
+resources are wasted with unnecessarily large binaries.
 
-With a lack of more powerful code-size optimizations, valuable resources are
-wasted with unnecessarily large binaries.
-Weaver~and~McKee~\cite{weaver09} demonstrated that, by hand-optimizing the
-assembly of a small Linux program, its size could be reduced by at least a factor
-of three when compared to the best compilation settings.
-However, hand-optimizing the assembly of every program is impractical and better
-code-size optimizations are needed.
+%Furthermore, the rise of the Internet of Things (IoT) depends heavily on tiny and efficient devices.
+%Some of these devices can have as little as only a few kilobytes of
+%memory~\cite{yelamarthi17,plaza18}.
+%At the same time, low-end devices have been playing an important role in driving
+%innovation in developing countries~\cite{hart02,etzo10}.
+%As a result, there is an increasing focus on the development of programs
+%tailored for these low-end devices with limited memory sizes~\cite{androidGo,hahm16}.
+
+%Weaver~and~McKee~\cite{weaver09} demonstrated that, by hand-optimizing the
+%assembly of a small Linux program, its size could be reduced by at least a factor
+%of three when compared to the best compilation settings.
+%However, hand-optimizing the assembly of every program is impractical and better
+%code-size optimizations are needed.
 
 One important code-size optimization that reduces redundant code is function
 merging~\cite{tallam10,edler14}.
@@ -47,9 +43,14 @@ In order to maximize merging opportunities, this optimization is ideally
 executed on the whole program during link-time optimization.
 Even in its most simplistic form, i.e., by merging only identical functions,
 function merging optimization is crucial for making high-level abstractions
-feasible, such as some C++ ABIs and templates.
-Otherwise, these abstractions could cause sufficient explosion in code size that
-they would be unusable for production software~\cite{tallam10,kwan12}.
+feasible.
+Without such optimization, these abstractions could cause sufficient explosion
+in code size that they would be unusable for production
+software~\cite{tallam10,kwan12}.
+For example, some C++ ABIs may end up creating multiple identical constructors
+and destructors of a class to use in different contexts~\cite{kwan12}.
+Besides, it is well known that C++ templates replicate the code for different
+specializations, in most cases, resulting in a large amount of similar code~\cite{tallam10livska14}.
 
 Most industrial-strength compilers, such as GCC~\cite{gcc}, LLVM~\cite{llvm},
 and MSVC~\cite{msvc-icf}, implement variants of this optimization that are

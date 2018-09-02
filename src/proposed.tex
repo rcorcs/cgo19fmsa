@@ -1,7 +1,9 @@
 \section{Our Approach} \label{sec:fm}
 
-In this section, we describe our proposed function-merging technique, and how it is able to solve the motivating examples as one would expect. Contrary to all existing techniques, ours is able to merge any two arbitrary functions. If the two functions are equivalent, i.e., identical, then they can be completely merged into a single function.
-However, if the two functions differ at any point, an extra parameter is required, so that the caller is able to distinguish between the functions.
+In this section, we describe our proposed function-merging technique, and how it is able to solve the motivating examples as one would expect. Contrary to all existing techniques, ours is able to merge any two arbitrary functions.
+For this reason, we also propose a profitability cost model to decide when it is beneficial to merge two functions (see Section~\ref{sec:profit-model}).
+If the two functions are equivalent, i.e., identical, then they can be completely merged into a single function.
+However, if the two functions differ at any point, an extra parameter is required so that the caller is able to select the correct function.
 %The two functions can differ in any possible way, including their list of parameters or return types.
 If the lists of parameters are different, we can merge them so that we are able to uniquely represent all parameters from both functions. If the return types are
 different, we can use an aggregate type to return values of both types or return just the non-void type if the other one is void.
@@ -10,6 +12,8 @@ different, we can use an aggregate type to return values of both types or return
 %functions must have equivalent return types or one of them must be \textit{void}.
 
 Intuitively, when we are manually merging two functions, in a textual format, we try to visualize them side by side, identifying the equivalent segments of code and the non-equivalent ones. Then, we use this understanding to create the merged function.
+In this paper, we propose a technique that follows this intuitive principle.
+In the core of our technique lies a sequence alignment algorithm, which is responsible for arranging the code in segments that are either equivalent or non-equivalent.
 
 \begin{figure}[t!]
   \centering
@@ -40,11 +44,21 @@ alignment.}
 
 \subsection{Linearization}
 
+\begin{figure}[b]
+  \centering
+  \includegraphics[width=0.7\linewidth]{figs/linearization-example.pdf}
+  \caption{An example of the linearization of a CFG.}
+  \label{fig:linearization-example}
+\end{figure}
+
 The \textit{linearization}\footnote{Although linearization of CFGs
 usually refers to a predicated representation, % resulting from an if-conversion,
-in this paper, we refer to a simpler definition.} of a function consits in specifying an ordering of the basic blocks based on a traversal
-of the CFG and then producing a sequence of basic block labels and instructions, similar to a textual representation of the function. The
-exact ordering chosen will not compromise the correctness of the results but it can have an impact on the quality of the merge operation.
+in this paper, we refer to a simpler definition.} is a key step for enabling the
+use of sequence alignment.
+It consits in specifying an ordering of the basic blocks based on a traversal
+of the CFG and then producing a sequence of labels and instructions, similar to a textual representation of the function.
+All instructions from a given basic block must appear right after the label of that basic block, besides maintaining the same order among them.
+However, the exact ordering chosen for the basic blocks will not compromise the correctness of the results but it can have an impact on the quality of the merge operation.
 Figure~\ref{fig:linearization-example} shows a simplified example of the linearization of the CFG of a function extracted from the \text{400.perlbench} benchmark in SPEC CPU2006.
 
 %Although this operation is trivial, the specific ordering of the basic blocks
@@ -55,23 +69,15 @@ Figure~\ref{fig:linearization-example} shows a simplified example of the lineari
 %if there are successors.
 %This is true for most IRs, such as the LLVM IR, or can be easily adapted.
 
-\begin{figure}[b]
-  \centering
-  \includegraphics[width=0.7\linewidth]{figs/linearization-example.pdf}
-  \caption{An example of the linearization of a CFG.}
-  \label{fig:linearization-example}
-\end{figure}
-
-
 In our implementation, the linearization uses a reverse post-order~(RPO) of the
 basic blocks, following a canonical ordering of the successors.
 %, e.g., \textit{true} branches before \textit{false} ones.
 %Figure~\ref{fig:branch-linearization} shows an example of the linearization
 %using the canonical RPO.
-The RPO guarantees that the linearization starts with the entry basic block and then proceeds favoring definitions before uses, except in
-the presence of loops. Although the specifc ordering produced by the canonical linearization may not be optimal, it is common practice for
-compilers to rely on prior canonicalizations, e.g., canonical loops, canonical induction variables, canonical reassociation,
-etc.~\cite{briggs94,liu96}. By contrast, if, instead, we use an RPO linearization with a uniformly randomized ordering of the successor basic
+%The RPO guarantees that the linearization starts with the entry basic block and then proceeds favoring definitions before uses, except in the presence of loops.
+Although the specifc ordering produced by the canonical linearization may not be optimal,
+in general it shows good results, as it is also common practice for compilers to rely on prior canonicalizations, e.g., canonical loops, canonical induction variables, canonical reassociation, etc.~\cite{briggs94,liu96}.
+By contrast, if, instead, we use an RPO linearization with a uniformly randomized ordering of the successor basic
 blocks, the final code-size reduction of the function-merging optimization can deteriorate by 10\% for individual benchmarks.
 %Note that our decision for using the canonical RPO is purely pragmatic and other orderings of the basic blocks could also be used, as long as it produces a sequence of labels followed by instructions.
 
@@ -86,12 +92,12 @@ blocks, the final code-size reduction of the function-merging optimization can d
 
 \subsection{Sequence Alignment}
 
-When merging two functions, the goal is to identify which pairs of instructions
-and labels that can be merged and which ones need to be selected based on the
-actual function being executed.
+When merging two functions, the goal is to identify which segments of code
+are equivalent, and therefore can be merged, and which ones are different.
+%and labels that can be merged and which ones need to be selected based on the
+%actual function being executed.
 To avoid breaking the semantics of the original program, we also need to
-maintain the same order of execution of the instructions for each one of
-the functions.
+maintain the ordering of the instructions for each one of the functions.
 
 To this end, after linearization, we reduce the problem of merging functions
 to the problem of \textit{sequence alignment}. %~\cite{carrillo88,wang94}.
@@ -155,6 +161,8 @@ Specifically for function-merging, we are concerned with the alphabet
 consisting of all possible typed instructions and labels.
 Every linearized function represents a sequence derived from this alphabet.
 We explain the equivalence relation used for this alphabet in the next section.
+Although we only consider pair-wise alignments, the technique would also work
+for multi-sequences.
 
 %We describe the equivalence relation between two predicated values in two
 %separate cases, namely, the equivalence between instructions and the
@@ -209,6 +217,7 @@ Labels can represent both normal basic blocks and landing blocks, which are used
 in exception handling code.
 Labels of normal basic blocks are always considered equivalent but
 landing blocks must have identical landing-pad instructions.
+We describe exception handling code in more detail in the next section.
 
 Two instructions are equivalent if: $(1)$ their opcodes are semantically
 equivalent, but not necessarily the same; $(2)$ they both have equivalent types;
@@ -224,8 +233,8 @@ a select instruction is used to ensure that the correct value will be used in
 the computation.
 %distinguish between the execution of two functions being merged.
 For function calls, the type equivalence requires that both instructions have
-identical function types, i.e., both called functions must have an identical
-return type and an identical list of parameter types.
+identical function types, i.e., both called functions must have identical
+return types and identical list of parameters.
 
 \subsubsection{Handling Exception Handling Code}
 
@@ -605,7 +614,7 @@ Finally, the new function is added to the optimization working list.
 Because of this feedback loop, merge operations can also be performed on
 functions that resulted from previous merge operations.
 
-\subsection{Profitability Cost Model}
+\subsection{Profitability Cost Model}\label{sec:profit-model}
 
 After generating the code of the merged function, we need to estimate the
 code-size benefit of replacing the original pair of functions by the new merged
