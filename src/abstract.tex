@@ -1,24 +1,39 @@
 \begin{abstract}
-%Resource-constrained devices are becoming increasingly important.
-%However, valuable resources are still wasted as a result of unnecessarily large 
-%binaries caused by the weakness of current code-size optimizations.
-In recent years, resource-constrained devices are becoming increasingly important.
-At the same time, some programs for these devices can have binaries of several megabytes in size, with ever-increasing complexity.
-Savings in code size enables more features to be included.
-However, valuable resources are still wasted as a result of unnecessarily large 
-binaries caused by the weakness of current code-size optimizations.
-Most industrial-strength compilers offer an important code-size optimization
-that reduces redundant code by merging similar functions.
-In this paper, we propose a novel technique for merging functions
-that addresses major limitations of the state-of-the-art
-with a fundamentally different approach. We embed this technique in
-a ranking-based exploration mechanism so that we can focus
-the optimization on promising pairs of functions.
-Our approach is more than $3\times$ better than the state-of-the-art,
-reducing code size of programs by up to 22\%, with an overall average of 5.6\%,
-while introducing an average compilation-time overhead of only 20\%.
-Moreover, aided by profiling information, this optimization can be deployed
-without any significant impact on the performance of the generated code.
+Resource-constrained devices, such as IoT, are becoming increasingly important.
+Not only performance, but also code size is a bottleneck in such systems.
+Compared to more traditional platforms, memory is a larger part of the cost and
+code occupies much of it. Despite that, compilers make little effort to reduce
+code size. Production compilers save only space by merging identical functions,
+while research compilers improve on that by merging the few functions with
+identical control flow graphs. This leaves us with two equally bad choices for
+resolving the bottleneck: either increase cost by adding more memory or reduce
+code size by removing functionality. This paper shows a better way. We
+introduce a novel technique that can merge arbitrary functions through sequence
+alignment, a bioinformatics algorithm for identifying regions of similarity
+between sequences. We combine this technique with an intelligent exploration
+mechanism to direct the search towards the most promising function pairs. Our
+approach is more than $3\times$ better than the state-of-the-art, reducing code
+size by up to 22\%, with an overall average of 5.6\%, while introducing an
+average compilation-time overhead of only 20\%. When aided by profiling
+information, this optimization can be deployed without any significant impact
+on the performance of the generated code.
 
+%In recent years, resource-constrained devices are becoming increasingly important.
+%At the same time, some programs for these devices can have binaries of several megabytes in size, with ever-increasing complexity.
+%Savings in code size enables more features to be included.
+%However, valuable resources are still wasted as a result of unnecessarily large
+%binaries caused by the weakness of current code-size optimizations.
+%Most industrial-strength compilers offer an important code-size optimization
+%that reduces redundant code by merging similar functions.
+%In this paper, we propose a novel technique for merging functions
+%that addresses major limitations of the state-of-the-art
+%with a fundamentally different approach. We embed this technique in
+%a ranking-based exploration mechanism so that we can focus
+%the optimization on promising pairs of functions.
+%Our approach is more than $3\times$ better than the state-of-the-art,
+%reducing code size of programs by up to 22\%, with an overall average of 5.6\%,
+%while introducing an average compilation-time overhead of only 20\%.
+%Moreover, aided by profiling information, this optimization can be deployed
+%without any significant impact on the performance of the generated code.
 \end{abstract}
 
