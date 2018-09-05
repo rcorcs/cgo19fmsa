@@ -1,24 +1,20 @@
 \section{Introduction}
 \label{sec:introduction}
 
-In recent years, resource-constrained devices are becoming increasingly important.
-Some of the programs for these devices can have binaries of several megabytes in size,
-with ever-increasing complexity.
-For these programs, memory size can be a showstopper~\cite{plaza18}.
-In these constrained scenarios, code-size optimizations are essential~\cite{schultz03,varma04,sehgal12,keoh14,auler17}.
+In recent years, resource-constrained devices are becoming increasingly
+important. Application binaries for these devices often reach several megabytes
+in size, turning memory size into a bottleneck~\cite{plaza18}. Just adding more
+memory is not always a viable option. Highly integrated System-on-Chips are
+common in this market and their memories typically occupy the largest fraction
+of the chip area, contributing most of the overall cost. Even small
+increases in memory area translate directly to equivalent increases in cost,
+which lead to enormous levels of lost profit in large scales~\cite{edler10}.
 
-In many embedded systems, memories typically occupy the largest fraction of the chip area, contributing in most of the overall cost.
-As a consequence, any reduction in code size translates directly to equivalent
-savings of die area, where even modest savings can lead to a substantial overall
-cost reduction, in large scales~\cite{edler10}.
-%In particular, considering that some of these programs for embedded systems can
-%have binaries of several mega bytes in size.
-Therefore, savings in code size can enable more features to be included without
-exceeding size restrictions, as increasing the memory size is not always a
-viable solution, given its potential impact on power consumption and overall
-costs.
-However, with a lack of more powerful code-size optimizations, these valuable
-resources are wasted with unnecessarily large binaries.
+In such constrained scenarios, reducing the code size is essential~\cite{schultz03,varma04,sehgal12,keoh14,auler17}.
+Unfortunately, production compilers offer little help beyond dead code
+elimination or merging identical functions~\cite{tallam10,kwan12,livska14}.
+Developers might have more luck just removing functionality from their
+libraries~\cite{keoh14} or hand-optimizing their code~\cite{weaver09}.
 
 %Furthermore, the rise of the Internet of Things (IoT) depends heavily on tiny and efficient devices.
 %Some of these devices can have as little as only a few kilobytes of
@@ -28,42 +24,51 @@ resources are wasted with unnecessarily large binaries.
 %As a result, there is an increasing focus on the development of programs
 %tailored for these low-end devices with limited memory sizes~\cite{androidGo,hahm16}.
 
-%Weaver~and~McKee~\cite{weaver09} demonstrated that, by hand-optimizing the
-%assembly of a small Linux program, its size could be reduced by at least a factor
-%of three when compared to the best compilation settings.
-%However, hand-optimizing the assembly of every program is impractical and better
-%code-size optimizations are needed.
-
-One important code-size optimization that reduces redundant code is function
-merging~\cite{tallam10,edler14}.
-Function merging is an interprocedural optimization that combines multiple
-similar functions into a single function, reducing replicated code.
-The merged function must retain the semantics from each one of the functions
-orignally involved in the merge operation.
-In order to maximize merging opportunities, this optimization is ideally
-executed on the whole program during link-time optimization.
-Even in its most simplistic form, i.e., by merging only identical functions,
-function merging optimization is crucial for making high-level abstractions
-feasible.
-Without such optimization, these abstractions could cause sufficient explosion
-in code size that they would be unusable for production
-software~\cite{tallam10,kwan12}.
+Function merging reduces replicated code by combining multiple identical
+functions into a single one. 
+While sounding too simple to work, it is crucial for making high-level
+abstractions usable, even when they introduce duplicate code~\cite{tallam10,kwan12}.
 For example, some C++ ABIs may end up creating multiple identical constructors
-and destructors of a class to use in different contexts~\cite{kwan12}.
-Besides, it is well known that C++ templates replicate the code for different
-specializations, in most cases, resulting in a large amount of similar code~\cite{tallam10,livska14}.
+and destructors of a class to use in different contexts~\cite{kwan12} and C++
+templates replicate code for different specializations~\cite{tallam10,livska14}.
+More advanced research approaches~\cite{edler14} have extended this idea into
+merging non-identical functions by leveraging structural similarity. Functions
+with identical control-flow graphs (CFGs) and only small differences within
+corresponding basic blocks are merged into a single function that maintains
+the semantics of the original functions. This is particularly important for
+handling specialized template functions with small differences in their
+compiled form.
 
-Most industrial-strength compilers, such as GCC~\cite{gcc}, LLVM~\cite{llvm},
-and MSVC~\cite{msvc-icf}, implement variants of this optimization.
-While they are only capable of merging identical functions~\cite{tallam10,kwan12,livska14},
-the state-of-the-art~\cite{edler14} is able to also merge non-identical functions
-by leveraging structural similarity.
-However, it is still limited to dealing with small differences within
-corresponding basic blocks in identical control-flow graphs (CFGs).
+While an improvement, even this state-of-the-art often fails to produce any
+noticeable code size reduction. In this paper, we introduce a novel way to merge
+functions that overcomes the major limitations of the state-of-the-art. Our
+insight was that the weak results of existing function merging implementations
+are not due to the lack of duplicate code but due to the rigid, ad-hoc 
+algorithms they use to find duplicates.
 
-In this paper, we propose a novel technique for merging functions
-that addresses many major limitations of the state-of-the-art, using a
-fundamentally different approach from the existing ones.
+Our approach is based upon the concept of sequence alignment, developed in
+bioinformatics for identifying functional or evolutionary relationships between
+different DNA or RNA sequences. Similarly, we use sequence alignment to find
+areas of functional similarity in arbitrary function pairs. Aligned segments
+with equivalent code are merged. The remaining segments where the two functions
+differ are added to the new function too but have their code guarded by a
+function identifier. This approach leads to significant code size reduction,
+more than three times better than the state-of-the-art can achieve.
+
+Applying sequence alignment to all pairs of functions is prohibitively expensive
+even for medium sized programs. To counter this, our technique is integrated with
+a ranking-based exploration mechanism that focuses the search to the most
+promising pairs of function. \todo{whats interesting about this ranking?}.
+As a result, we achieve our code size savings while introducing little compilation-time
+overhead.
+
+Compared to identical function merging, we introduce extra code to be executed,
+namely the code that chooses dissimilar sequences in merged functions. A naive
+implementation could easily hurt performance, e.g by merging two hot functions
+with only few similarities. Our implementation avoids this by incorporating
+profiling information to identify hot code blocks and effectively disable code
+size optimizations for them. \todo{the rest is WiP}.
+
 Our function-merging technique is able to merge any two functions, i.e., it
 provides the following improvements over the state-of-the-art:
 \begin{itemize}[noitemsep,topsep=0pt]
