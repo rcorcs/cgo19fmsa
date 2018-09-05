@@ -1,3 +1,4 @@
+
 \section{Motivation} \label{sec:motivation}
 
 %This section motivates for a more powerful function-merging technique with
@@ -12,6 +13,13 @@
 
 As a motivation, consider two SPEC CPU2006 benchmark examples shown in Figures~\ref{fig:sphinx-example} and \ref{fig:libquantum-example}.
 
+\begin{figure}[t!]
+  \centering
+  \includegraphics[width=.95\linewidth]{figs/sphinx-example.pdf}
+  \caption{Example of two functions with different parameters that could be merged, as shown at the bottom.
+           We highlight where they differ.}
+  \label{fig:sphinx-example}
+\end{figure}
 
 Figure~\ref{fig:sphinx-example} shows two functions from the \texttt{482.sphinx3}. Although these two functions seem identical, their
 function arguments are of different types, namely, \textit{float32} and \textit{float64}. In the diagram, we highlight the segments where
@@ -30,10 +38,10 @@ functions is called. Function merging reduces the total number of machine instru
 
 \begin{figure}[t!]
   \centering
-  \includegraphics[width=.95\linewidth]{figs/sphinx-example.pdf}
-  \caption{Example of two functions with different parameters that could be merged, as shown at the bottom.
+  \includegraphics[width=\linewidth]{figs/libquantum-example.pdf}
+  \caption{Example of two functions with different CFGs that could be merged, as shown at the bottom.
            We highlight where they differ.}
-  \label{fig:sphinx-example}
+  \label{fig:libquantum-example}
 \end{figure}
 
 
@@ -67,13 +75,6 @@ Function merging reduces the total number of machine instructions of the two fun
 %%the reviewer won't understand how our technique works.}
 %>>>>>>> e85b1a68ed569a46dd18b4379769346de63fc8f8
 
-\begin{figure}[t!]
-  \centering
-  \includegraphics[width=\linewidth]{figs/libquantum-example.pdf}
-  \caption{Example of two functions with different CFGs that could be merged, as shown at the bottom.
-           We highlight where they differ.}
-  \label{fig:libquantum-example}
-\end{figure}
 
 These examples show that the state-of-the-art function merging methods impose over-restricted constraints on the code structures, and thus
 miss massive opportunities. Our work aims to develop a better approach to lift the constraints to merge similar code of any two arbitrary
