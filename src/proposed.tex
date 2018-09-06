@@ -1,9 +1,10 @@
 \section{Our Approach} \label{sec:fm}
 
-In this section, we describe our proposed function-merging technique, and how it is able to solve the motivating examples as one would
-expect. Contrary to all existing techniques, ours is able to merge any two arbitrary functions. For this reason, we also propose a cost
-model to decide when it is beneficial to merge two functions (see Section~\ref{sec:profit-model}).
-
+In this section we describe our proposed function merging technique and show
+how it optimally merges the motivating examples. Our technique works on any two
+arbitrary functions, even when they have few similarities and merging them would
+be counter-productive. For that reason, we also introduce a cost model to decide
+when it is beneficial to merge two functions (see Section~\ref{sec:profit-model}).
 
 %% I don't think the compilation pipeline should be here.
 %% The optimization does not need to be performed during link-time.
