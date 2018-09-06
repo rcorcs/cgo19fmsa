@@ -485,43 +485,38 @@ select or extra branch instruction will be added.
 As a result, we can remove the extra parameter that represents the function
 identifier.
 
-\vspace{-1ex}
-\section{The Exploration Framework}
+%\vspace{-1ex}
+\section{Profitability Analysis}
 \label{sec:framework}
 
 %In this section, we describe our implementation of the function merging
 %optimization, which combines the proposed function-merging technique with an
 %efficient exploration infrastructure.
 
-In this section, we describe our exploration infrastructure for the
-function merging optimization.
-Although the proposed technique is able to merge any two functions, it is not
-always profitable to merge them.
-In fact, as it is only profitable to merge functions that are sufficiently
-similar, for most pairs of functions, merging them increases code size.
-Therefore, the main goal of the exploration infrastructure is to efficiently
-find pairs of functions that are profitable to merge.
+%In this section, we describe our exploration infrastructure for the
+%function merging optimization.
+Although the proposed technique is able to merge any two functions, it is not always profitable to merge them. In fact, as it is only
+profitable to merge functions that are sufficiently similar, for most pairs of functions, merging them increases the code size.
 
-As described in Section~\ref{sec:background}, LLVM's existing function merging
-optimization, due to its hard restriction of only merging identical functions,
-is able to  efficiently explore which functions to merge by computing a hash
-of the functions.
-If two functions have the same hash, they are very likely to be identical.
-Moreover, merging identical functions is always profitable.
-For the proposed function-merging technique, on the other hand, because it is
-able to merge any pair of functions, we have a much larger exploration space and
-also a more challenging decision problem.
+%Therefore,
+%the main goal of our exploration infrastructure is to efficiently find pairs of functions that are profitable to merge.
+%%
+%As described in Section~\ref{sec:background}, LLVM's existing function merging
+%optimization, due to its hard restriction of only merging identical functions,
+%is able to  efficiently explore which functions to merge by computing a hash
+%of the functions.
+%If two functions have the same hash, they are very likely to be identical.
+%Moreover, merging identical functions is always profitable.
+%For the proposed function-merging technique, on the other hand, because it is
+%able to merge any pair of functions, we have a much larger exploration space and
+%also a more challenging decision problem.
 
 %\subsection{Ranking Infrastructure}
 
-For every function, ideally, we would like to try to merge it with all other
-functions and choose the pair that maximizes the reduction in code size.
-However, this quadratic exploration over all pairs of functions results in
-compilation-time overheads that are usually unacceptable for real-world
-scenarios.
-In order to avoid the quadratic exploration of all possible merges, we propose
-the framework shown in Figure~\ref{fig:func-merge-opt-arch} for the our
-optimization.
+For every function, ideally, we would like to try to merge it with all other functions and choose the pair that maximizes the reduction in
+code size. However, this quadratic exploration over all pairs of functions results will result in prohibitively expensive compilation
+overhead. In order to avoid the quadratic exploration of all possible merges, we propose the exploration framework shown in
+Figure~\ref{fig:func-merge-opt-arch} for the our optimization.
 \begin{figure}[t!]
   \centering
   \includegraphics[width=0.65\linewidth]{figs/func-merge-opt-arch.pdf}
@@ -529,21 +524,13 @@ optimization.
   \label{fig:func-merge-opt-arch}
 \end{figure}
 
-The proposed framework is based on a light-weight ranking infrastructure that
-uses a \textit{fingerprint} of the functions to evaluate their similarity.
-It starts by first precomputing and caching the fingerprint of all functions.
-The goal of the fingerprint is to allow us to efficiently discard unpromising
-pairs of functions so that we perform the more expensive evaluation only on
-the topmost similar pairs.
-To this end, the fingerprint consists of: $(1)$ map of instruction opcodes to
-their frequency in the function; $(2)$ the set of types manipulated by the
-function.
-While functions can have several thousands of instructions, an IR usually has
-just a few tens of opcodes, e.g., the LLVM IR has only about 64 different
-opcodes.
-This means that the fingerprint needs to store just a small integer array of the
-opcode frequencies and a set of types, which allows for an efficient similarty
-comparison.
+The proposed framework is based on a light-weight ranking infrastructure that uses a \textit{fingerprint} of the functions to evaluate
+their similarity. It starts by first precomputing and caching the fingerprint of all functions. The goal of the fingerprint is to allow us
+to efficiently discard unpromising pairs of functions so that we perform the more expensive evaluation only on the topmost similar pairs.
+To this end, the fingerprint consists of: $(1)$ a map of instruction opcodes to their frequency in the function; $(2)$ the set of types
+manipulated by the function. While functions can have several thousands of instructions, an IR usually has just a few tens of opcodes,
+e.g., the LLVM IR has only about 64 different opcodes. This means that the fingerprint needs to store just a small integer array of the
+opcode frequencies and a set of types, which allows for an efficient similarty comparison.
 
 By comparing the opcode frequencies of two functions, we are able to estimate
 an upper bound of the merge between these functions, assuming that all
