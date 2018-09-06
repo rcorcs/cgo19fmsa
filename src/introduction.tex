@@ -67,32 +67,32 @@ namely the code that chooses dissimilar sequences in merged functions. A naive
 implementation could easily hurt performance, e.g by merging two hot functions
 with only few similarities. Our implementation avoids this by incorporating
 profiling information to identify hot code blocks and effectively disable code
-size optimizations for them. %\todo{the rest is WiP}.
+size optimizations for them. 
 
-Our function-merging technique is able to merge any two functions, i.e., it
-provides the following improvements over the state-of-the-art:
-\begin{itemize}[noitemsep,topsep=0pt]
-  \item It is capable of merging functions with different signature, i.e.,
-  different return type or list of parameters.
-  \item It is capable of merging CFGs with different structures.
-  \item While the state-of-the-art is able to only merge instructions within
-  corresponding basic blocks in structurally identical CFGs,
-  our technique can merge instructions spanning across multiple basic blocks.
+In this paper, we make the following contributions:
+\begin{itemize}[noitemsep,topsep=3pt]
+  \item We are the first to allow merging arbitrary functions, even ones with
+    different signatures and CFGs.
+  \item An novel ranking mechanism for focusing inter-procedural optimizations
+    to the most profitable function pairs.
+  \item We use Sequence Alignment Function Merging to reduce code size by up to
+    22\%, outperforming the state-of-the-art by three times, while introducing
+    minimal compile-time and negligible run-time overheads.
 \end{itemize}
-In order to focus the optimization on promising pairs of functions,
-our technique is integrated with a ranking-based exploration mechanism.
-As a result, our optimization is more than three times better than the
-state-of-the-art for reducing code size with little compilation-time overhead.
-Our optimization is able to reduce size of the compiled programs by up to
-22\% over the already highly optimized baseline, with an average code-size
-reduction of about 5.6\%.
-These optimization can be carried on with little or no significant impact on
-performance, especially when aided by profiling information.
+%In order to focus the optimization on promising pairs of functions,
+%our technique is integrated with a ranking-based exploration mechanism.
+%As a result, our optimization is more than three times better than the
+%state-of-the-art for reducing code size with little compilation-time overhead.
+%Our optimization is able to reduce size of the compiled programs by up to
+%22\% over the already highly optimized baseline, with an average code-size
+%reduction of about 5.6\%.
+%These optimization can be carried on with little or no significant impact on
+%performance, especially when aided by profiling information.
 %Moreover, aided by profiling information, these optimization can be carried on
 %without any significant impact on performance.
 %We also propose a ranking-based exploration mechanism so that we can focus
 %the optimization on promising pairs of functions.
-Our prototype introduces an average overhead of only 20\% in compilation time.
+%Our prototype introduces an average overhead of only 20\% in compilation time.
 
 
 
