@@ -8,11 +8,12 @@ code occupies much of it. Despite that, compilers make little effort to reduce
 code size. Production compilers only save space by merging identical functions,
 while research compilers improve on that by merging the few functions with
 identical control-flow graphs and signatures.
-However, existing solutions are insufficient and we end up having to either increase cost by adding more memory or remove functionalities from the program.
+However, existing solutions are insufficient and we end up having to either increase cost by adding more memory or remove functionalities from programs.
 %This leaves us with two equally bad choices for dealing with code size: either increase cost by adding more memory or remove functionalities from the program.
 %This paper shows a better way.
-%We introduce
-This paper solves this problem by introducing
+
+We introduce
+%This paper solves this problem by introducing
 a novel technique that can merge arbitrary functions through sequence
 alignment, a bioinformatics algorithm for identifying regions of similarity
 between sequences. We combine this technique with an intelligent exploration
