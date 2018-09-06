@@ -1,26 +1,33 @@
 \section{Our Approach} \label{sec:fm}
 
-In this section, we describe our proposed function-merging technique, and how it is able to solve the motivating examples as one would expect. Contrary to all existing techniques, ours is able to merge any two arbitrary functions.
-For this reason, we also propose a profitability cost model to decide when it is beneficial to merge two functions (see Section~\ref{sec:profit-model}).
-If the two functions are equivalent, i.e., identical, then they can be completely merged into a single function.
-However, if the two functions differ at any point, an extra parameter is required so that the caller is able to select the correct function.
-%The two functions can differ in any possible way, including their list of parameters or return types.
-If the lists of parameters are different, we can merge them so that we are able to uniquely represent all parameters from both functions. If the return types are
-different, we can use an aggregate type to return values of both types or return just the non-void type if the other one is void.
-%\fixme{ZW: Should refer to the motivation example here.}
-%However, in our current implementation, the only restriction is that both
-%functions must have equivalent return types or one of them must be \textit{void}.
+In this section, we describe our proposed function-merging technique, and how it is able to solve the motivating examples as one would
+expect. Contrary to all existing techniques, ours is able to merge any two arbitrary functions. For this reason, we also propose a cost
+model to decide when it is beneficial to merge two functions (see Section~\ref{sec:profit-model}).
 
-Intuitively, when we are manually merging two functions, in a textual format, we try to visualize them side by side, identifying the equivalent segments of code and the non-equivalent ones. Then, we use this understanding to create the merged function.
-In this paper, we propose a technique that follows this intuitive principle.
-In the core of our technique lies a sequence alignment algorithm, which is responsible for arranging the code in segments that are either equivalent or non-equivalent.
+\subsection{Overview}
+Our approach can effectively handle multiple function merging scenarios. If the two functions are identical, they can be completely merged
+into a single function using existing function merging approaches. However, if the two functions differ at any point, an extra function
+identifier parameter (see Figure~\ref{fig:sphinx-example}) is required so that the caller is able to select the correct function. If the
+lists of parameters are different, we can merge them so that we are able to uniquely represent all parameters from both functions. If the
+return types are different, we can use an aggregate type to return values of both types or return just the non-void type if the other one
+is void.
+
+
+Intuitively, when we are manually merging two functions, in a textual format, we try to visualize them side by side, identifying the
+equivalent segments of code and the non-equivalent ones. Then, we use this understanding to create the merged function. In this paper, we
+propose a technique that follows this simple yet effective principle. In the core of our technique lies a sequence alignment algorithm,
+which is responsible for arranging the code in segments that are either equivalent or non-equivalent.
 
 \begin{figure}[t!]
   \centering
   %\vspace{-1ex}
   \includegraphics[width=0.85\linewidth]{figs/func-merge-overview.pdf}
   \caption{Overview of our function-merging technique.
-           Equivalent segments of code is represented in green and the non-equivalent ones in red.}
+           Equivalent segments of code is represented in green and the non-equivalent ones in red.
+           \fixme{ZW: We need to change the colors and don't use color codes in the text, because the paper may be printed in black and white.}
+           }
+
+
   \label{fig:func-merge-overview}
   %\vspace{-1ex}
 \end{figure}
@@ -348,7 +355,7 @@ reducing the number of values required to be communicated between functions.
 the number of select instructions that are needed to distinguish between the
 merged functions.
 
-\begin{figure}[h]
+\begin{figure}[t!]
   \centering
   \includegraphics[width=0.9\linewidth]{figs/merged-params.pdf}
   \caption{Example of a merge operation on the list of parameters of two functions.}
@@ -501,7 +508,7 @@ identifier.
 %optimization, which combines the proposed function-merging technique with an
 %efficient exploration infrastructure.
 
-In this section, we describe our exploration infrastructure for the 
+In this section, we describe our exploration infrastructure for the
 function merging optimization.
 Although the proposed technique is able to merge any two functions, it is not
 always profitable to merge them.
@@ -530,7 +537,7 @@ scenarios.
 In order to avoid the quadratic exploration of all possible merges, we propose
 the framework shown in Figure~\ref{fig:func-merge-opt-arch} for the our
 optimization.
-\begin{figure}[h]
+\begin{figure}[t!]
   \centering
   \includegraphics[width=0.65\linewidth]{figs/func-merge-opt-arch.pdf}
   \caption{Overview of our exploration framework.}

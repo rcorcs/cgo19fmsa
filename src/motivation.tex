@@ -21,12 +21,12 @@ As a motivation, consider two SPEC CPU2006 benchmark examples shown in Figures~\
   \label{fig:sphinx-example}
 \end{figure}
 
-Figure~\ref{fig:sphinx-example} shows two functions from the \texttt{482.sphinx3}. Although these two functions seem identical, their
-function arguments are of different types, namely, \textit{float32} and \textit{float64}. In the diagram, we highlight the segments where
-the data operations differ from each other. None of the the existing function-merging techniques would merge these two functions, as they
-all require both functions to have exactly the same list of parameters, with the same types and in the same order. As shown at the bottom
-of Figure~\ref{fig:sphinx-example}, these functions can be merged using two strategies. Firstly, we can expand the function argument list
-to include the two parameters of different types. Then, we use a function identifier, \texttt{func\_id}, to indicate which of the two
+Figure~\ref{fig:sphinx-example} shows two functions from the \texttt{482.sphinx3} benchmark. Although these two functions seem identical,
+their function arguments are of different types, namely, \textit{float32} and \textit{float64}. In the diagram, we highlight the segments
+where the data operations differ from each other. None of the the existing function-merging techniques would merge these two functions, as
+they all require both functions to have exactly the same list of parameters, with the same types and in the same order. As shown at the
+bottom of Figure~\ref{fig:sphinx-example}, these functions can be merged in two steps. Firstly, we can expand the function argument list to
+include the two parameters of different types. Then, we use a function identifier, \texttt{func\_id}, to indicate which of the two
 functions is called. Function merging reduces the total number of machine instructions of the two functions by 18\%.
 
 %If we compile all three functions, we can see that the each one of the two original functions have 14 machine instructions, while the merged function has 23 machine instructions.
@@ -45,9 +45,9 @@ functions is called. Function merging reduces the total number of machine instru
 \end{figure}
 
 
-Figure~\ref{fig:libquantum-example} gives another two functions extracted from \texttt{462.libquantum}. Although these two functions have
-the same signature, i.e., the same return type and list of parameters, they differ in some parts, including their CFGs. None of the
-existing techniques can merge the two functions because of the difference in the CFGs. As shown at the bottom of
+Figure~\ref{fig:libquantum-example} gives another two functions extracted from \texttt{462.libquantum}. While these two functions have the
+same signature, i.e., the same return type and list of parameters, they differ in some parts, including their CFGs. None of the existing
+techniques can merge the two functions because of the difference in the CFGs. As shown at the bottom of
 Figure~\ref{fig:libquantum-example}, these two functions in fact can be merged by simply using a function identifier, \texttt{func\_id}.
 Function merging reduces the total number of machine instructions of the two functions by 23\%.
 
@@ -78,4 +78,4 @@ Function merging reduces the total number of machine instructions of the two fun
 
 These examples show that the state-of-the-art function merging methods impose over-restricted constraints on the code structures, and thus
 miss massive opportunities. Our work aims to develop a better approach to lift the constraints to merge similar code of any two arbitrary
-functions.
+functions if it is profitable to do so.
