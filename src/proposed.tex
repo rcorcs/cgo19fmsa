@@ -5,12 +5,10 @@ expect. Contrary to all existing techniques, ours is able to merge any two arbit
 model to decide when it is beneficial to merge two functions (see Section~\ref{sec:profit-model}).
 
 \subsection{Overview}
-Our approach can effectively handle multiple function merging scenarios. If the two functions are identical, they can be completely merged
-into a single function using existing function merging approaches. However, if the two functions differ at any point, an extra function
-identifier parameter (see Figure~\ref{fig:sphinx-example}) is required so that the caller is able to select the correct function. If the
-lists of parameters are different, we can merge them so that we are able to uniquely represent all parameters from both functions. If the
-return types are different, we can use an aggregate type to return values of both types or return just the non-void type if the other one
-is void.
+Our approach is implemented as an LLVM pass to perform at the LLVM IR level. Therefore, it can perform function merging across application
+and library code.
+
+
 
 
 Intuitively, when we are manually merging two functions, in a textual format, we try to visualize them side by side, identifying the
@@ -99,17 +97,17 @@ successors in canonical order~\cite{briggs94,liu96}. We find this strategy leads
 
 \subsection{Sequence Alignment}
 
-When merging two functions, the goal is to identify which segments of the code are equivalent (and therefore can be merged) and which ones
-are different.
-%and labels that can be merged and which ones need to be selected based on the
-%actual function being executed.
-To avoid breaking the semantics of the original program, we also need to maintain the order of the instructions for each one of the
-functions.
+%When merging two functions, the goal is to identify which segments of the code are equivalent (and therefore can be merged) and which ones
+%are different.
+%%and labels that can be merged and which ones need to be selected based on the
+%%actual function being executed.
+%To avoid breaking the semantics of the original program, we also need to maintain the order of the instructions for each one of the
+%functions.
 
-To this end, after linearization, we convert the function merging problem to the problem of \textit{sequence alignment}. Sequence alignment
-is an important technique to many areas of science, most notably in molecular biology~\cite{needleman70,smith81,carrillo88,wang94} where,
-for example, it is used for identifying homologous subsequences of amino acid in proteins. Figure~\ref{fig:opcode-align} shows an example
-of the sequence alignment between two linearized functions extracted from the \texttt{400.perlbench} benchmark, including the one used in
+After linearization, we convert the function merging problem to the problem of \textit{sequence alignment}. Sequence alignment is an
+important technique to many areas of science, most notably in molecular biology~\cite{needleman70,smith81,carrillo88,wang94} where, for
+example, it is used for identifying homologous subsequences of amino acid in proteins. Figure~\ref{fig:opcode-align} shows an example of
+the sequence alignment between two linearized functions extracted from the \texttt{400.perlbench} benchmark, including the one used in
 Figure~\ref{fig:linearization-example}.
 
 Formally, sequence alignment can be defined as follows:
@@ -205,20 +203,16 @@ that rewards matches and equally penalizes mismatches and gaps.
 %For example, note that in Figure~\ref{fig:opcode-align}, the red blocks, for
 %a particular sequence, tend to be grouped together.
 
-\vspace{-2ex}
-\subsection{Equivalence Relation}
 
-In order to merge functions we first need to define what makes two pieces of
-code equivalent and therefore mergeable.
-In this section, we describe how we define the equivalence relation between values in two
-separate cases, namely, the equivalence between instructions and the
-equivalence between labels.
+\subsection{Equivalence Evaluation}
 
-Labels can represent both normal basic blocks and landing blocks, which are used
-in exception handling code.
-Labels of normal basic blocks are always considered equivalent but
-landing blocks must have identical landing-pad instructions.
-We describe exception handling code in more detail in the next section.
+In order to merge functions we first need to define what makes two pieces of code within two functions equivalent and therefore are
+mergeable. In this section, we describe how we define the equivalence relation between values in two separate cases, namely, the
+equivalence between instructions and the equivalence between labels.
+
+Labels can represent both normal basic blocks and landing blocks, which are used in exception handling code. Labels of normal basic blocks
+are ignored during code equivalence evaluation, but those for landing blocks must be treated differently. We describe exception handling
+code in more detail in the next section.
 
 Two instructions are equivalent if: $(1)$ their opcodes are semantically
 equivalent, but not necessarily the same; $(2)$ they both have equivalent types;
@@ -237,10 +231,10 @@ For function calls, the type equivalence requires that both instructions have
 identical function types, i.e., both called functions must have identical
 return types and identical list of parameters.
 
-\subsubsection{Handling Exception Handling Code}
+\subsubsection{Exception Handling Code}
 
-In this section, we describe restrictions imposed by exception handling code and
-their equivalence relation.
+%In this section, we describe restrictions imposed by exception handling code and
+%their equivalence relation.
 Most modern compilers implement the zero-cost Itanium ABI for exception
 handling~\cite{dinechin00}, including GCC and LLVM, sometimes called the
 \textit{landing-pad} model.
@@ -251,22 +245,16 @@ when an exception has been thrown.
 %and corresponds to the return value of the personality function, which must also
 %be identical for the two functions being merged.
 
-The invoke instruction co-operates tightly with its landing block, i.e., the
-basic block pointed by the exception branch of an invoke instruction.
-The landing block must have a landing-pad instruction as its first non-$\phi$
-instruction.
-Given this restriction, two equivalent invoke instructions must also have
-landing blocks with identical landing-pad instructions.
-This restriction can be easily checked since the landing-pad instruction is
-always the first instruction in a landing block.
+%The invoke instruction co-operates tightly with its landing block, i.e., the basic block pointed by the exception branch of an invoke
+%instruction. The landing block must have a landing-pad instruction as its first non-$\phi$ instruction. Given this restriction, two
+%equivalent invoke instructions must also have landing blocks with identical landing-pad instructions. This restriction can be easily
+%checked since the landing-pad instruction is always the first instruction in a landing block. \fixme{ZW: We need an example here.}
 
-Landing blocks are responsible for handling all catch clauses covering the
-particular call site, in the high-level code.
-All clauses are defined by the landing-pad instruction, which encodes the list of
-all exception and cleanup handlers.
-Landing-pad instructions are equivalent if they have exactly the same type and
-also encode identical lists of exception and cleanup handlers.
-
+%Landing blocks are responsible for handling all catch clauses covering the particular call site, in the high-level code. All clauses are
+%defined by the landing-pad instruction, which encodes the list of all exception and cleanup handlers.
+Landing-pad instructions are
+equivalent if they have exactly the same type and also encode identical lists of exception and cleanup handlers. \fixme{ZW: We need an
+example here.}
 %The return value of the landing-pad instruction is crucial in deciding what
 %action to take when the landing block is entered, and corresponds to the return
 %value of the personality function.
@@ -291,10 +279,15 @@ also encode identical lists of exception and cleanup handlers.
 %personality function is mandated by the stack unwinder).
 
 \subsection{Code Generation}
+Our approach can effectively handle multiple function merging scenarios. If the two functions are identical, they can be completely merged
+into a single function using existing function merging approaches. However, if the two functions differ at any point, an extra function
+identifier parameter (see Figure~\ref{fig:sphinx-example}) is required so that the caller is able to select the correct function. If the
+lists of parameters are different, we can merge them so that we are able to uniquely represent all parameters from both functions. If the
+return types are different, we can use an aggregate type to return values of both types or return just the non-void type if the other one
+is void.
 
-The code generation phase is responsible for producing a new function from the
-result of the sequence alignment.
-This phase has three main concerns: merging the two lists of parameters;
+ The code generation phase is responsible for producing a new function from the result of the sequence alignment. This phase has
+three main concerns: merging the two lists of parameters;
 %from both functions;
 generating the necessary select instructions in order to
 use the appropriate operands in merged instructions;
@@ -303,8 +296,10 @@ constructing the CFG of the merged function.
 
 %\subsubsection{Merged Parameters}
 
-If the lists of parameters are different, we can merge them so that we are able
-to uniquely represent all parameters from both functions.
+%If the lists of parameters are different, we can merge them so that we are able
+%to uniquely represent all parameters from both functions.
+
+
 
 The merged list of parameters must contain exactly one parameter that uniquely
 represents each one of the parameters from both functions, without necessarily
@@ -585,7 +580,7 @@ This cadidate exploration is then performed in a greedy fashion, where the first
 candidate that actually results in a profitable merge ends the exploration and
 the merge operation is finally commited.
 
-\begin{figure}[h]
+\begin{figure}[t!]
   \centering
   \includegraphics[width=0.8\linewidth]{figs/average-cdf-exploration-threshold.pdf}
   \caption{Average CDF for the exploration threshold and the percentage of merged operations covered.
