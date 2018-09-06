@@ -52,21 +52,20 @@ function-identifier parameter.
 
 \subsection{Linearization}
 
-\begin{figure}[b]
+\begin{figure}[t!]
   \centering
   \includegraphics[width=0.7\linewidth]{figs/linearization-example.pdf}
-  \caption{An example of the linearization of a CFG.}
+  \caption{Linearizing the CFG of an example function.}
   \label{fig:linearization-example}
 \end{figure}
 
-The \textit{linearization}\footnote{Although linearization of CFGs
+Linearization\footnote{Although linearization of CFGs
 usually refers to a predicated representation, % resulting from an if-conversion,
-in this paper, we refer to a simpler definition.} is a key step for enabling the
-use of sequence alignment.
-It consists in specifying an ordering of the basic blocks based on a traversal
-of the CFG and then producing a sequence of labels and instructions, similar to a textual representation of the function.
-All instructions from a given basic block must appear right after the label of that basic block, besides maintaining the same order among them.
-Figure~\ref{fig:linearization-example} shows a simplified example of the linearization of the CFG of a function extracted from the \text{400.perlbench} benchmark in SPEC CPU2006.
+in this paper, we refer to a simpler definition.} is a key step for enabling the use of sequence alignment. It consists in specifying an
+ordering of the basic blocks based on a traversal of the CFG and then producing a sequence of labels and instructions, similar to a textual
+representation of the function. All instructions from a given basic block must appear right after the label of that basic block, besides
+maintaining the same order among them. Figure~\ref{fig:linearization-example} shows a simplified example for linearizing the CFG of a
+function extracted from the SPEC CPU2006 \texttt{400.perlbench} benchmark.
 
 %Although this operation is trivial, the specific ordering of the basic blocks
 %chosen can have an impact on the merging operation.
@@ -76,17 +75,17 @@ Figure~\ref{fig:linearization-example} shows a simplified example of the lineari
 %if there are successors.
 %This is true for most IRs, such as the LLVM IR, or can be easily adapted.
 
-The exact ordering chosen for the basic blocks will not compromise the correctness of the results but it can have an impact on the quality of the merge operation.
-In our implementation, the linearization uses a reverse post-order~(RPO) of the
-basic blocks, following a canonical ordering of the successors.
+The exact order chosen for the basic blocks will not compromise the correctness of the results but it can have an impact on the quality of
+the merge operation. We empirically choose a strategy by first ordering the the basic blocks in reverse post-order, and then ordering the
+successors in canonical order~\cite{briggs94,liu96}. We find this strategy leads to good performance in our experiment.
 %, e.g., \textit{true} branches before \textit{false} ones.
 %Figure~\ref{fig:branch-linearization} shows an example of the linearization
 %using the canonical RPO.
 %The RPO guarantees that the linearization starts with the entry basic block and then proceeds favoring definitions before uses, except in the presence of loops.
-Although the specifc ordering produced by the canonical linearization may not be optimal,
-in general it shows good results, as it is also common practice for compilers to rely on prior canonicalizations, e.g., canonical loops, canonical induction variables, canonical reassociation, etc.~\cite{briggs94,liu96}.
-By contrast, if, instead, we use an RPO linearization with a uniformly randomized ordering of the successor basic
-blocks, the final code-size reduction of the function-merging optimization can deteriorate by 10\% for individual benchmarks.
+%Although the specifc ordering produced by the canonical linearization may not be optimal,
+%in general it shows good results, as it is also common practice for compilers to rely on prior canonicalizations, e.g., canonical loops, canonical induction variables, canonical reassociation, etc.~\cite{briggs94,liu96}.
+%By contrast, if, instead, we use an RPO linearization with a uniformly randomized ordering of the successor basic
+%blocks, the final code-size reduction of the function-merging optimization can deteriorate by 10\% for individual benchmarks.
 %Note that our decision for using the canonical RPO is purely pragmatic and other orderings of the basic blocks could also be used, as long as it produces a sequence of labels followed by instructions.
 
 %\begin{figure}[h]
