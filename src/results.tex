@@ -5,12 +5,12 @@ In this section, we evaluate the proposed optimization, where we analyze our
 improvements on code-size reduction, as well as its impact on the program's
 performance and compilation-time.
 
-\begin{figure}[t!]
-  \centering
-  \includegraphics[width=0.7\linewidth]{figs/opt-pipeline.pdf}
-  \caption{The compilation pipeline using a monolithic link-time optimization (LTO).}
-  \label{fig:opt-pipeline}
-\end{figure}
+%\begin{figure}[t!]
+%  \centering
+%  \includegraphics[width=0.7\linewidth]{figs/opt-pipeline.pdf}
+%  \caption{The compilation pipeline using a monolithic link-time optimization (LTO).}
+%  \label{fig:opt-pipeline}
+%\end{figure}
 
 
 
@@ -46,9 +46,9 @@ instead of using a rank-based greedy approach, actually executes the merge opera
 %The oracle represents the results assuming a perfect ranking strategy.
 %However, the oracle has a very costly quadratic exploration, as explained in
 %Section~\ref{sec:framework}.
-The oracle represents the results assuming a perfect ranking strategy, which
-requires a very costly quadratic exploration, as explained in
-Section~\ref{sec:framework}.
+The oracle represents the results assuming a perfect ranking strategy, which requires a very costly quadratic exploration, as explained in
+Section~\ref{sec:framework}. \fixme{ZW: I suggest we call ``oracle" exhaustive-exploration instead. ``oracle" often used to refer the
+up-bound performance.}
 
 
 
@@ -78,21 +78,21 @@ Section~\ref{sec:framework}.
 
 Figure~\ref{fig:reduction-obj} reports the code-size reduction over the baseline for the linked object. %These results show how much we can improve over the existing techniques, by having a more powerful solution, and how close we
 %can get to the oracle with our ranking-based exploration framework.
-We observe a similar pattern for code-size reduction for all benchmarks on both architecures. This is expected because the optimizations
-are applied at the platform-independent IR level. However, some of the decisions may change due to the target-dependent cost model (LLVM's
-TTI) and, similarly, the final object files will also differ due to differences in the instruction set architecture (ISA), compiler
-backend, etc.
+We observe a similar pattern for code-size reduction for all benchmarks on the Intel and ARM architectures. This is expected because the
+optimizations are applied at the platform-independent IR level. However, some of the decisions may change due to the target-dependent cost
+model (LLVM's TTI) and, similarly, the final object files will also differ due to differences in the instruction set architecture (ISA),
+compiler backend, etc.
 
-Our optimization, FMSA, significantly improves over the state-of-the art (SoA). For the Intel platform, FMSA could achieve an average
-code-size reduction of up to 5.8\% (or 5.3\% with the lower configuration), while the SoA and Identical had an average reduction of 1.8\%
-and 0.9\%, respectively. Similarly, for the ARM platform, FMSA can achieve an average code-size reduction of up to 5.1\% (or 4.6\% with the
-lower configuration), while the SoA and Identical had an average reduction of 2\% and 1.1\%, respectively. For several of the benchmarks,
-the proposed technique shows some impressive code-size reductions compared to the other optimizations. Table~\ref{tab:reduction} highlights
+Our approach, FMSA, significantly improves over the state-of-the art (SoA). For the Intel platform, FMSA can achieve an average code-size
+reduction of up to 5.8\% (or 5.3\% with the lower configuration), while the SoA and Identical had an average reduction of 1.8\% and 0.9\%,
+respectively. Similarly, for the ARM platform, FMSA can achieve an average code-size reduction of up to 5.1\% (or 4.6\% with the lower
+configuration), while the SoA and Identical had an average reduction of 2\% and 1.1\%, respectively. For several of the benchmarks, the
+proposed technique shows some impressive code-size reductions compared to the other optimizations. Table~\ref{tab:reduction} highlights
 some of these results for both platforms. Although not noticeable in Figure~\ref{fig:reduction-obj}, the state-of-the-art slightly
 increases code-size in two benchmarks, namely, \texttt{462.libquantum} and \texttt{482.sphinx3}, while FMSA shows significant reductions in
-both cases. The only case where a configuration of FMSA results in slightly less reduction than the SoA is on the 445.gobmk benchmark, but
-only for the ARM platform. However, the oracle is able to improve over the SoA, with a code-size reduction of 1.33\%. In all other cases,
-FMSA is always equal or better than all other function-merging optimizations, usually by a significant margin.
+both cases. The only case where a configuration of FMSA results in slightly less code-size saving over the SoA is on the \texttt{445.gobmk}
+benchmark on the ARM platform. However, the oracle is able to improve over the SoA, with a code-size reduction of 1.33\%. In all other
+cases, FMSA is always equal or better than all other function-merging optimizations, usually by a significant margin.
 
 \begin{table}[]
 \label{tab:reduction}

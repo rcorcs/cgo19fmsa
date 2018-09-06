@@ -46,10 +46,7 @@ is straightforward, shown at the bottom of Figure~\ref{fig:libquantum-example}, 
 none of the existing techniques can merge the two functions. The state-of-the-art can work with non-identical functions, but it needs
 their CFGs to be identical. Even a single extra basic block, as in this case, makes merging impossible.
 
-These examples show that all existing techniques are severely limited.
-Optimization passes in production compilers work only on effectively identical
-functions. State-of-the-art techniques can merge functions only when they are
-structurally similar, with identical signatures and isomorphic CFGs. All of
-them miss massive opportunities for code size reduction. In the next sections,
-we show a superior approach which removes such constraints and is able to merge
-arbitrary functions, when it is profitable to do so.
+These examples show that all existing techniques are severely limited. Optimization passes in production compilers work only on effectively
+identical functions. State-of-the-art techniques can merge functions only when they are structurally similar, with identical signatures and
+isomorphic CFGs. All of them miss massive opportunities for code size reduction. In the next sections, we show a better approach which
+removes such constraints and is able to merge arbitrary functions, when it is profitable to do so.
