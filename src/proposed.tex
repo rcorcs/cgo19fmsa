@@ -21,12 +21,10 @@ which is responsible for arranging the code in segments that are either equivale
   %\vspace{-1ex}
   \includegraphics[width=0.85\linewidth]{figs/func-merge-overview.pdf}
   \caption{Overview of our function-merging technique.
-           Equivalent segments of code is represented in green and the non-equivalent ones in red.
+           Equivalent segments of code is represented in green and the non-equivalent ones in red.}
            %\fixme{ZW: We need to change the colors and don't use color codes in the text, because the paper may be printed in black and white.}
            %\fixme{Rodrigo: I think it is very ugly to use dashed background, or using other ugly patterns to differenciate things.
            %        I think it is important for the paper to look nice and give a good first impression to the reader.}
-           }
-
 
   \label{fig:func-merge-overview}
   %\vspace{-1ex}
@@ -65,7 +63,7 @@ in this paper, we refer to a simpler definition.} is a key step for enabling the
 ordering of the basic blocks based on a traversal of the CFG and then producing a sequence of labels and instructions, similar to a textual
 representation of the function. All instructions from a given basic block must appear right after the label of that basic block, besides
 maintaining the same order among them. Figure~\ref{fig:linearization-example} shows a simplified example for linearizing the CFG of a
-function extracted from the SPEC CPU2006 \texttt{400.perlbench} benchmark.
+real function extracted from the SPEC CPU2006 \texttt{400.perlbench} benchmark.
 
 %Although this operation is trivial, the specific ordering of the basic blocks
 %chosen can have an impact on the merging operation.
@@ -76,8 +74,11 @@ function extracted from the SPEC CPU2006 \texttt{400.perlbench} benchmark.
 %This is true for most IRs, such as the LLVM IR, or can be easily adapted.
 
 The exact order chosen for the basic blocks will not compromise the correctness of the results but it can have an impact on the quality of
-the merge operation. We empirically choose a strategy by first ordering the the basic blocks in reverse post-order, and then ordering the
-successors in canonical order~\cite{briggs94,liu96}. We find this strategy leads to good performance in our experiment.
+the merge operation. We empirically choose to linearize functions using a reverse post-order of the basic blocks, with a canonical ordering of successor basic blocks.
+It is also common practice for compilers to rely on prior canonicalizations~\cite{briggs94,liu96}.
+Moreover, we find this strategy leads to good performance in our experiment.
+%a strategy by first ordering the basic blocks in reverse post-order, and then ordering the
+%successors in canonical order~\cite{briggs94,liu96}. 
 %, e.g., \textit{true} branches before \textit{false} ones.
 %Figure~\ref{fig:branch-linearization} shows an example of the linearization
 %using the canonical RPO.
