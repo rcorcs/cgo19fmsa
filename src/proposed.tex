@@ -4,6 +4,10 @@ In this section, we describe our proposed function-merging technique, and how it
 expect. Contrary to all existing techniques, ours is able to merge any two arbitrary functions. For this reason, we also propose a cost
 model to decide when it is beneficial to merge two functions (see Section~\ref{sec:profit-model}).
 
+
+%% I don't think the compilation pipeline should be here.
+%% The optimization does not need to be performed during link-time.
+
 \begin{figure}[t!]
   \centering
   \includegraphics[width=0.7\linewidth]{figs/opt-pipeline.pdf}
@@ -37,6 +41,8 @@ which is responsible for arranging the code in segments that are either equivale
            %\fixme{ZW: We need to change the colors and don't use color codes in the text, because the paper may be printed in black and white.}
            %\fixme{Rodrigo: I think it is very ugly to use dashed background, or using other ugly patterns to differenciate things.
            %        I think it is important for the paper to look nice and give a good first impression to the reader.}
+           %%By the way, the seq. alignment has a visual structural difference between code that will be merged (blocks in the centre in Fig. 5, and blocks in both functions in this figure.}
+           %%compared to code that will not be merged, only one of the functions have a block of code.
 
   \label{fig:func-merge-overview}
   %\vspace{-1ex}
