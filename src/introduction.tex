@@ -3,7 +3,7 @@
 
 In recent years, resource-constrained devices are becoming increasingly
 important. Application binaries for these devices often reach several megabytes
-in size, turning memory size into a bottleneck~\cite{plaza18}. Just adding more
+in size, turning memory size into a limiting factor~\cite{plaza18}. Just adding more
 memory is not always a viable option. Highly integrated System-on-Chips are
 common in this market and their memories typically occupy the largest fraction
 of the chip area, contributing most of the overall cost. Even small
@@ -11,7 +11,7 @@ increases in memory area translate directly to equivalent increases in cost,
 which lead to enormous levels of lost profit in large scales~\cite{edler10}.
 
 In such constrained scenarios, reducing the code size is essential~\cite{schultz03,varma04,sehgal12,keoh14,auler17}.
-Unfortunately, production compilers offer little help beyond dead code
+Unfortunately, production compilers offer little help beyond dead-code
 elimination or merging identical functions~\cite{tallam10,kwan12,livska14}.
 Developers might have more luck just removing functionality from their
 libraries~\cite{keoh14} or hand-optimizing their code~\cite{weaver09}.
@@ -26,12 +26,12 @@ libraries~\cite{keoh14} or hand-optimizing their code~\cite{weaver09}.
 
 Function merging reduces replicated code by combining multiple identical
 functions into a single one. 
-While sounding too simple to work, it is crucial for making high-level
-abstractions usable, even when they introduce duplicate code~\cite{tallam10,kwan12}.
+Although a simple and intuitive concept, it is crucial for making high-level
+abstractions usable, when they introduce duplicate code~\cite{tallam10,kwan12}.
 For example, some C++ ABIs may end up creating multiple identical constructors
 and destructors of a class to use in different contexts~\cite{kwan12} and C++
 templates replicate code for different specializations~\cite{tallam10,livska14}.
-More advanced research approaches~\cite{edler14} have extended this idea into
+More advanced approaches~\cite{edler14} have extended this idea into
 merging non-identical functions by leveraging structural similarity. Functions
 with identical control-flow graphs (CFGs) and only small differences within
 corresponding basic blocks are merged into a single function that maintains
@@ -39,11 +39,11 @@ the semantics of the original functions. This is particularly important for
 handling specialized template functions with small differences in their
 compiled form.
 
-While an improvement, even this state-of-the-art often fails to produce any
+While an improvement, even the state-of-the-art often fails to produce any
 noticeable code size reduction. In this paper, we introduce a novel way to merge
 functions that overcomes the major limitations of the state-of-the-art. Our
 insight was that the weak results of existing function merging implementations
-are not due to the lack of duplicate code but due to the rigid, ad-hoc 
+are not due to the lack of duplicate code but due to the rigid, overly restrictive
 algorithms they use to find duplicates.
 
 Our approach is based upon the concept of sequence alignment, developed in
@@ -57,8 +57,8 @@ more than three times better than the state-of-the-art can achieve.
 
 Applying sequence alignment to all pairs of functions is prohibitively expensive
 even for medium sized programs. To counter this, our technique is integrated with
-a ranking-based exploration mechanism that focuses the search to the most
-promising pairs of function. \todo{whats interesting about this ranking?}.
+a ranking-based exploration mechanism that efficiently focuses the search to the most
+promising pairs of function. %\todo{whats interesting about this ranking?}.
 As a result, we achieve our code size savings while introducing little compilation-time
 overhead.
 
@@ -67,7 +67,7 @@ namely the code that chooses dissimilar sequences in merged functions. A naive
 implementation could easily hurt performance, e.g by merging two hot functions
 with only few similarities. Our implementation avoids this by incorporating
 profiling information to identify hot code blocks and effectively disable code
-size optimizations for them. \todo{the rest is WiP}.
+size optimizations for them. %\todo{the rest is WiP}.
 
 Our function-merging technique is able to merge any two functions, i.e., it
 provides the following improvements over the state-of-the-art:

@@ -30,7 +30,7 @@ For this reason, we only show compilation-time results for the Intel platform.
 
 \begin{figure}[t!]
   \centering
-  \includegraphics[width=0.8\linewidth]{figs/opt-pipeline.pdf}
+  \includegraphics[width=0.7\linewidth]{figs/opt-pipeline.pdf}
   \caption{The compilation pipeline using a monolithic link-time optimization (LTO).}
   \label{fig:opt-pipeline}
 \end{figure}
@@ -61,16 +61,17 @@ The oracle represents the results assuming a perfect ranking strategy, which
 requires a very costly quadratic exploration, as explained in
 Section~\ref{sec:framework}.
 
-\begin{figure*}[b]
+
+\vspace{-1ex}
+\subsection{Code-Size Reduction}
+
+\begin{figure*}[t]
   \centering
   \includegraphics[width=\linewidth]{figs/compilation-time.pdf}
   \vspace{-4ex}
   \caption{Compilation-time overhead on the Intel platform. The oracle has an average overhead of 25$\times$.}
   \label{fig:compilation-time}
 \end{figure*}
-
-\vspace{-1ex}
-\subsection{Code-Size Reduction}
 
 %\begin{figure*}[th]
 %  \centering
@@ -112,12 +113,11 @@ code-size reductions compared to the other optimizations.
 Table~\ref{tab:reduction} highlights some of these results for both platforms.
 Although not noticeable in Figure~\ref{fig:reduction-obj}, the state-of-the-art
 slightly increases code-size in two benchmarks, namely, the 462.libquantum and
-482.sphinx3, while the proposed optimization shows significant reductions in
-both cases.
+482.sphinx3, while FMSA shows significant reductions in both cases.
 The only case where a configuration of FMSA results in slightly less reduction
 than the state-of-the-art is on the 445.gobmk benchmark, but only for the ARM
 platform.
-However, the oracle exploration is able to improve over the state-of-the-art,
+However, the oracle is able to improve over the state-of-the-art,
 with a code-size reduction of 1.33\%.
 In all other cases, FMSA is always equal or better than all other
 function-merging optimizations, usually by a significant margin.
@@ -125,7 +125,7 @@ function-merging optimizations, usually by a significant margin.
 \begin{table}[]
 \label{tab:reduction}
 \centering
-\scalebox{0.85}{
+\scalebox{0.8}{
 \begin{tabular}{|l|c|c|c|}
 \hline
 \multicolumn{1}{|c|}{\textbf{Benchmarks}} & \textbf{Identical} & \textbf{SoA}  & \textbf{FMSA {[}t=1{]}} \\ \hline
@@ -214,17 +214,9 @@ account that the other techniques have no real impact on these benchmarks.
 %  \label{fig:identical-example}
 %\end{figure*}
 
+\vspace{-2ex}
 \subsection{Compilation Time}
 
-\begin{figure}[th]
-  \centering
-  %\hspace{-2ex}
-  \includegraphics[width=1.0\linewidth]{figs/compilation-time-breakdown-sqrd.pdf}
-  \vspace{-8.5ex}
-  \caption{A compilation-time breakdown isolating the percentage for each major
-           step of the optimization, with an exploration threshold of one.}
-  \label{fig:compilation-time-breakdown}
-\end{figure}
 
 Figure~\ref{fig:compilation-time} shows the compilation-time overhead for all
 optimizations.
@@ -235,6 +227,24 @@ large overhead would make it impossible to visualize the results properly.
 The oracle has an average compilation-time overhead of 25$\times$ compared to
 the baseline, with its largest overhead being of 136$\times$ on the 447.dealII
 benchmark.
+
+\begin{figure}[b]
+  \centering
+  %\hspace{-2ex}
+  \includegraphics[width=1.0\linewidth]{figs/compilation-time-breakdown-sqrd.pdf}
+  \vspace{-8.5ex}
+  \caption{A compilation-time breakdown isolating the percentage for each major
+           step of the optimization (t=1).}%, with an exploration threshold of one.}
+  \label{fig:compilation-time-breakdown}
+\end{figure}
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\linewidth]{figs/runtime-impact.pdf}
+  \vspace{-4ex}
+  \caption{Runtime.}
+  \label{fig:runtime-impact}
+\end{figure*}
 
 Unlike the other more mature implementations, our optimization is a prototype
 implementation not yet highly tuned for compilation-time.
@@ -275,16 +285,9 @@ This analysis suggests that optimizing the sequence alignment algorithm and
 the ranking mechanism is key to reduce, even further, the overall
 compilation-time overhead.
 
-
+\vspace{-1ex}
 \subsection{Performance Impact}
 
-\begin{figure*}[t]
-  \centering
-  \includegraphics[width=\linewidth]{figs/runtime-impact.pdf}
-  \vspace{-4ex}
-  \caption{Runtime.}
-  \label{fig:runtime-impact}
-\end{figure*}
 
 The primary goal of function merging is to reduce code size.
 Nevertheless, it is also important to understand its impact on the programs'
@@ -294,10 +297,47 @@ Overall, our optimization has an average impact of about 3\% on programs' perfor
 For most of the programs, in the benchmark suite, there are no
 statistical differences between the version optimized with the proposed function
 merging or the baseline.
-There are only three cases with a noticeable performance impact, namely,
-433.milc, 462.libquantum, and 464.h264ref.
-In particular, the 462.libquantum benchmark shows a performance degradation of
-about \todo{20\%}.
+There are only a few benchmarks with a noticeable performance impact, namely,
+433.milc, 447.dealII, and 464.h264ref.
+%There are only three cases with a noticeable performance impact, namely,
+%433.milc, 462.libquantum, and 464.h264ref.
+%In particular, the 462.libquantum benchmark shows a performance degradation of
+%about \todo{20\%}.
+
+As a case study, we analyze the performance impact on the \text{433.milc}
+benchmark.
+We consider our function-merging optimization with exploration threshold equals
+to one.
+For this benchmark, a total of 58 functions were merged.
+After inspecting the program's execution with profiling information, we
+identified that only a handful of these functions are significantly hotter than
+the other ones.
+Hot basic blocks are determined based on the block frequencies recorded by
+instrumenting all basic blocks in the program~\cite{ball94}.
+
+If, instead, we prevent these hot function of being merged, the performance
+impact goes away and we end up with a performance which is statistically
+equivalent to the baseline version, while still providing a good code-size
+reduction.
+Our original optimization results in a code-size reduction of 5.11\% and a
+performance overhead of about 18\%.
+Even when reducing the performance overhead to zero, we can still offer a
+code-size reduction of 2.09\%.
+Note that the state-of-the-art has a reduction of only 1.09\% on this benchmark.
+If we can be more permissive, allowing some of the hot functions to be merged,
+we can have a code-size reduction of 3.43\% while keeping the performance impact
+at about 8\%.
+
+%However, \text{quantum\_gate1} is the largest function in the program,
+%which means that this merge operation greatly contributes
+%to the overall code-size reduction.
+%Preventing this merge results in the code-size reduction dropping from 16\% to
+%6.9\%, which is still a very significant code-size reduction compared to the
+%other techniques that show no reduction on this particular benchmark.
+
+%It is interesting to note that, for the 447.dealII benchmark, FMSA [t=1] has
+%no extra impact than the state-of-the-art
+
 
 %As a case study, we analyze the performance impact on the \text{462.libquantum}
 %benchmark.

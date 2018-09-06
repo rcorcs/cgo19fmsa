@@ -1,21 +1,26 @@
 \begin{abstract}
-Resource-constrained devices, such as IoT, are becoming increasingly important.
-Not only performance, but also code size is a bottleneck in such systems.
+Resource-constrained devices for embedded systems are becoming increasingly important.
+In such systems, memory is highly restrictive, making code size in most cases
+even more important than performance.
+%Not only performance, but also code size is a bottleneck in such systems.
 Compared to more traditional platforms, memory is a larger part of the cost and
 code occupies much of it. Despite that, compilers make little effort to reduce
-code size. Production compilers save only space by merging identical functions,
+code size. Production compilers only save space by merging identical functions,
 while research compilers improve on that by merging the few functions with
-identical control flow graphs. This leaves us with two equally bad choices for
-resolving the bottleneck: either increase cost by adding more memory or reduce
-code size by removing functionality. This paper shows a better way. We
-introduce a novel technique that can merge arbitrary functions through sequence
+identical control-flow graphs and signatures.
+However, existing solutions are insufficient and we end up having to either increase cost by adding more memory or remove functionalities from the program.
+%This leaves us with two equally bad choices for dealing with code size: either increase cost by adding more memory or remove functionalities from the program.
+%This paper shows a better way.
+%We introduce
+This paper solves this problem by introducing
+a novel technique that can merge arbitrary functions through sequence
 alignment, a bioinformatics algorithm for identifying regions of similarity
 between sequences. We combine this technique with an intelligent exploration
 mechanism to direct the search towards the most promising function pairs. Our
 approach is more than $3\times$ better than the state-of-the-art, reducing code
 size by up to 22\%, with an overall average of 5.6\%, while introducing an
-average compilation-time overhead of only 20\%. When aided by profiling
-information, this optimization can be deployed without any significant impact
+average compilation-time overhead of only 20\%. When aided by profiling information,
+this optimization can be deployed without any significant impact
 on the performance of the generated code.
 
 %In recent years, resource-constrained devices are becoming increasingly important.

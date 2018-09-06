@@ -1,4 +1,4 @@
-\vspace{-2ex}
+\vspace{-3ex}
 \section{Conclusion}
 
 We have presented a novel technique, based on sequence alignment, for merging
@@ -6,31 +6,24 @@ functions that addresses major limitations of the existing solutions.
 We have also proposed a ranking-based exploration mechanism so that we can focus
 the optimization on promising pairs of functions, reducing considerably the
 compilation-time overhead, compared to the oracle's quadratic exploration.
-With this framework, our prototype introduces an average
-compilation-time overhead of only 20\%.
-Our optimization shows code-size reductions up to 22\%, with an overall average
-of about 5.6\%.
+With this framework, our 
+optimization is able to reduce code size by up to 22\%, with an overall average
+of about 5.6\%, while introducing an average compilation-time overhead of only 20\%.
+%prototype introduces an average
+%compilation-time overhead of only 20\%.
+%Our optimization shows code-size reductions up to 22\%, with an overall average
+%of about 5.6\%.
 This optimization can be carried on without any significant impact on
 performance when profiling information is used.
 
-%Allowed instruction reordering could be performed in order to improve coverage
-%of the proposed function merging strategy.
-%Although we perform sequence alignment directly on the functions after
-%linearization, some functions can have their instructions reodered without
-%changing their semantics.
-%This instruction reodering could potentially improve the alignment of two given
-%functions.
-%However, it is a constly operation that can significantly degrade compilation
-%time.
+%%TODO:camera-ready
+%For future work, we plan to focus on improving the ranking mechanism to reduce
+%compilation time even further.
+%A better compilation time can also be achieved by integrating the
+%function-merging optimization to a summary-based parallel link-time optimization
+%framework, such as ThinLTO in LLVM.
+%We also plan to work on the linearization of the candidate functions, allowing
+%instruction reordering to maximize the number of matches between the functions.
 
-For future work, we plan to focus on improving the ranking mechanism to reduce
-compilation time even further.
-A better compilation time can also be achieved by integrating the
-function-merging optimization to a summary-based parallel link-time optimization
-framework, such as ThinLTO in LLVM.
-We also plan to work on the linearization of the candidate functions, allowing
-instruction reordering to maximize the number of matches between the functions.
-%Have a linearization of the candidates based on the current function:
-%Lin(F1) = canonical linearization of F1, then linearize F2 based on Lin(F1).
 
 
