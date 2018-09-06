@@ -54,7 +54,7 @@
 %% %% [3] - double dagger
 %% %% ...
 %% \long\def\symbolfootnotetext[#1]#2{\begingroup%
-%% \def\thefootnote{\fnsymbol{footnote}}\footnotetext[#1]{#2}\endgroup} 
+%% \def\thefootnote{\fnsymbol{footnote}}\footnotetext[#1]{#2}\endgroup}
 
 \linespread{0.94}
 %% END OF HACKS
@@ -164,8 +164,10 @@ escapeinside={@}{@}             % Escape sequence @ESCAPED STUFF@
 \interfootnotelinepenalty=10000
 
 %% Tables
+\usepackage{colortbl}
+\usepackage{color}
 \usepackage{booktabs}
-\usepackage[table]{xcolor}
+%\usepackage[table]{xcolor}
 \definecolor{oddcolor}{gray}{1.0}
 \definecolor{evencolor}{gray}{0.9}
 
@@ -191,10 +193,10 @@ escapeinside={@}{@}             % Escape sequence @ESCAPED STUFF@
 \newcommand{\ScalarCost}{$\mathit{ScalarCost}$}
 
 \newcommand{\todo}[1]{{\color{red}\large{#1}}}
-%\newcommand{\fixme}[1]{{\color{blue}\fbox{FIXME:} #1}}
+\newcommand{\fixme}[1]{{\color{blue}\fbox{FIXME:} #1}}
 \newcommand{\update}{{\color{magenta}\fbox{Needs Update.}}}
 \newcommand{\code}[1]{{\ttfamily #1}}
 
-\newcommand{\fixme}[1]{}
+%\newcommand{\fixme}[1]{}
 
 %% END OF PREAMPLE
