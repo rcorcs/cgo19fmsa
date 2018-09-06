@@ -99,26 +99,18 @@ successors in canonical order~\cite{briggs94,liu96}. We find this strategy leads
 
 \subsection{Sequence Alignment}
 
-When merging two functions, the goal is to identify which segments of code
-are equivalent, and therefore can be merged, and which ones are different.
+When merging two functions, the goal is to identify which segments of the code are equivalent (and therefore can be merged) and which ones
+are different.
 %and labels that can be merged and which ones need to be selected based on the
 %actual function being executed.
-To avoid breaking the semantics of the original program, we also need to
-maintain the ordering of the instructions for each one of the functions.
+To avoid breaking the semantics of the original program, we also need to maintain the order of the instructions for each one of the
+functions.
 
-To this end, after linearization, we reduce the problem of merging functions
-to the problem of \textit{sequence alignment}. %~\cite{carrillo88,wang94}.
-%After linearization, the problem of merging two functions can be reduced to the
-%\textit{sequence alignment} problem~\cite{carrillo88,wang94}, which is itself
-%closely related to finding the
-%\textit{longest common subsequence}~\cite{hirschberg75,maier78}.
-Sequence alignment is an important technique to many areas of science,
-most notably in molecular biology~\cite{needleman70,smith81,carrillo88,wang94}
-where, for example, it is used for identifying homologous subsequences of amino
-acid in proteins.
-Figure~\ref{fig:opcode-align} shows an example of the sequence alignment
-between two linearized functions extracted from the \text{400.perlbench} benchmark,
-including the one used in Figure~\ref{fig:linearization-example}.
+To this end, after linearization, we convert the function merging problem to the problem of \textit{sequence alignment}. Sequence alignment
+is an important technique to many areas of science, most notably in molecular biology~\cite{needleman70,smith81,carrillo88,wang94} where,
+for example, it is used for identifying homologous subsequences of amino acid in proteins. Figure~\ref{fig:opcode-align} shows an example
+of the sequence alignment between two linearized functions extracted from the \texttt{400.perlbench} benchmark, including the one used in
+Figure~\ref{fig:linearization-example}.
 
 Formally, sequence alignment can be defined as follows:
 For a given alphabet $\alpha$, a sequence $S$ of $k$ characters is a subset of
@@ -153,8 +145,9 @@ Finally, for all $j\in\{1,\ldots,l\}$, there is at least one value of $i$ for
 which $b_j^{(i)}$ is not a blank character.
 %and for any pair of sequences that have a non-blank character at position $j$,
 %these characters are equivalent.
-Note that two aligned sequences may contain both non-blank and non-equivalent
-characters at any given position, in which case it contains a mismatch.
+Note that two aligned sequences may contain both non-blank and non-equivalent characters at any given position, in which case it contains a
+mismatch. \fixme{ZW: This formal definition is so confusing. Perhaps consider using Figure 5 to describe how sequence alignment works in
+the laymen terms?}
 
 \begin{figure}[t]
   \centering
@@ -189,19 +182,17 @@ for multi-sequences.
 %identical function types, i.e., both called functions must have an identical
 %return type and an identical list of parameter types.
 
-There is a vast literature on algorithms for performing sequence alignment,
-especially in the context of molecular biology.
-These algorithms range from optimal algorithms based on dynamic programming to
-probabilistic models that do not guarantee
-optimality~\cite{needleman70,smith81,carrillo88,hickey11}.
-In this paper, we use the Needleman-Wunsh algorithm~\cite{needleman70}.
-This algorithm is based on dynamic programming and consists of two main steps.
-First, it builds a \textit{similarity matrix}, based on a scoring scheme, which
-assigns weights for matches, mismatches, and \textit{gaps} (blank characters).
-Afterwards, a backward traversal is performed on the similarity matrix, in order
-to reconstruct the final alignment by maximizing the total score.
-We use a standard scoring scheme for the Needleman-Wunsh algorithm that rewards
-matches and equally penalizes mismatches and gaps.
+%There is a vast literature on algorithms for performing sequence alignment,
+%especially in the context of molecular biology.
+%These algorithms range from optimal algorithms based on dynamic programming to
+%probabilistic models that do not guarantee
+%optimality~\cite{needleman70,smith81,carrillo88,hickey11}.
+
+Our work uses the Needleman-Wunsh algorithm~\cite{needleman70} to perform sequence alignment. This algorithm is based on dynamic
+programming and consists of two main steps. First, it builds a \textit{similarity matrix}, based on a scoring scheme, which assigns weights
+for matches, mismatches, and \textit{gaps} (blank characters). Afterwards, a backward traversal is performed on the similarity matrix, in
+order to reconstruct the final alignment by maximizing the total score. We use a standard scoring scheme for the Needleman-Wunsh algorithm
+that rewards matches and equally penalizes mismatches and gaps.
 
 %\todo{Remove this paragraph.}
 %When producing the final aligned sequence, there may be several possible optimal
