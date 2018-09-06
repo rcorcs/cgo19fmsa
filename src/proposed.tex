@@ -4,13 +4,25 @@ In this section, we describe our proposed function-merging technique, and how it
 expect. Contrary to all existing techniques, ours is able to merge any two arbitrary functions. For this reason, we also propose a cost
 model to decide when it is beneficial to merge two functions (see Section~\ref{sec:profit-model}).
 
-\subsection{Overview}
+\begin{figure}[t!]
+  \centering
+  \includegraphics[width=0.7\linewidth]{figs/opt-pipeline.pdf}
+  \caption{The compilation pipeline of our approach.}
+  \label{fig:opt-pipeline}
+\end{figure}
+
+\subsection{The Compilation Pipeline}
 Our approach is implemented as an LLVM pass to perform at the LLVM IR level. Therefore, it can perform function merging across application
 and library code.
 
+Figure~\ref{fig:opt-pipeline} shows an overview of the compilation pipeline using our function merging (FM) approach. First, we apply early
+code-size optimizations per compilation-unit (e.g., \update{functions and basic blocks}). Then, function merging and further code-size
+optimizations are applied during monolithic link-time optimization~(LTO). With LTO, object file generation is delayed until all input
+modules are known, instead of being generated per
+compilation-unit, which enables more powerful optimizations based on whole-program analyses. %The baseline uses exactly the same compilation
+%pipeline, except for not having any function-merging optimization.
 
-
-
+\subsection{Overview of Our Approach}
 Intuitively, when we are manually merging two functions, in a textual format, we try to visualize them side by side, identifying the
 equivalent segments of code and the non-equivalent ones. Then, we use this understanding to create the merged function. In this paper, we
 propose a technique that follows this simple yet effective principle. In the core of our technique lies a sequence alignment algorithm,
