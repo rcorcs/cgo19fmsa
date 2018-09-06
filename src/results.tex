@@ -159,16 +159,16 @@ function-merging optimizations, usually by a significant margin.
 %little compilation-time overhead,
 %merging identical functions, in most cases, has a rather small impact on
 These results show that, although the LLVM's identical function merging has 
-little compilation-time overhead, in most cases, has a rather small impact on
-code-size reduction, with an average reduction of less than 1\%.
+little compilation-time overhead, in most cases, it also has a rather small
+impact on code-size reduction, with an average reduction of less than 1\%.
 The only few cases where it has a noticeable impact are on some of the C++
 benchmarks, namely, 447.dealII, 450.soplex, and 471.omnetpp, which is mostly
 due to the heavy use of templating. %, as exemplified in Figure~\ref{fig:identical-example}.
 %However, the proposed technique (FMSA) can also perform much better on these
 However, FMSA can also perform much better on these
-benchmarks, with a difference of almost 6$\times$ on the 471.omnetpp benchmark.
+benchmarks, with an improvement of almost 6$\times$ on the 471.omnetpp benchmark.
 Moreover, our technique also shows remarkable reductions on several of the
-C benchmarks, such as, 462.libquantum and 482.sphinx3, especially when taken into
+C benchmarks, such as, 462.libquantum and 482.sphinx3, especially when taking into
 account that the other techniques have no real impact on these benchmarks.
 
 %Figure~\ref{fig:libquantum-example} shows an example of two functions\footnote{We
@@ -280,16 +280,17 @@ compilation-time overhead.
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=\linewidth]{figs/compilation-time.pdf}
+  \includegraphics[width=\linewidth]{figs/runtime-impact.pdf}
   \vspace{-4ex}
-  \caption{Runtime. \todo{add the correct plot.}}
-  \label{fig:runtime}
+  \caption{Runtime.}
+  \label{fig:runtime-impact}
 \end{figure*}
 
 The primary goal of function merging is to reduce code size.
 Nevertheless, it is also important to understand its impact on the programs'
 execution time and the trade-offs between performance and code-size reduction.
-Overall, our optimization has an impact of about 3\% on code performance.
+Figure~\ref{fig:runtime-impact} shows the normalized execution time.
+Overall, our optimization has an average impact of about 3\% on programs' performance.
 For most of the programs, in the benchmark suite, there are no
 statistical differences between the version optimized with the proposed function
 merging or the baseline.
@@ -298,33 +299,25 @@ There are only three cases with a noticeable performance impact, namely,
 In particular, the 462.libquantum benchmark shows a performance degradation of
 about \todo{20\%}.
 
-As a case study, we analyze the performance impact on the \text{462.libquantum}
-benchmark.
-After a detailed inspection of the program's execution with profiling
-information, we identified only two functions that contain the hottest basic
-blocks in the whole program.
-Hot basic blocks are determined based on the block frequencies recorded by
-instrumenting all basic blocks in the program~\cite{ball94}.
-The two hottest functions are: \text{quantum\_gate1} and
-\text{quantum\_decohere}.
-If we cross this information with the list of merged functions, we can confirm
-that the function \text{quantum\_gate1} is involved in a merge operation with
-a non-identical function.
+%As a case study, we analyze the performance impact on the \text{462.libquantum}
+%benchmark.
+%After a detailed inspection of the program's execution with profiling
+%information, we identified only two functions that contain the hottest basic
+%blocks in the whole program.
+%Hot basic blocks are determined based on the block frequencies recorded by
+%instrumenting all basic blocks in the program~\cite{ball94}.
+%The two hottest functions are: \text{quantum\_gate1} and
+%\text{quantum\_decohere}.
+%If we cross this information with the list of merged functions, we can confirm
+%that the function \text{quantum\_gate1} is involved in a merge operation with
+%a non-identical function.
 
-%\begin{figure*}[th]
-%  \centering
-%%  \includegraphics[width=\linewidth]{figs/speedup-intel.pdf}
-%  \caption{Speedup.}
-%  \label{fig:speedup-intel}
-%\end{figure*}
-
-If, instead, we prevent this function of being merged, the performance
-impact goes away and we end up with a performance which is statistically
-equivalent to the baseline version.
-However, \text{quantum\_gate1} is the largest function in the program,
-%with more than 600 LLVM instructions,
-which means that this merge operation greatly contributes
-to the overall code-size reduction.
-Preventing this merge results in the code-size reduction dropping from 16\% to
-6.9\%, which is still a very significant code-size reduction compared to the
-other techniques that show no reduction on this particular benchmark.
+%If, instead, we prevent this function of being merged, the performance
+%impact goes away and we end up with a performance which is statistically
+%equivalent to the baseline version.
+%However, \text{quantum\_gate1} is the largest function in the program,
+%which means that this merge operation greatly contributes
+%to the overall code-size reduction.
+%Preventing this merge results in the code-size reduction dropping from 16\% to
+%6.9\%, which is still a very significant code-size reduction compared to the
+%other techniques that show no reduction on this particular benchmark.

@@ -19,7 +19,8 @@ In the core of our technique lies a sequence alignment algorithm, which is respo
   \centering
   %\vspace{-1ex}
   \includegraphics[width=0.85\linewidth]{figs/func-merge-overview.pdf}
-  \caption{Overview of our function-merging technique.}
+  \caption{Overview of our function-merging technique.
+           Equivalent segments of code is represented in green and the non-equivalent ones in red.}
   \label{fig:func-merge-overview}
   %\vspace{-1ex}
 \end{figure}
@@ -39,8 +40,8 @@ Aligned segments with equivalent code are merged, avoiding redundancy, %redundan
 and the remaining segments where the two functions differ have their code guarded by a function identifier. At this point, we also create a
 merged list of parameters where parameters of the same type are shared between the functions, without necessarily keeping their original
 order. This new function can then be used to replace the original functions, as they are semantically equivalent, given the appropriate
-function-identifier parameter. \fixme{ZW: It is weird sequence alignment is introduced here. We need to explain why using sequence
-alignment.}
+function-identifier parameter.
+%\fixme{ZW: It is weird sequence alignment is introduced here. We need to explain why using sequence alignment.}
 
 \subsection{Linearization}
 
@@ -55,10 +56,9 @@ The \textit{linearization}\footnote{Although linearization of CFGs
 usually refers to a predicated representation, % resulting from an if-conversion,
 in this paper, we refer to a simpler definition.} is a key step for enabling the
 use of sequence alignment.
-It consits in specifying an ordering of the basic blocks based on a traversal
+It consists in specifying an ordering of the basic blocks based on a traversal
 of the CFG and then producing a sequence of labels and instructions, similar to a textual representation of the function.
 All instructions from a given basic block must appear right after the label of that basic block, besides maintaining the same order among them.
-However, the exact ordering chosen for the basic blocks will not compromise the correctness of the results but it can have an impact on the quality of the merge operation.
 Figure~\ref{fig:linearization-example} shows a simplified example of the linearization of the CFG of a function extracted from the \text{400.perlbench} benchmark in SPEC CPU2006.
 
 %Although this operation is trivial, the specific ordering of the basic blocks
@@ -69,6 +69,7 @@ Figure~\ref{fig:linearization-example} shows a simplified example of the lineari
 %if there are successors.
 %This is true for most IRs, such as the LLVM IR, or can be easily adapted.
 
+The exact ordering chosen for the basic blocks will not compromise the correctness of the results but it can have an impact on the quality of the merge operation.
 In our implementation, the linearization uses a reverse post-order~(RPO) of the
 basic blocks, following a canonical ordering of the successors.
 %, e.g., \textit{true} branches before \textit{false} ones.

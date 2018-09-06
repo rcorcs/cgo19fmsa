@@ -7,13 +7,13 @@
 In this section, for a good understanding of this paper, we provide a brief 
 description of the existing techniques for function merging.
 Specifically, we describe the state-of-the-art~\cite{edler14} and the
-technique offered by major compilers.
+simple technique offered by major compilers.
 %e.g., GCC and LLVM~\cite{llvm-fm,livska14}.
 
 The function merging optimization currently offered by GCC and LLVM is
 only able to merge identical functions~\cite{llvm-fm,livska14}.
 This optimization is only flexible enough to accommodate simple type mismatches
-provided they can be bitcasted in a losslessly way.
+provided they can be bitcast in a lossless way.
 %Similarly to the technique proposed by Edler von Koch~et~al.~\cite{edler14},
 %LLVM's optimization also exploits structural similarity among functions.
 %However, the current implementation does not allow instructions to differ in
@@ -41,7 +41,7 @@ if they agree in the number, order, and types of their parameters as well as
 their return types, linkage type, and other compiler-specific properties.
 %CFGs are equivalent if and only if they are isomorphic graphs, i.e., there is a
 %directed edge-preserving bijection between the vertex-set of the two graphs.
-In addition to the structural similarity among functions, they also consider
+In addition to the structural similarity among functions, they also require
 that corresponding basic blocks of isomorphic CFGs have exactly the same number
 of instructions and that corresponding instructions must have equivalent
 resulting types but may differ in their opcodes or in the number and type of
@@ -67,4 +67,4 @@ their ability of merging functions.
 %fundamentally different from the existing ones, addressing most of their major
 %limitations.
 In the next section, we show examples of real functions that the existing
-techniques fail to merge and how we can solve them.
+techniques fail to merge and the scale of the missed opportunity.
