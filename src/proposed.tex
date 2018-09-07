@@ -632,11 +632,6 @@ original functions to a single call to the merged function.
 Afterwards, if the original functions can be completely removed, we update the
 call graph, replacing the calls to the original functions by calls to the
 merged function.
-When compiling the whole program, during link-time optimization, we can be more
-aggressive when removing the original functions.
-However, if the optimization is applied per compilation unit, then extra
-conditions must be guaranteed, e.g., the function must not be externally visible
-to other compilation units.
 Finally, the new function is added to the optimization working list.
 Because of this feedback loop, merge operations can also be performed on
 functions that resulted from previous merge operations.
@@ -677,3 +672,34 @@ Our implementation makes use of the code-size costs provided by LLVM's
 target-transformation interface (TTI), which is widely used in the decision
 %making by most of the LLVM's optimizations.
 making of most optimizations.
+
+\subsection{Compilation Mode}
+
+There are different ways of applying this optimization, with different trade-offs.
+\fixme{Work in progress.}
+When compiling the whole program, e.g., during link-time optimization, we can be
+more aggressive when removing the original functions.
+However, if the optimization is applied per compilation unit, then extra
+conditions must be guaranteed, e.g., the function must not be externally visible
+to other compilation units.
+
+
+\begin{figure}[b]
+  \centering
+  \includegraphics[width=0.7\linewidth]{figs/opt-pipeline.pdf}
+  \caption{In our experiments we use a compilation pipeline with a monolithic link-time optimization (LTO).}
+  \label{fig:opt-pipeline}
+\end{figure}
+
+
+Figure~\ref{fig:opt-pipeline} shows an overview of the compilation pipeline used
+throughout our evaluation.
+First, we apply early code-size optimizations per compilation-unit.
+Then, function merging and further code-size optimizations are applied during
+monolithic link-time optimization~(LTO).
+With LTO, object file generation is delayed until all input modules are known,
+instead of being generated per compilation-unit, which enables more powerful
+optimizations based on whole-program analyses.
+The baseline uses exactly the same compilation pipeline, except for not having
+any function-merging optimization.
+
