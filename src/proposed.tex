@@ -5,30 +5,33 @@ how it optimally merges the motivating examples. Our technique works on any two
 arbitrary functions, even when they have few similarities and merging them would
 be counter-productive. For that reason, we also introduce a cost model to decide
 when it is beneficial to merge two functions (see Section~\ref{sec:profit-model}).
+To avoid an expensive quadratic exploration, we integrate our profitability analysis
+with an efficient ranking mechanism based on a lightweight fingerprint of the functions.
 
 %% I don't think the compilation pipeline should be here.
 %% The optimization does not need to be performed during link-time.
 %% I think it is part of our experimental setup, that's way it was in the result section.
 %% It could be performed per compilation-unit as well.
-\begin{figure}[t!]
-  \centering
-  \includegraphics[width=0.7\linewidth]{figs/opt-pipeline.pdf}
-  \caption{The compilation pipeline of our approach.}
-  \label{fig:opt-pipeline}
-\end{figure}
+%\begin{figure}[t!]
+%  \centering
+%  \includegraphics[width=0.7\linewidth]{figs/opt-pipeline.pdf}
+%  \caption{The compilation pipeline of our approach.}
+%  \label{fig:opt-pipeline}
+%\end{figure}
 
-\subsection{The Compilation Pipeline}
-Our approach is implemented as an LLVM pass to perform at the LLVM IR level. Therefore, it can perform function merging across application
-and library code.
+%\subsection{The Compilation Pipeline}
+%Our approach is implemented as an LLVM pass to perform at the LLVM IR level. Therefore, it can perform function merging across application
+%and library code.
 
-Figure~\ref{fig:opt-pipeline} shows an overview of the compilation pipeline using our function merging (FM) approach. First, we apply early
-code-size optimizations per compilation-unit (e.g., \update{functions and basic blocks}). Then, function merging and further code-size
-optimizations are applied during monolithic link-time optimization~(LTO). With LTO, object file generation is delayed until all input
-modules are known, instead of being generated per
-compilation-unit, which enables more powerful optimizations based on whole-program analyses. %The baseline uses exactly the same compilation
-%pipeline, except for not having any function-merging optimization.
+%Figure~\ref{fig:opt-pipeline} shows an overview of the compilation pipeline using our function merging (FM) approach. First, we apply early
+%code-size optimizations per compilation-unit (e.g., \update{functions and basic blocks}). Then, function merging and further code-size
+%optimizations are applied during monolithic link-time optimization~(LTO). With LTO, object file generation is delayed until all input
+%modules are known, instead of being generated per
+%compilation-unit, which enables more powerful optimizations based on whole-program analyses. %The baseline uses exactly the same compilation
+%%%%pipeline, except for not having any function-merging optimization.
 
-\subsection{Overview of Our Approach}
+%\subsection{Overview of Our Approach}
+\subsection{Overview}
 Intuitively, when we are manually merging two functions, in a textual format, we try to visualize them side by side, identifying the
 equivalent segments of code and the non-equivalent ones. Then, we use this understanding to create the merged function. In this paper, we
 propose a technique that follows this simple yet effective principle. In the core of our technique lies a sequence alignment algorithm,
@@ -64,9 +67,11 @@ into a single function based on the aligned sequences.
 Aligned segments with equivalent code are merged, avoiding redundancy, %redundant code,
 and the remaining segments where the two functions differ have their code guarded by a function identifier. At this point, we also create a
 merged list of parameters where parameters of the same type are shared between the functions, without necessarily keeping their original
-order. This new function can then be used to replace the original functions, as they are semantically equivalent, given the appropriate
+order.
+We also allow for the return types to be different, in which case an aggregate type can be used to return values of both types or, if one of them are void, then just the non-void type needs to be returned.
+Finally, the new merged function can then be used to replace the original functions, as they are semantically equivalent, given the appropriate
 function-identifier parameter.
-%\fixme{ZW: It is weird sequence alignment is introduced here. We need to explain why using sequence alignment.}
+When merging identical functions, the resulting function is also identical, and no function-identifier parameter is needed.
 
 \subsection{Linearization}
 
@@ -120,15 +125,11 @@ Moreover, we find this strategy leads to good performance in our experiment.
 
 \subsection{Sequence Alignment}
 
-%When merging two functions, the goal is to identify which segments of the code are equivalent (and therefore can be merged) and which ones
-%are different.
-%%and labels that can be merged and which ones need to be selected based on the
-%%actual function being executed.
-%To avoid breaking the semantics of the original program, we also need to maintain the order of the instructions for each one of the
-%functions.
+When merging two functions, the goal is to identify which segments of the code are equivalent (and therefore can be merged) and which ones are different.
+To avoid breaking the semantics of the original program, we also need to maintain the order of the instructions for each one of the functions.
 
-After linearization, we convert the function merging problem to the problem of \textit{sequence alignment}. Sequence alignment is an
-important technique to many areas of science, most notably in molecular biology~\cite{needleman70,smith81,carrillo88,wang94} where, for
+%%definition of "reduce": present a problem or subject in a simplified form.
+After linearization, we reduce the problem of merging functions to the problem of \textit{sequence alignment}. Sequence alignment is an important technique to many areas of science, most notably in molecular biology~\cite{needleman70,smith81,carrillo88,wang94} where, for
 example, it is used for identifying homologous subsequences of amino acid in proteins. Figure~\ref{fig:opcode-align} shows an example of
 the sequence alignment between two linearized functions extracted from the \texttt{400.perlbench} benchmark, including the one used in
 Figure~\ref{fig:linearization-example}.
@@ -215,9 +216,12 @@ for multi-sequences.
 %These algorithms range from optimal algorithms based on dynamic programming to
 %probabilistic models that do not guarantee
 %optimality~\cite{needleman70,smith81,carrillo88,hickey11}.
+Our work uses the Needleman-Wunsh algorithm~\cite{needleman70} to perform sequence alignment.
+This algorithm gives an alignment that is guaranteed to be optimal for a given scoring scheme~\cite{higgins89},
+however, other algorithm could also be used with different performance and memory usage trade-offs~\cite{needleman70,smith81,carrillo88,hickey11}.
+Different alignments would produce different but valid merged functions.
 
-Our work uses the Needleman-Wunsh algorithm~\cite{needleman70} to perform sequence alignment. This algorithm is based on dynamic
-programming and consists of two main steps. First, it builds a \textit{similarity matrix}, based on a scoring scheme, which assigns weights
+The Needleman-Wunsh algorithm~\cite{needleman70} is based on dynamic programming and consists of two main steps. First, it builds a \textit{similarity matrix}, based on a scoring scheme, which assigns weights
 for matches, mismatches, and \textit{gaps} (blank characters). Afterwards, a backward traversal is performed on the similarity matrix, in
 order to reconstruct the final alignment by maximizing the total score. We use a standard scoring scheme for the Needleman-Wunsh algorithm
 that rewards matches and equally penalizes mismatches and gaps.
@@ -263,6 +267,13 @@ return types and identical list of parameters.
 
 \subsubsection{Exception Handling Code}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% RODRIGO: I think that we need to talk about landing blocks, not only landing pad instructions,
+%%% because labels that represent landing blocks are treated differently from normal basic blocks,
+%%% and this is essential handling this kind of code, which is the key for some of the huge reduction
+%%% on the benchmarks 447.dealII, 482.omnetpp, etc.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %In this section, we describe restrictions imposed by exception handling code and
 %their equivalence relation.
 Most modern compilers implement the zero-cost Itanium ABI for exception
@@ -274,6 +285,8 @@ when an exception has been thrown.
 %is crucial in deciding what action to take when the landing block is entered,
 %and corresponds to the return value of the personality function, which must also
 %be identical for the two functions being merged.
+
+
 
 %The invoke instruction co-operates tightly with its landing block, i.e., the basic block pointed by the exception branch of an invoke
 %instruction. The landing block must have a landing-pad instruction as its first non-$\phi$ instruction. Given this restriction, two
