@@ -1,14 +1,14 @@
 \section{Introduction}
 \label{sec:introduction}
 
-In recent years, resource-constrained devices are becoming increasingly
+In recent years, resource-constrained devices have become increasingly
 important. Application binaries for these devices often reach several megabytes
 in size, turning memory size into a limiting factor~\cite{plaza18}. Just adding more
-memory is not always a viable option. Highly integrated System-on-Chips are
+memory is not always a viable option. Highly integrated Systems-on-Chip are
 common in this market and their memories typically occupy the largest fraction
 of the chip area, contributing most of the overall cost. Even small
 increases in memory area translate directly to equivalent increases in cost,
-which lead to enormous levels of lost profit in large scales~\cite{edler10}.
+which lead to enormous levels of lost profit at large scales~\cite{edler10}.
 
 In such constrained scenarios, reducing the code size is essential~\cite{schultz03,varma04,sehgal12,keoh14,auler17}.
 Unfortunately, production compilers offer little help beyond dead-code
@@ -42,7 +42,7 @@ compiled form.
 While an improvement, even the state-of-the-art often fails to produce any
 noticeable code size reduction. In this paper, we introduce a novel way to merge
 functions that overcomes the major limitations of the state-of-the-art. Our
-insight was that the weak results of existing function merging implementations
+insight is that the weak results of existing function merging implementations
 are not due to the lack of duplicate code but due to the rigid, overly restrictive
 algorithms they use to find duplicates.
 
@@ -73,7 +73,7 @@ In this paper, we make the following contributions:
 \begin{itemize}[noitemsep,topsep=3pt]
   \item We are the first to allow merging arbitrary functions, even ones with
     different signatures and CFGs.
-  \item An novel ranking mechanism for focusing inter-procedural optimizations
+  \item A novel ranking mechanism for focusing inter-procedural optimizations
     to the most profitable function pairs.
   \item We use Sequence Alignment Function Merging to reduce code size by up to
     22\%, outperforming the state-of-the-art by three times, while introducing

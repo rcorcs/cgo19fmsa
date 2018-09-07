@@ -1,7 +1,7 @@
 \section{Our Approach} \label{sec:fm}
 
 In this section we describe our proposed function merging technique and show
-how it optimally merges the motivating examples. Our technique works on any two
+how it merges the motivating examples. Our technique works on any two
 arbitrary functions, even when they have few similarities and merging them would
 be counter-productive. For that reason, we also introduce a cost model to decide
 when it is beneficial to merge two functions (see Section~\ref{sec:profit-model}).
@@ -34,7 +34,7 @@ with an efficient ranking mechanism based on a lightweight fingerprint of the fu
 \subsection{Overview}
 Intuitively, when we are manually merging two functions, in a textual format, we try to visualize them side by side, identifying the
 equivalent segments of code and the non-equivalent ones. Then, we use this understanding to create the merged function. In this paper, we
-propose a technique that follows this simple yet effective principle. In the core of our technique lies a sequence alignment algorithm,
+propose a technique that follows this simple yet effective principle. At the core of our technique lies a sequence alignment algorithm,
 which is responsible for arranging the code in segments that are either equivalent or non-equivalent.
 
 \begin{figure}[t!]
@@ -673,16 +673,27 @@ target-transformation interface (TTI), which is widely used in the decision
 %making by most of the LLVM's optimizations.
 making of most optimizations.
 
-\subsection{Compilation Mode}
+\subsection{Link-Time Optimization}
 
 There are different ways of applying this optimization, with different trade-offs.
-\fixme{Work in progress.}
-When compiling the whole program, e.g., during link-time optimization, we can be
-more aggressive when removing the original functions.
+We can apply our optimization on a per compilation-unit basis, which tends to
+result in low compilation-time overheads, since only part of the program is being
+considered at a time.
+However, this also limits the optimization opportunities, as we can only merge
+pairs of functions within the same compilation unit.
+
+This optimization can also be applied in the whole-program, for example, during
+link-time optimization (LTO).
+Optimizing the whole-program is beneficial for the simple fact that we have more
+information and more functions to merge.
+It allows us to merge pairs of functions across modules.
+
+In addition to the benefit of being able to merge more functions, when optimizing
+the whole program, we can also be more aggressive when removing the original functions,
+since we know that there will be no external reference to them.
 However, if the optimization is applied per compilation unit, then extra
 conditions must be guaranteed, e.g., the function must not be externally visible
 to other compilation units.
-
 
 \begin{figure}[b]
   \centering
@@ -700,6 +711,4 @@ monolithic link-time optimization~(LTO).
 With LTO, object file generation is delayed until all input modules are known,
 instead of being generated per compilation-unit, which enables more powerful
 optimizations based on whole-program analyses.
-The baseline uses exactly the same compilation pipeline, except for not having
-any function-merging optimization.
 

@@ -5,10 +5,12 @@ even more important than performance.
 %Not only performance, but also code size is a bottleneck in such systems.
 Compared to more traditional platforms, memory is a larger part of the cost and
 code occupies much of it. Despite that, compilers make little effort to reduce
-code size. Production compilers only save space by merging identical functions,
+code size.
+One key technique attempts to merge the bodies of similar functions.
+However, production compilers only apply this optimization to identical functions,
 while research compilers improve on that by merging the few functions with
 identical control-flow graphs and signatures.
-However, existing solutions are insufficient and we end up having to either increase cost by adding more memory or remove functionalities from programs.
+Overall, existing solutions are insufficient and we end up having to either increase cost by adding more memory or remove functionalities from programs.
 %This leaves us with two equally bad choices for dealing with code size: either increase cost by adding more memory or remove functionalities from the program.
 %This paper shows a better way.
 
