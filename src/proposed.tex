@@ -42,10 +42,11 @@ which is responsible for arranging the code in segments that are either equivale
   %\vspace{-1ex}
   \includegraphics[width=0.85\linewidth]{figs/func-merge-overview.pdf}
   \caption{Overview of our function-merging technique.
-           Equivalent segments of code is represented in green and the non-equivalent ones in red.}
+           Equivalent segments of code is represented in light green and the non-equivalent ones in dark red.}
            %\fixme{ZW: We need to change the colors and don't use color codes in the text, because the paper may be printed in black and white.}
            %\fixme{Rodrigo: I think it is very ugly to use dashed background, or using other ugly patterns to differenciate things.
            %        I think it is important for the paper to look nice and give a good first impression to the reader.}
+		   %\fixme{PP: I don't like patterns either, but the two colours looked the same in b&w or to colourblind people. Made the green light and the red dark to make them distinct.}
            %%By the way, the seq. alignment has a visual structural difference between code that will be merged (blocks in the centre in Fig. 5, and blocks in both functions in this figure.}
            %%compared to code that will not be merged, only one of the functions have a block of code.
 
@@ -88,10 +89,10 @@ the behavior of function merging in production compilers.
 
 Linearization\footnote{Although linearization of CFGs
 usually refers to a predicated representation, % resulting from an if-conversion,
-in this paper, we refer to a simpler definition.} is a key step for enabling the use of sequence alignment. It consists in specifying an
-ordering of the basic blocks based on a traversal of the CFG and then producing a sequence of labels and instructions, similar to a textual
-representation of the function. All instructions from a given basic block must appear right after the label of that basic block, besides
-maintaining the same order among them. Figure~\ref{fig:linearization-example} shows a simplified example for linearizing the CFG of a
+in this paper, we use a simpler definition.} is a key step for enabling the use of sequence alignment. It takes the CFG of the function,
+specifies a traversal order of the basic blocks, and for each block outputs its label and its instructions. Linearization
+maintains the original ordering of the instructions inside each basic block.
+Figure~\ref{fig:linearization-example} shows a simplified example of linearizing the CFG of a
 real function extracted from the SPEC CPU2006 \texttt{400.perlbench} benchmark.
 
 %Although this operation is trivial, the specific ordering of the basic blocks
@@ -102,10 +103,12 @@ real function extracted from the SPEC CPU2006 \texttt{400.perlbench} benchmark.
 %if there are successors.
 %This is true for most IRs, such as the LLVM IR, or can be easily adapted.
 
-The exact order chosen for the basic blocks will not compromise the correctness of the results but it can have an impact on the quality of
-the merge operation. We empirically choose to linearize functions using a reverse post-order of the basic blocks, with a canonical ordering of successor basic blocks.
-It is also common practice for compilers to rely on prior canonicalizations~\cite{briggs94,liu96}.
-Moreover, we find this strategy leads to good performance in our experiment.
+The traversal order we use for linearization has no effect on the correctness of the transformation
+but it can affect its effectiveness. We empirically chose a reverse post-order traversal with a
+canonical ordering of successor basic blocks.
+%It is also common practice for compilers to rely on prior canonicalizations~\cite{briggs94,liu96}.
+This strategy leads to good performance in our experiments.
+
 %a strategy by first ordering the basic blocks in reverse post-order, and then ordering the
 %successors in canonical order~\cite{briggs94,liu96}. 
 %, e.g., \textit{true} branches before \textit{false} ones.
@@ -244,30 +247,20 @@ that rewards matches and equally penalizes mismatches and gaps.
 
 \subsection{Equivalence Evaluation}
 
-In order to merge functions we first need to define what makes two pieces of code within two functions equivalent and therefore are
-mergeable. In this section, we describe how we define the equivalence relation between values in two separate cases, namely, the
-equivalence between instructions and the equivalence between labels.
+Before we merge functions, we first need to define what makes two pieces of code equivalent and
+therefore mergeable. In this section, we define equivalence in two separate cases, the equivalence
+between instructions and the equivalence between labels.
 
-Labels can represent both normal basic blocks and landing blocks, which are used in exception handling code. Labels of normal basic blocks
-are ignored during code equivalence evaluation, but those for landing blocks must be treated differently. We describe exception handling
-code in more detail in the next section.
+In general, two instructions are equivalent if: $(1)$ their opcodes are semantically equivalent,
+but not necessarily the same; $(2)$ they both have equivalent types; and $(3)$ they have pairwise
+operands with equivalent types. Types are equivalent if they can be bitcasted in a lossless way from one to
+the other. For pointers, we also need to make sure that there is no conflict regarding memory alignment.
+In the special case of function calls, type equivalence means that both instructions have identical
+function types, i.e. identical return types and identical list of parameters.
 
-Two instructions are equivalent if: $(1)$ their opcodes are semantically
-equivalent, but not necessarily the same; $(2)$ they both have equivalent types;
-and $(3)$ they have pairwise operands with equivalent types.
-Types are considered equivalent if they can be bitcasted in a lossless way
-from one to the other.
-It is also important to make sure that there is no conflict regarding memory
-alignment when handling pointers.
-No additional restriction is imposed on the operands of the two instructions
-being compared for equivalence.
-Whenever two operands cannot be statically proved to represent the same value,
-a select instruction is used to ensure that the correct value will be used in
-the computation.
-%distinguish between the execution of two functions being merged.
-For function calls, the type equivalence requires that both instructions have
-identical function types, i.e., both called functions must have identical
-return types and identical list of parameters.
+Labels can represent both normal basic blocks and landing blocks used in exception handling code.
+Labels of normal basic blocks are ignored during code equivalence evaluation, but we cannot do the
+same for landing blocks. We describe how we handle such blocks in more detail in the following section.
 
 \subsubsection{Exception Handling Code}
 
@@ -278,8 +271,6 @@ return types and identical list of parameters.
 %%% on the benchmarks 447.dealII, 482.omnetpp, etc.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%In this section, we describe restrictions imposed by exception handling code and
-%their equivalence relation.
 Most modern compilers implement the zero-cost Itanium ABI for exception
 handling~\cite{dinechin00}, including GCC and LLVM, sometimes called the
 \textit{landing-pad} model.
