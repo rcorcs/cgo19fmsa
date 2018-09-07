@@ -5,13 +5,6 @@ In this section, we evaluate the proposed optimization, where we analyze our
 improvements on code-size reduction, as well as its impact on the program's
 performance and compilation-time.
 
-%\begin{figure}[t!]
-%  \centering
-%  \includegraphics[width=0.7\linewidth]{figs/opt-pipeline.pdf}
-%  \caption{The compilation pipeline using a monolithic link-time optimization (LTO).}
-%  \label{fig:opt-pipeline}
-%\end{figure}
-
 
 
 \subsection{Experimental Setup}
@@ -25,6 +18,14 @@ The ARM platform has a Cortex-A53 ARMv8 CPU of 1.4~GHz with 1~GiB of RAM.
 We also use the Intel platform to cross-compile all benchmarks to the ARM
 platform.
 For this reason, we only show compilation-time results for the Intel platform.
+
+\begin{figure}[t!]
+  \centering
+  \includegraphics[width=0.7\linewidth]{figs/opt-pipeline.pdf}
+  \caption{In our experiments we use a compilation pipeline with a monolithic link-time optimization (LTO).}
+  \label{fig:opt-pipeline}
+\end{figure}
+
 
 \begin{figure*}[t!]
   \centering
@@ -50,7 +51,16 @@ The oracle represents the results assuming a perfect ranking strategy, which req
 Section~\ref{sec:framework}. \fixme{ZW: I suggest we call ``oracle" exhaustive-exploration instead. ``oracle" often used to refer the
 up-bound performance.}
 
-
+Figure~\ref{fig:opt-pipeline} shows an overview of the compilation pipeline used
+throughout our evaluation.
+First, we apply early code-size optimizations per compilation-unit.
+Then, function merging and further code-size optimizations are applied during
+monolithic link-time optimization~(LTO).
+With LTO, object file generation is delayed until all input modules are known,
+instead of being generated per compilation-unit, which enables more powerful
+optimizations based on whole-program analyses.
+The baseline uses exactly the same compilation pipeline, except for not having
+any function-merging optimization.
 
 \subsection{Code-Size Reduction}
 

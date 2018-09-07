@@ -21,15 +21,18 @@ bottom of Figure~\ref{fig:sphinx-example}, these functions can be easily merged
 in three steps. First, we expand the function argument list to include the
 two parameters of different types. Then, we add a function identifier,
 \texttt{func\_id}, to indicate which of the two functions is called. Finally,
-we place the lines that are unique to one of the functions in an if-then-else, with
-\texttt{func\_id} being the predicate. Overall, merging these two functions
-reduces the total number of machine instructions by 18\%.
+we place the lines that are unique to one of the functions in
+a conditional branch predicated by the \texttt{func\_id}.
+%an if-then-else, with \texttt{func\_id} being the predicate.
+Overall, merging these two functions reduces the total number of machine
+instructions by 18\% in the final object file for the Intel x86 architecture.
 
 Despite being so similar, neither GCC or LLVM can merge the two functions.
-They can only handle identical functions and functions where type mismatches
-can be removed by lossless bitcasting of the conflicting variables. Similarly, the
-state-of-the-art~\cite{edler14}, while much more powerful, cannot merge the two
-functions either. It requires both functions to have the same list of parameters.
+They can only handle identical functions, allowing only for type mismatches
+that can be removed by lossless bitcasting of the conflicting values.
+Similarly, the state-of-the-art~\cite{edler14}, while more powerful, cannot
+merge the two functions either. It requires both functions to have the same list
+of parameters.
 
 \begin{figure}[t!]
   \centering
@@ -42,11 +45,10 @@ functions either. It requires both functions to have the same list of parameters
 
 Figure~\ref{fig:libquantum-example} gives another two functions extracted from \texttt{462.libquantum}. While these two functions have the
 same signature, i.e. the same return type and list of parameters, they differ slightly in their bodies. Merging them manually
-is straightforward, shown at the bottom of Figure~\ref{fig:libquantum-example}, reducing the number of instructions by 23\%. But again,
+is straightforward, shown at the bottom of Figure~\ref{fig:libquantum-example}, reducing the number of instructions by 23\% in the final object file. But again,
 none of the existing techniques can merge the two functions. The state-of-the-art can work with non-identical functions, but it needs
 their CFGs to be identical. Even a single extra basic block, as in this case, makes merging impossible.
 
 These examples show that all existing techniques are severely limited. Optimization passes in production compilers work only on effectively
-identical functions. State-of-the-art techniques can merge functions only when they are structurally similar, with identical signatures and
-isomorphic CFGs. All of them miss massive opportunities for code size reduction. In the next sections, we show a better approach which
+identical functions. State-of-the-art techniques can merge functions only when they are structurally identical, with isomorphic CFGs, and identical signatures. All of them miss massive opportunities for code size reduction. In the next sections, we show a better approach which
 removes such constraints and is able to merge arbitrary functions, when it is profitable to do so.
