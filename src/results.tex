@@ -48,7 +48,7 @@ instead of using a rank-based greedy approach, actually executes the merge opera
 %However, the oracle has a very costly quadratic exploration, as explained in
 %Section~\ref{sec:framework}.
 The oracle represents the results assuming a perfect ranking strategy, which requires a very costly quadratic exploration, as explained in
-Section~\ref{sec:framework}. \fixme{ZW: I suggest we call ``oracle" exhaustive-exploration instead. ``oracle" often used to refer the
+Section~\ref{sec:framework}. \fixme{ZW: I suggest we call ``oracle" exhaustive-exploration instead. ``oracle" is often used to refer the
 up-bound performance.}
 
 Figure~\ref{fig:opt-pipeline} shows an overview of the compilation pipeline used
@@ -93,8 +93,8 @@ proposed technique shows some impressive code-size reductions compared to the ot
 some of these results for both platforms. Although not noticeable in Figure~\ref{fig:reduction-obj}, the state-of-the-art slightly
 increases code-size in two benchmarks, namely, \texttt{462.libquantum} and \texttt{482.sphinx3}, while FMSA shows significant reductions in
 both cases. The only case where a configuration of FMSA results in slightly less code-size saving over the SoA is on the \texttt{445.gobmk}
-benchmark on the ARM platform. However, the oracle is able to improve over the SoA, with a code-size reduction of 1.33\%. In all other
-cases, FMSA is always equal or better than all other function-merging optimizations, usually by a significant margin.
+benchmark on the ARM platform. However, the FMSA (oracle) is able to improve over the SoA, with a code-size reduction of 1.33\%. In all
+other cases, FMSA is always equal or better than all other function-merging optimizations, usually by a significant margin.
 
 \begin{table}[]
 \label{tab:reduction}
