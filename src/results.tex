@@ -8,16 +8,19 @@ performance and compilation-time.
 
 
 \subsection{Experimental Setup}
-We compare our optimization with the state-of-the-art function merging approach~\cite{edler14}, and the LLVM's implementation of identical
-function merging. All optimizations are implemented in LLVM v7 and evaluated using the C/C++ SPEC CPU2006~\cite{spec} benchmark suite.
+We compare our optimization against the state-of-the-art function merging approach of Edler von Koch et al.~\cite{edler14} and LLVM's identical
+function merging. In our evaluation, we refer to identical function merging as \textit{Identical}, the state-of-the-art as \textit{SoA}, and our
+approach as \textit{FMSA}.
 
-We apply all approaches to an Intel and an ARM platforms. The Intel platform has a quad-core 3.4~GHz Intel Core i7 CPU with 16~GiB of RAM.
+All optimizations are implemented in LLVM v7 and evaluated on the C/C++ SPEC CPU2006~\cite{spec} benchmark suite. We target two different
+instruction sets, the Intel x86-64 and the ARM Thumb. Our Intel testbench has a quad-core 3.4~GHz Intel Core i7 CPU with 16~GiB of RAM.
 %The operating system is openSUSE 42.2 with Linux kernel version 4.4.27.
-The ARM platform has a Cortex-A53 ARMv8 CPU of 1.4~GHz with 1~GiB of RAM.
+The ARM testbench has a Cortex-A53 ARMv8 CPU of 1.4~GHz with 1~GiB of RAM.
 %The operating system of the ARM platform is a Raspbian.
-We also use the Intel platform to cross-compile all benchmarks to the ARM
-platform.
-For this reason, we only show compilation-time results for the Intel platform.
+We use the Intel platform for compiling for either target. As a result, compilation-time is almost
+identical for both targets. Changing the target only affects the behavior of the backend, a very
+short part of the pipeline. Because of that, we only report compilation-time overhead results for
+one of the targets, the Intel ISA.
 
 \begin{figure*}[t!]
   \centering
@@ -31,17 +34,17 @@ For this reason, we only show compilation-time results for the Intel platform.
   \label{fig:reduction-obj}
 \end{figure*}
 
-
-During our evaluation, we refer to LLVM's identical function merging as \textit{Identical}, the state-of-the-art as \textit{SoA}, and our
-proposed function merging as \textit{FMSA}. For the proposed optimization, we vary the exploration threshold (Section~\ref{sec:framework})
-and we present the results for a range of those values. In addition, we also show the results for the oracle exploration strategy, which
-instead of using a rank-based greedy approach, actually executes the merge operation with all candidates and then chooses the best one.
+For the proposed optimization, we vary the exploration threshold (Section~\ref{sec:framework})
+and we present the results for a range of threshold values. We also show the results for the oracle exploration strategy, which
+instead of using a rank-based greedy approach, merges a function with all candidates and chooses the best one.
 %The oracle represents the results assuming a perfect ranking strategy.
 %However, the oracle has a very costly quadratic exploration, as explained in
 %Section~\ref{sec:framework}.
-The oracle represents the results assuming a perfect ranking strategy, which requires a very costly quadratic exploration, as explained in
+This oracle is a perfect ranking strategy but is unrealistic. It requires a very costly quadratic exploration, as explained in
 Section~\ref{sec:framework}. \fixme{ZW: I suggest we call ``oracle" exhaustive-exploration instead. ``oracle" is often used to refer the
 up-bound performance.}
+
+
 
 \subsection{Code-Size Reduction}
 
@@ -114,11 +117,11 @@ other cases, FMSA is always equal or better than all other function-merging opti
 %little compilation-time overhead,
 %merging identical functions, in most cases, has a rather small impact on
 For most of the cases, the LLVM's identical function merging has a small impact on code-size reduction, with an average reduction of less
-than 1\%. The only few cases where it has a noticeable impact are on some of the C++ benchmarks, namely, 447.dealII, 450.soplex, and
-471.omnetpp, which is mostly
+than 1\%. The only few cases where it has a noticeable impact are on some of the C++ benchmarks, namely, \texttt{447.dealII},
+\texttt{450.soplex}, and \texttt{471.omnetpp}, which is mostly
 due to the heavy use of templating. %, as exemplified in Figure~\ref{fig:identical-example}.
 %However, the proposed technique (FMSA) can also perform much better on these
-However, FMSA can also perform much better on these benchmarks, with an improvement of almost 6$\times$ on the \texttt{471.omnetpp
+By contrast, FMSA significantly outperforms LLVM on these benchmarks, with an improvement of almost 6$\times$ on the \texttt{471.omnetpp
 benchmark}. Moreover, our technique also shows remarkable reductions on several of the C benchmarks, such as, \texttt{462.libquantum} and
 \texttt{482.sphinx3}, especially when taking into account that the other techniques have no real impact on these benchmarks.
 
