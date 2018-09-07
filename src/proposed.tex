@@ -663,24 +663,24 @@ making of most optimizations.
 \subsection{Link-Time Optimization}
 
 There are different ways of applying this optimization, with different trade-offs.
-We can apply our optimization on a per compilation-unit basis, which tends to
-result in low compilation-time overheads, since only part of the program is being
-considered at a time.
-However, this also limits the optimization opportunities, as we can only merge
-pairs of functions within the same compilation unit.
+We can apply our optimization on a per compilation-unit basis, which usually
+results in lower compilation-time overheads, because only a small part of the
+whole program is being considered at each moment.
+However, this also limits the optimization opportunities, since only pairs of
+functions within the same compilation unit would be merged.
 
-This optimization can also be applied in the whole-program, for example, during
-link-time optimization (LTO).
-Optimizing the whole-program is beneficial for the simple fact that we have more
-information and more functions to merge.
+On the other hand, our optimization can also be applied in the whole program,
+for example, during link-time optimization (LTO).
+Optimizing the whole program is beneficial for the simple fact that the
+optimization will have more function at its disposal.
 It allows us to merge pairs of functions across modules.
 
 In addition to the benefit of being able to merge more functions, when optimizing
 the whole program, we can also be more aggressive when removing the original functions,
 since we know that there will be no external reference to them.
 However, if the optimization is applied per compilation unit, then extra
-conditions must be guaranteed, e.g., the function must not be externally visible
-to other compilation units.
+conditions must be guaranteed, e.g., the function must be explicitly defined
+as internal or private to the compilation unit.
 
 \begin{figure}[t!]
   \centering
@@ -692,10 +692,9 @@ to other compilation units.
 
 Figure~\ref{fig:opt-pipeline} shows an overview of the compilation pipeline used
 throughout our evaluation.
-First, we apply early code-size optimizations per compilation-unit.
+First, we apply early code-size optimizations to each compilation unit.
 Then, function merging and further code-size optimizations are applied during
 monolithic link-time optimization~(LTO).
 With LTO, object file generation is delayed until all input modules are known,
-instead of being generated per compilation-unit, which enables more powerful
+instead of being generated per compilation unit, which enables more powerful
 optimizations based on whole-program analyses.
-
