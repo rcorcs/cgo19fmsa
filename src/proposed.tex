@@ -295,9 +295,10 @@ when an exception has been thrown.
 
 %Landing blocks are responsible for handling all catch clauses covering the particular call site, in the high-level code. All clauses are
 %defined by the landing-pad instruction, which encodes the list of all exception and cleanup handlers.
-Landing-pad instructions are
-equivalent if they have exactly the same type and also encode identical lists of exception and cleanup handlers. \fixme{ZW: We need an
-example here.}
+Landing-pad instructions are equivalent if they have exactly the same type and also encode identical lists of exception and cleanup handlers. %\fixme{ZW: We need an example here.}
+%% landingpad {i8*, 32}
+%%     catch i8* null
+
 %The return value of the landing-pad instruction is crucial in deciding what
 %action to take when the landing block is entered, and corresponds to the return
 %value of the personality function.
@@ -322,42 +323,34 @@ example here.}
 %personality function is mandated by the stack unwinder).
 
 \subsection{Code Generation}
-Our approach can effectively handle multiple function merging scenarios. If the two functions are identical, they can be completely merged
-into a single function using existing function merging approaches. However, if the two functions differ at any point, an extra function
-identifier parameter (see Figure~\ref{fig:sphinx-example}) is required so that the caller is able to select the correct function. If the
-lists of parameters are different, we can merge them so that we are able to uniquely represent all parameters from both functions. If the
-return types are different, we can use an aggregate type to return values of both types or return just the non-void type if the other one
-is void.
+Our approach can effectively handle multiple function merging scenarios.
+When merging identical functions, 
+If the two functions are identical, they can be completely merged into a single function.
+% using existing function merging approaches.
+%% Rodrigo: No, we do *not* use "existing approaches" in our optimization. Everything results from the sequence alignment.
+However, if the two functions differ at any point, an extra function-identifier parameter (see Figure~\ref{fig:sphinx-example}) is required so that the caller is able to select the correct function.
+If the lists of parameters are different, we can merge them so that we are able to uniquely represent all parameters from both functions. If the return types are different, we can use an aggregate type to return
+values of both types or return just the non-void type if the other one is void.
 
- The code generation phase is responsible for producing a new function from the result of the sequence alignment. This phase has
-three main concerns: merging the two lists of parameters;
-%from both functions;
+The code generation phase is responsible for producing a new function from the result of the sequence alignment. This phase has three main concerns: merging the two lists of parameters;
 generating the necessary select instructions in order to
 use the appropriate operands in merged instructions;
-%distinguish between the execution of the appropriate function;
 constructing the CFG of the merged function.
 
 %\subsubsection{Merged Parameters}
-
-%If the lists of parameters are different, we can merge them so that we are able
-%to uniquely represent all parameters from both functions.
-
 
 
 The merged list of parameters must contain exactly one parameter that uniquely
 represents each one of the parameters from both functions, without necessarily
 maintaining the same order.
-%The merged list of parameters must be able to represent all parameters from
-%both functions, where the each individual parameter in the merged list of
-%parameters can represent at most one parameter of both functions.
 An extra binary parameter, called the function identifier, is also added to the
 merged list of parameters.
 This extra parameter is required to distinguish between the two merged functions.
 Figure~\ref{fig:merged-params} depicts how we merge the list of parameters of
 two functions.
 First, we create the binary parameter that represents the function identifier,
-one of the functions will be identified by the value \textit{true} and the other
-by value \textit{false}.
+one of the functions will be identified by the value \texttt{true} and the other
+by the value \texttt{false}.
 We then add all the parameters of one of the functions to the new list of
 parameters.
 Finally, for each parameter of the second function, we either reuse an existing
@@ -529,7 +522,7 @@ As a result, we can remove the extra parameter that represents the function
 identifier.
 
 %\vspace{-1ex}
-\section{Profitability Analysis}
+\section{Focusing on the Profitable Functions}
 \label{sec:framework}
 
 %In this section, we describe our implementation of the function merging
@@ -539,7 +532,9 @@ identifier.
 %In this section, we describe our exploration infrastructure for the
 %function merging optimization.
 Although the proposed technique is able to merge any two functions, it is not always profitable to merge them. In fact, as it is only
-profitable to merge functions that are sufficiently similar, for most pairs of functions, merging them increases the code size.
+profitable to merge functions that are sufficiently similar, for most pairs of functions, merging them increases code size.
+In this section, we propose our framework for efficiently exploring the
+optimization space, focusing on pairs of functions that are profitable to merge. 
 
 %Therefore,
 %the main goal of our exploration infrastructure is to efficiently find pairs of functions that are profitable to merge.
@@ -559,7 +554,7 @@ profitable to merge functions that are sufficiently similar, for most pairs of f
 For every function, ideally, we would like to try to merge it with all other functions and choose the pair that maximizes the reduction in
 code size. However, this quadratic exploration over all pairs of functions results will result in prohibitively expensive compilation
 overhead. In order to avoid the quadratic exploration of all possible merges, we propose the exploration framework shown in
-Figure~\ref{fig:func-merge-opt-arch} for the our optimization.
+Figure~\ref{fig:func-merge-opt-arch} for our optimization.
 \begin{figure}[t!]
   \centering
   \includegraphics[width=0.65\linewidth]{figs/func-merge-opt-arch.pdf}
