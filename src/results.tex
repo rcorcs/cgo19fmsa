@@ -113,18 +113,14 @@ other cases, FMSA is always equal or better than all other function-merging opti
 %These results show that, although it has
 %little compilation-time overhead,
 %merging identical functions, in most cases, has a rather small impact on
-These results show that, although the LLVM's identical function merging has
-little compilation-time overhead, in most cases, it also has a rather small
-impact on code-size reduction, with an average reduction of less than 1\%.
-The only few cases where it has a noticeable impact are on some of the C++
-benchmarks, namely, 447.dealII, 450.soplex, and 471.omnetpp, which is mostly
+For most of the cases, the LLVM's identical function merging has a small impact on code-size reduction, with an average reduction of less
+than 1\%. The only few cases where it has a noticeable impact are on some of the C++ benchmarks, namely, 447.dealII, 450.soplex, and
+471.omnetpp, which is mostly
 due to the heavy use of templating. %, as exemplified in Figure~\ref{fig:identical-example}.
 %However, the proposed technique (FMSA) can also perform much better on these
-However, FMSA can also perform much better on these
-benchmarks, with an improvement of almost 6$\times$ on the 471.omnetpp benchmark.
-Moreover, our technique also shows remarkable reductions on several of the
-C benchmarks, such as, 462.libquantum and 482.sphinx3, especially when taking into
-account that the other techniques have no real impact on these benchmarks.
+However, FMSA can also perform much better on these benchmarks, with an improvement of almost 6$\times$ on the \texttt{471.omnetpp
+benchmark}. Moreover, our technique also shows remarkable reductions on several of the C benchmarks, such as, \texttt{462.libquantum} and
+\texttt{482.sphinx3}, especially when taking into account that the other techniques have no real impact on these benchmarks.
 
 %Figure~\ref{fig:libquantum-example} shows an example of two functions\footnote{We
 %have changed very lightly some of the names used in the functions so that the
