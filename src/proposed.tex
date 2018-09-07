@@ -279,25 +279,32 @@ return types and identical list of parameters.
 Most modern compilers implement the zero-cost Itanium ABI for exception
 handling~\cite{dinechin00}, including GCC and LLVM, sometimes called the
 \textit{landing-pad} model.
-In this model, landing-pad instructions are used to encode which action is taken
-when an exception has been thrown.
-%The type of equivalent landing-pad instructions must be identical as its value
-%is crucial in deciding what action to take when the landing block is entered,
-%and corresponds to the return value of the personality function, which must also
-%be identical for the two functions being merged.
-
-
-
-%The invoke instruction co-operates tightly with its landing block, i.e., the basic block pointed by the exception branch of an invoke
-%instruction. The landing block must have a landing-pad instruction as its first non-$\phi$ instruction. Given this restriction, two
-%equivalent invoke instructions must also have landing blocks with identical landing-pad instructions. This restriction can be easily
-%checked since the landing-pad instruction is always the first instruction in a landing block. \fixme{ZW: We need an example here.}
-
-%Landing blocks are responsible for handling all catch clauses covering the particular call site, in the high-level code. All clauses are
-%defined by the landing-pad instruction, which encodes the list of all exception and cleanup handlers.
-Landing-pad instructions are equivalent if they have exactly the same type and also encode identical lists of exception and cleanup handlers. %\fixme{ZW: We need an example here.}
+%In this model, landing-pad instructions are used to encode which action is taken
+%when an exception has been thrown.
+This model consists of:
+$(1)$ invoke instructions that have two successors, one for the normal execution and
+one for handling exceptions, called the landing block;
+$(2)$ landing-pad instructions that encode which action is taken when an exception has
+been thrown.
+The invoke instruction co-operates tightly with its landing block.
+The landing block must have a landing-pad instruction as its first non-$\phi$
+instruction.
+As a result, two equivalent invoke instructions must also have landing blocks
+with identical landing-pad instructions.
+This verification is made easy by having the landing-pad instruction as the first
+instruction in a landing block.
+%This restriction can be easily checked since the landing-pad instruction is
+%always the first instruction in a landing block. 
+%Landing blocks are responsible for handling all catch clauses covering the
+%particular call site, in the high-level code.
+%All clauses are defined by the landing-pad instruction, which encodes the list of
+%all exception and cleanup handlers.
+Similarly, landing-pad instructions are equivalent if they have exactly the same
+type and also encode identical lists of exception and cleanup handlers.
+%\fixme{ZW: We need an example here.}
 %% landingpad {i8*, 32}
 %%     catch i8* null
+
 
 %The return value of the landing-pad instruction is crucial in deciding what
 %action to take when the landing block is entered, and corresponds to the return

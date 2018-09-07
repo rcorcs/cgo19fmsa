@@ -64,14 +64,6 @@ any function-merging optimization.
 
 \subsection{Code-Size Reduction}
 
-\begin{figure*}[t]
-  \centering
-  \includegraphics[width=\linewidth]{figs/compilation-time.pdf}
-  \vspace{-4ex}
-  \caption{Compilation-time overhead on the Intel platform. The oracle has an average overhead of 25$\times$.}
-  \label{fig:compilation-time}
-\end{figure*}
-
 %\begin{figure*}[th]
 %  \centering
 %  \includegraphics[width=\linewidth]{figs/reduction-obj-intel-label.pdf}
@@ -199,6 +191,14 @@ account that the other techniques have no real impact on these benchmarks.
 
 \subsection{Compilation Overhead}
 
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\linewidth]{figs/compilation-time.pdf}
+  \vspace{-4ex}
+  \caption{Compilation-time overhead on the Intel platform. The oracle has an average overhead of 25$\times$.}
+  \label{fig:compilation-time}
+\end{figure*}
+
 
 Figure~\ref{fig:compilation-time} shows the compilation-time overhead for all
 optimizations.
@@ -210,7 +210,7 @@ The oracle has an average compilation-time overhead of 25$\times$ compared to
 the baseline, with its largest overhead being of 136$\times$ on the 447.dealII
 benchmark.
 
-\begin{figure}[b]
+\begin{figure}[t]
   \centering
   %\hspace{-2ex}
   \includegraphics[width=1.0\linewidth]{figs/compilation-time-breakdown-sqrd.pdf}
