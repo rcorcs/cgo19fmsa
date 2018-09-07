@@ -394,14 +394,11 @@ merging them, improves code-size reduction of individual benchmarks by up to 7\%
 
 %\subsubsection{Control-Flow Graph Reconstruction}
 
-After generating the merged list of parameters, we perform a code generation
-to produce the CFG of the merged function in two passes over the aligned
-sequence.
+After generating the merged list of parameters, we produce the CFG of the merged function in two
+passes over the aligned sequence.
 The first pass creates the basic blocks and instructions.
-The second assigns the correct operands to the instructions, which also connects
-the basic blocks.
-A two-passes approach is required in order to handle loops, due to cyclic data
-dependencies.
+The second assigns the correct operands to the instructions and connects the basic blocks.
+A two-passes approach is required in order to handle loops, due to cyclic data dependencies.
 %Listing~\ref{lst:CodeGen} presents the pseudocode for the code generation.
 
 %\begin{myfloat}[h]
@@ -473,10 +470,9 @@ If the label represents a landing block, a landing-pad instruction is also added
 to the new basic block.
 During this process, we keep a mapping from the instructions and labels in the
 original functions to their corresponding values in the new merged function.
-This mapping is required to appropriately create the use-definition
-chains for the merged function, which is done by pointing the operands of the
+We need this mapping to generate the use-definition chains for the merged function, which is done by pointing the operands of the
 instructions to the correct values in the function.
-However, at this point, the cloned instructions are created with empty operands,
+However, at this point, the cloned instructions are given empty operands,
 as we are still creating the complete mapping.
 
 While iterating over the aligned sequence, we also need to create extra basic
@@ -485,25 +481,25 @@ original functions, guarding the execution of instructions that are unique to
 one of the functions being merged.
 When transitioning from matching instructions or labels to non-matching ones,
 we need to branch to new basic blocks based on the function identifier.
-This divergent point is used to continue code generation for the contiguous
-non-matching segment of the aligned sequence.
-When trasitioning back from non-matching segments to a matching segment, we need
+%This divergent point is used to continue code generation for the contiguous
+%non-matching segment of the aligned sequence.
+When transitioning back from non-matching segments to a matching segment, we need
 to reconnect both divergent points by branching back to a single new basic block
 where merged instructions will be added.
 
-The second pass over the aligned sequence is solely responsible for updating
-the operands of all the instructions and adding select instructions as necessary.
+The second pass over the aligned sequence updates the operands of all the
+instructions and adds select instructions as necessary.
 Select instructions are created when a merged instruction has different operand
-values in the original functions, such that the appropriate value needs to be
+values in the original functions, so the appropriate value needs to be
 selected based on the function identifier.
-However, if the operands are labels, instead of adding a select instruction,
-the operand selection is performed in a control-flow manner, using a new basic
-block and a conditional branch based on the function-identifier parameter.
-When the two labels represent landing blocks, we hoist the landing-pad
+If the operands are labels, instead of adding a select instruction, we perform
+operand selection through divergent control flow, using a new basic
+block and a conditional branch on the function identifier.
+If the two labels represent landing blocks, we hoist the landing-pad
 instruction to the new common basic block, converting it to a landing block and
 converting the two landing blocks to normal basic blocks.
 This is required for the correctness of the landing-pad model.
-Additionally, similar to previous work on vectorization~\cite{porpodas18}, we
+Similar to previous work on vectorization~\cite{porpodas18}, we
 also exploit commutative instructions in order to maximize similarity.
 When assigning operands to commutative instructions, we perform operand
 reordering to maximize the number of matching operands and reduce the total
