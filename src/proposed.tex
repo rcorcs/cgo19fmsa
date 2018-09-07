@@ -325,31 +325,31 @@ type and also encode identical lists of exception and cleanup handlers.
 %personality function is mandated by the stack unwinder).
 
 \subsection{Code Generation}
-Our approach can effectively handle multiple function merging scenarios.
-When merging identical functions, 
-If the two functions are identical, they can be completely merged into a single function.
-% using existing function merging approaches.
-%% Rodrigo: No, we do *not* use "existing approaches" in our optimization. Everything results from the sequence alignment.
-However, if the two functions differ at any point, an extra function-identifier parameter (see Figure~\ref{fig:sphinx-example}) is required so that the caller is able to select the correct function.
-If the lists of parameters are different, we can merge them so that we are able to uniquely represent all parameters from both functions. If the return types are different, we can use an aggregate type to return
-values of both types or return just the non-void type if the other one is void.
+The code generation phase is responsible for producing a new function from the output of the sequence alignment.
+Our three main objectives are: merging the parameter lists; generating select instructions to choose the appropriate
+operands in merged instructions; and constructing the CFG of the merged function.
 
-The code generation phase is responsible for producing a new function from the result of the sequence alignment. This phase has three main concerns: merging the two lists of parameters;
-generating the necessary select instructions in order to
-use the appropriate operands in merged instructions;
-constructing the CFG of the merged function.
+Our approach can effectively handle multiple different function merging scenarios:
+\begin{itemize}[noitemsep,topsep=3pt]
+  \item identical functions,
+  \item functions with differing bodies,
+  \item functions with different parameter lists, 
+  \item functions with different return types,
+  \item and any combination of these cases.
+\end{itemize}
 
 %\subsubsection{Merged Parameters}
 
+To maintain the semantics of the original functions, we must be able to pass their parameters to
+the new merged function. The merged parameter list is the union of the original lists, with
+placeholders of the correct type for any of the parameters. Maintaining the original order is not
+important for maintaining semantics, so we make no effort to do so.
+If the two functions have differing bodies, we add an extra binary parameter, called the function
+identifier, to the merged list of parameters. This extra parameter is required for selecting code
+that should be executed only for one of the merged functions.
 
-The merged list of parameters must contain exactly one parameter that uniquely
-represents each one of the parameters from both functions, without necessarily
-maintaining the same order.
-An extra binary parameter, called the function identifier, is also added to the
-merged list of parameters.
-This extra parameter is required to distinguish between the two merged functions.
-Figure~\ref{fig:merged-params} depicts how we merge the list of parameters of
-two functions.
+Figure~\ref{fig:merged-params} depicts
+how we merge the list of parameters of two functions.
 First, we create the binary parameter that represents the function identifier,
 one of the functions will be identified by the value \texttt{true} and the other
 by the value \texttt{false}.
@@ -358,9 +358,9 @@ parameters.
 Finally, for each parameter of the second function, we either reuse an existing
 and available parameter of identical type from the first function or we add a
 new parameter.
-We then keep track of the mapping between the lists of parameters of the
+We keep track of the mapping between the lists of parameters of the
 original functions and the merged function so that, later, we are able to
-replace the function calls.
+update the function calls.
 When replacing the function calls to the new merged function, parameters that
 are not used by the original function being called will receive undefined values.
 %For this reason, it is important to be careful when merging the two functions
@@ -372,34 +372,25 @@ benefits:
 %(1) it allows for a simpler function call, with fewer values to pass to the
 %called function, reducing code size;
 %(2) similarly, it reduces the frame of the merged function;
-(1) it reduces the overheads concerning function call abstractions, such as,
+(1) it reduces the overheads associated with function call abstractions, such as,
 reducing the number of values required to be communicated between functions.
-(2) if the reused parameters have similar usage by both functions, it may reduce
-the number of select instructions that are needed to distinguish between the
-merged functions.
+(2) if both functions use merged parameters in similar ways, it will remove some
+of the cases where we need select instructions to distinguish between the functions.
 
 \begin{figure}[t!]
   \centering
   \includegraphics[width=0.9\linewidth]{figs/merged-params.pdf}
-  \caption{Example of a merge operation on the list of parameters of two functions.}
+  \caption{Example of a merge operation on the parameter lists of two functions.}
   \label{fig:merged-params}
 \end{figure}
 
-
-When multiple available parameters of one function have the same type as a given
-parameter from the other function, we choose the one that minimizes the number
-%of select instructions by analyzing all pairs of matching instructions in the
-%aligned sequence that contain the parameters as operands.
-of select instructions.
-%We are able to find pairs of parameters that minimize the number of selects by
-The pairs of parameters that minimize the number of selects can be found by
-analyzing all pairs of matching instructions, in the aligned sequence, that
-contain the corresponding parameters as operands.
-Experiments show that maximizing the matching of parameters, compared to never
-%merging them, improves the average code-size reduction in about 1\%, with
-%improvements in individual benchmarks of up to 7\%.
+There are multiple valid ways of merging parameter lists. For example, multiple
+parameters of one function may have the same type as a given parameter from the other
+function. In such cases, we select parameter pairs that minimize the number of
+select instructions. We find them by analyzing all pairs of equivalent instruction
+that use the parameters as operands. 
+Our experiments show that maximizing the matching of parameters, compared to never
 merging them, improves code-size reduction of individual benchmarks by up to 7\%.
-
 
 %\subsubsection{Control-Flow Graph Reconstruction}
 
