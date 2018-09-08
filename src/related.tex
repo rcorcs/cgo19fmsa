@@ -19,7 +19,7 @@ Function merging falls in the latter category.
 Google developed an optimization for the \textit{gold} linker that merges
 identical functions on a bit-level~\cite{tallam10,kwan12}.
 After placing each function in a separate ELF section, they identify functions
-that have their \textit{text} section bit-identical and also their
+sections that have their \textit{text} bit-identical and also their
 relocations point to identical sections.
 Similar machine-level implementations are also offered by other production compilers
 and linkers, such as MSVC~\cite{msvc-icf}.
