@@ -1,24 +1,25 @@
 
 \section{Conclusion}
 
-We have presented a novel technique, based on sequence alignment, for merging
-functions that addresses major limitations of the existing solutions.
-We have also proposed a ranking-based exploration mechanism so that we can focus
-the optimization on promising pairs of functions, reducing considerably the
-compilation-time overhead, compared to the oracle's quadratic exploration.
-With this framework, our
+We introduced a novel technique, based on sequence alignment, for reducing
+code size by merging arbitrary functions. Our approach does not suffer from
+any of the major limitations of existing solutions, outperforming them by more
+than 3$\times$. We also proposed a ranking-based
+exploration mechanism to focus the optimization on promising pairs of
+functions. Ranking reduces the compilation-time overhead by orders of magnitude
+compared to an exhaustive quadratic exploration. With this framework, our
 optimization is able to reduce code size by up to 22\%, with an overall average
 of about 5.6\%, while introducing an average compilation-time overhead of only 20\%.
 %prototype introduces an average
 %compilation-time overhead of only 20\%.
 %Our optimization shows code-size reductions up to 22\%, with an overall average
 %of about 5.6\%.
-This optimization can be carried on without any significant impact on
-performance when profiling information is used.
+Coupled with profiling information, our optimization introduces no statistically
+significant impact on performance.
 
 For future work, we plan to focus on improving the ranking mechanism to reduce
-compilation time even further.
-A better compilation time can also be achieved by integrating the
+compilation time.
+We can achieve further improvements by integrating the
 function-merging optimization to a summary-based parallel link-time optimization
 framework, such as ThinLTO in LLVM.
 We also plan to work on the linearization of the candidate functions, allowing
