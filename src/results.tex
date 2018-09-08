@@ -249,14 +249,14 @@ For most benchmarks, there is no statistically significant difference between
 the baseline and the optimized binary. Only for \texttt{433.milc}, \texttt{447.dealII},
 and \texttt{464.h264ref} there is a noticeable performance impact.
 
-We focus on out worst result for \texttt{433.milc}. For an exploration threshold
-value of one, we merge 58 functions. Through profiling, we discovered that a
+We focus on our worst performance result for \texttt{433.milc}. For an
+exploration threshold value of one, we merge 58 functions. Through profiling, we discovered that a
 handful of them are hot, that is they are frequently executed. If we prevent
 these hot functions from merging, all performance impact is removed while still
 reducing code size. Specifically, our original results showed a 5.11\% code size
 reduction and an 18\% performance overhead. By avoiding merging hot functions,
 we have an effectively non-existant performance impact and a code size reduction
-of 2.09\%. While almost 9$\times$ less, this is still almost twice as good as
+of 2.09\%. This code size reduction is still almost twice as good as
 the state-of-the-art. As with the compilation overhead, this is a trade-off that
 the developer can control.
 
