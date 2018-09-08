@@ -25,7 +25,7 @@ Similar machine-level implementations are also offered by other production compi
 and linkers, such as MSVC~\cite{msvc-icf}.
 %A simpler version of this optimization was also offered by the MSVC linker~\cite{msvc-icf};
 
-This machine-level solution is target-dependent and needs to be adapted for every different back-end.
+This machine-level solution is target-dependent and needs to be adapted for every back-end.
 A similar optimization for merging identical functions %, but implemented at the IR level,
 is offered at the IR level by both GCC and LLVM~\cite{llvm-fm,livska14}.
 %In Section~\ref{sec:background}, we presented a detailed description of the
@@ -96,7 +96,8 @@ Code factoring can be applied at different levels of the program~\cite{loki04}.
 Local factoring, also known as local code motion, moves identical instructions
 from multiple basic blocks to either their common predecessor or successor,
 whenever valid~\cite{knoop94,briggs94,loki04}.
-Procedural abstraction (or outlining) finds identical code
+Procedural abstraction %(or outlining)
+finds identical code
 that can be extracted into a separate function, replacing all replicated
 occurrences with a function call~\cite{loki04,dreweke07}.
 

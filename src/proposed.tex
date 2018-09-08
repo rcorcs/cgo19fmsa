@@ -187,7 +187,7 @@ mismatch.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.85\linewidth]{figs/opcode-align.pdf}
+  \includegraphics[width=0.75\linewidth]{figs/opcode-align.pdf}
   %\caption{An example of a sequence alignment between two real functions extracted from the \text{400.perlbench} benchmark.}
   \caption{The sequence alignment between two functions, identifying the equivalent segments of code (green in the center) and the non-equivalent ones (red at the sides).}
   \label{fig:opcode-align}
@@ -673,7 +673,7 @@ On the other hand, our optimization can also be applied in the whole program,
 for example, during link-time optimization (LTO).
 Optimizing the whole program is beneficial for the simple fact that the
 optimization will have more function at its disposal.
-It allows us to merge pairs of functions across modules.
+It allows us to merge functions across modules.
 
 In addition to the benefit of being able to merge more functions, when optimizing
 the whole program, we can also be more aggressive when removing the original functions,
