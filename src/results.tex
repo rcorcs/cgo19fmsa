@@ -171,18 +171,15 @@ impact.
   \centering
   \includegraphics[width=\linewidth]{figs/compilation-time.pdf}
   \vspace{-4ex}
-	\caption{Compilation-time overhead on the Intel platform. For exhaustive exploration (not shown) the average overhead is 25$\times$. Through ranking, we reduce overhead by orders of magnitude. For an exploration threshold of one, FMSA has an overhead of only 20\%.}
+  \caption{Compilation-time overhead on the Intel platform. The oracle has an average overhead of 25$\times$.}
   \label{fig:compilation-time}
 \end{figure*}
 
 
-Figure~\ref{fig:compilation-time} shows the compilation-time overhead for all
-optimizations.
-As explained in the experimental setup, we only present results for compiling
-for Intel. Since we cross-compile on the same machine for both targets, compilation
-times are very similar. We also do not include results for the oracle (exhaustive) exploration.
-It would be hard to visualize it in the same plot as the other configurations, since it
-can be up to 136$\times$ slower than the baseline.
+Figure~\ref{fig:compilation-time} shows the compilation-time overhead for all optimizations. As explained in the experimental setup, we
+only present results when compiling for the Intel platform. Since we cross-compile on the same machine for both targets, compilation times
+are very similar. We also do not include results for the oracle (exhaustive) exploration. It would be hard to visualize it in the same plot
+as the other configurations, since it can be up to 136$\times$ slower than the baseline.
 
 \begin{figure}[t]
   \centering
@@ -198,67 +195,44 @@ can be up to 136$\times$ slower than the baseline.
   \centering
   \includegraphics[width=\linewidth]{figs/runtime-impact.pdf}
   \vspace{-4ex}
-  \caption{Runtime overhead on the Intel platform. Performance impact is almost always statistically insignificant. For the few benchmarks affected, FMSA merges hot functions.}
+  \caption{Runtime overhead on the Intel platform.}
   \label{fig:runtime-impact}
 \end{figure*}
 
-Unlike the other evaluated techniques, our optimization is a prototype
-implementation, not yet tuned for compilation-time.
-We believe that compilation-time can be further reduced with some additional engineering effort.
-Nevertheless, by using our ranking infrastructure to target only the single most promising function for each function we examine,
-we reduce compilation-time overhead by up to two orders of magnitude compared to the oracle.
-This brings the average compile-time overhead to only 20\% compared to the baseline, while
-still reducing code size almost as well as the oracle.
-Depending on the acceptable trade-off between compilation-time overhead and code size,
-the developer can change the exploration threshold to further shrink the binary or
-accelerate compilation.
+Unlike the other evaluated techniques, our optimization is a prototype implementation, not yet tuned for compilation-time. We believe that
+compilation-time can be further reduced with some additional engineering effort. Nevertheless, by using our ranking infrastructure to
+target only the single most promising equivalent function for each function we examine, we reduce compilation-time overhead by up to two
+orders of magnitude compared to the oracle. This brings the average compile-time overhead to only 20\% compared to the baseline, while
+still reducing code size almost as well as the oracle. Depending on the acceptable trade-off between compilation-time overhead and code
+size, the developer can change the exploration threshold to exploit more opportunities for code reduction, or to accelerate compilation.
 
-Figure~\ref{fig:compilation-time-breakdown} shows a detailed compilation-time
-breakdown.
-For each major step of the proposed optimization, we present the accumulated
-time spent across the whole program.
-To better understand the overhead of each one of the steps, we use
-an exploration threshold of one ($t = 1$).
-Because the ranking mechanism performs a quadratic operation on the number of
-functions, computing the similarity between all pairs of functions, it is
-expected that ranking would be amongst the most costly steps.
-However, it is interesting to notice that the sequence alignment dominates most
-of the compilation-time overhead, especially considering that this operation is
-performed only once per function, when $t = 1$.
-Although this operation is linear on the number of functions, the
-Needleman-Wunsh algorithm~\cite{needleman70} is quadratic on the size of the
-functions being aligned, both in time and space.
-Unsurprisingly, the code generation is the third most costly step, which also
-includes the time to optimize the merge of the parameters.
-The remaining steps take, in total, a very small percentage of all the
-compilation-time overhead.
-This analysis suggests that optimizing the sequence alignment algorithm and
-the ranking mechanism is key to reducing even further the overall
-compilation-time overhead.
+Figure~\ref{fig:compilation-time-breakdown} shows a detailed compilation-time breakdown. For each major step of the proposed optimization,
+we present the accumulated time spent across the whole program. To better understand the overhead of each one of the steps, we use an
+exploration threshold of one ($t = 1$). Because the ranking mechanism performs a quadratic operation on the number of functions, computing
+the similarity between all pairs of functions, it is expected that ranking would be amongst the most costly steps. However, it is
+interesting to notice that the sequence alignment dominates most of the compilation-time overhead, especially considering that this
+operation is performed only once per function, when $t = 1$. Although this operation is linear on the number of functions, the
+Needleman-Wunsh algorithm~\cite{needleman70} is quadratic on the size of the functions being aligned, both in time and space.
+Unsurprisingly, code generation is the third most costly step, which also includes the time to optimize the merge of the parameters. The
+remaining steps contribute, in total, a small percentage of all the compilation-time overhead. This analysis suggests that optimizing the
+sequence alignment algorithm and the ranking mechanism is key to reducing even further the overall compilation-time overhead.
 
-\vspace{-1ex}
+%\vspace{-1ex}
 \subsection{Performance Impact}
 
 
-The primary goal of function merging is to reduce code size.
-Nevertheless, it is also important to understand its impact on the programs'
-execution time and the trade-offs between performance and code size reduction.
-Figure~\ref{fig:runtime-impact} shows the normalized execution time.
-Overall, our optimization has an average impact of about 3\% on programs' performance.
-For most benchmarks, there is no statistically significant difference between
-the baseline and the optimized binary. Only for \texttt{433.milc}, \texttt{447.dealII},
-and \texttt{464.h264ref} there is a noticeable performance impact.
+The primary goal of function merging is to reduce code size. Nevertheless, it is also important to understand its impact on the programs'
+execution time and the trade-offs between performance and code size reduction. Figure~\ref{fig:runtime-impact} shows the normalized
+execution time. Overall, our optimization has an average impact of about 3\% on programs' runtime. For most benchmarks, there is no
+statistically significant difference between the baseline and the optimized binary. Only for \texttt{433.milc}, \texttt{447.dealII}, and
+\texttt{464.h264ref} there is a noticeable performance impact.
 
-We focus on our worst performance result for \texttt{433.milc}. For an
-exploration threshold value of one, we merge 58 functions. Through profiling, we discovered that a
-handful of them are hot, that is they are frequently executed. If we prevent
-these hot functions from merging, all performance impact is removed while still
-reducing code size. Specifically, our original results showed a 5.11\% code size
-reduction and an 18\% performance overhead. By avoiding merging hot functions,
-we have an effectively non-existant performance impact and a code size reduction
-of 2.09\%. This code size reduction is still almost twice as good as
-the state-of-the-art. As with the compilation overhead, this is a trade-off that
-the developer can control.
+We take the worst result for \texttt{433.milc} for discussion. For an exploration threshold value of one, we merge 58 functions for this
+benchmark. Through profiling, we discovered that a handful of them are hot, that is they are frequently executed. If we prevent these hot
+functions from merging, all performance impact is removed while still reducing code size. Specifically, our original results showed a
+5.11\% code size reduction and an 18\% performance overhead. By avoiding merging hot functions, we can obtain little performance impact and
+a code size reduction of 2.09\%. While almost 9$\times$ less, this is still almost twice as good as the state-of-the art. As with the
+compilation overhead, this is a trade-off that the developer can control.
 
 %Note that the state-of-the-art has a reduction of only 1.09\% on this benchmark.
 %If we can be more permissive, allowing some of the hot functions to be merged,
