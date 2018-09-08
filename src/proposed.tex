@@ -104,7 +104,7 @@ real function extracted from the SPEC CPU2006 \texttt{400.perlbench} benchmark.
 %This is true for most IRs, such as the LLVM IR, or can be easily adapted.
 
 The traversal order we use for linearization has no effect on the correctness of the transformation
-but it can affect its effectiveness. We empirically chose a reverse post-order traversal with a
+but it can impact its effectiveness. We empirically chose a reverse post-order traversal with a
 canonical ordering of successor basic blocks.
 %It is also common practice for compilers to rely on prior canonicalizations~\cite{briggs94,liu96}.
 This strategy leads to good performance in our experiments.
@@ -541,7 +541,7 @@ optimization space, focusing on pairs of functions that are profitable to merge.
 %\subsection{Ranking Infrastructure}
 
 For every function, ideally, we would like to try to merge it with all other functions and choose the pair that maximizes the reduction in
-code size. However, this quadratic exploration over all pairs of functions results will result in prohibitively expensive compilation
+code size. However, this quadratic exploration over all pairs of functions results in prohibitively expensive compilation
 overhead. In order to avoid the quadratic exploration of all possible merges, we propose the exploration framework shown in
 Figure~\ref{fig:func-merge-opt-arch} for our optimization.
 \begin{figure}[t!]
@@ -608,13 +608,13 @@ possible.
 Figure~\ref{fig:average-cdf-exploration-threshold} shows the cumulative
 distribution of the position of the profitable candidates in a top 10 rank.
 It shows that about 89\% of the merge operations occurred with the topmost
-candidate, where the top 5 covers over 98\% of the profitable candidates.
+candidate, while the top 5 cover over 98\% of the profitable candidates.
 These results suggest that the proposed fingerprint similarity is able to
-accurately capture the real function similarity, while possibly reducing the
-exploration cost by a few orders of magnitudes, depending on the actual number
-and size of the functions.
+accurately capture the real function similarity, while reducing the exploration
+cost by a few orders of magnitudes, depending on the actual number and size of
+the functions.
 
-When a profitable candidate is found, then we first replace the body of the two
+When a profitable candidate is found, we first replace the body of the two
 original functions to a single call to the merged function.
 Afterwards, if the original functions can be completely removed, we update the
 call graph, replacing the calls to the original functions by calls to the
@@ -672,7 +672,7 @@ functions within the same compilation unit would be merged.
 On the other hand, our optimization can also be applied in the whole program,
 for example, during link-time optimization (LTO).
 Optimizing the whole program is beneficial for the simple fact that the
-optimization will have more function at its disposal.
+optimization will have more functions at its disposal.
 It allows us to merge functions across modules.
 
 In addition to the benefit of being able to merge more functions, when optimizing

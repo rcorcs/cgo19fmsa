@@ -76,7 +76,7 @@ respectively. Similarly, for the ARM platform, FMSA can achieve an average code 
 threshold), while SoA and Identical had an average reduction of 2\% and 1.1\%, respectively. For several of the benchmarks, the
 proposed technique achieves impressive code size reduction compared to other merging approaches. Table~\ref{tab:reduction} highlights
 some of these results for both platforms. In two cases, \texttt{462.libquantum} and \texttt{482.sphinx3}, the state-of-the-art slightly
-increases code size, while FMSA shows reduces size significantly.  The only case where SOA outperforms FMSA is on the \texttt{445.gobmk}
+increases code size, while FMSA reduces size significantly.  The only case where SOA outperforms FMSA is on the \texttt{445.gobmk}
 benchmark on the ARM platform. There are little opportunities for function merging on that benchmark and FSMA misses a few of them.
 However, we can easily fix this by increasing the exploration threshold. For exhaustive exploration, FMSA improves over the SoA,
 with a code size reduction of 1.33\%. In all other cases, FMSA is always equal or better than all other function-merging optimizations, usually by a significant margin.
