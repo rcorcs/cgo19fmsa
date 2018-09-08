@@ -13,9 +13,9 @@ function merging. In our evaluation, we refer to identical function merging as \
 approach as \textit{FMSA}.
 
 All optimizations are implemented in LLVM v7 and evaluated on the C/C++ SPEC CPU2006~\cite{spec} benchmark suite. We target two different
-instruction sets, the Intel x86-64 and the ARM Thumb. Our Intel test bench has a quad-core 3.4~GHz Intel Core i7 CPU with 16~GiB of RAM.
+instruction sets, the Intel x86-64 and the ARM Thumb. Our Intel testbench has a quad-core 3.4~GHz Intel Core i7 CPU with 16~GiB of RAM.
 %The operating system is openSUSE 42.2 with Linux kernel version 4.4.27.
-The ARM test bench has a Cortex-A53 ARMv8 CPU of 1.4~GHz with 1~GiB of RAM.
+The ARM testbench has a Cortex-A53 ARMv8 CPU of 1.4~GHz with 1~GiB of RAM.
 %The operating system of the ARM platform is a Raspbian.
 We use the Intel platform for compiling for either target. As a result, compilation-time is almost
 identical for both targets. Changing the target only affects the behavior of the backend, a very
@@ -232,7 +232,7 @@ benchmark. Through profiling, we discovered that a handful of them contain hot c
 functions from merging, all performance impact is removed while still reducing code size. Specifically, our original results showed a
 5.11\% code size reduction and an 18\% performance overhead.
 %%RODRIGO: The performance impact goes actually to zero (no statistical difference)
-By avoiding merging hot functions, it results in effectively non-existent performance impact and
+By avoiding merging hot functions, it results in effectively non-existant performance impact and
 a code size reduction of 2.09\%.
 %%RODRIGO: 9$\times$ is wrong. 18\% is performance overhead; 2.09\% is code reduction; the previous code reduction was 5.11\%.
 This code size reduction is still about twice as good as the state-of-the-art. As with the
