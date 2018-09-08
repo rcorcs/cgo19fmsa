@@ -118,7 +118,7 @@ benchmarks, namely, \texttt{447.dealII}, \texttt{450.soplex}, and \texttt{471.om
 was designed to handle, duplicate functions due to heavy use of templating. But even on these benchmarks FMSA outperforms LLVM, with an
 improvement of almost 6$\times$ on \texttt{471.omnetpp}. FMSA is designed to merge a superset of the functions that the LLVM identical
 function merging can handle, so it is able to achieve better results in most of the cases. Moreover, our technique also shows remarkable
-reductions on several of the C benchmarks, include \texttt{462.libquantum} and \texttt{482.sphinx3}, where other techniques have no real
+reductions on several of the C benchmarks, especially \texttt{462.libquantum} and \texttt{482.sphinx3}, where other techniques have no real
 impact.
 
 %Figure~\ref{fig:libquantum-example} shows an example of two functions\footnote{We
@@ -227,11 +227,15 @@ execution time. Overall, our optimization has an average impact of about 3\% on 
 statistically significant difference between the baseline and the optimized binary. Only for \texttt{433.milc}, \texttt{447.dealII}, and
 \texttt{464.h264ref} there is a noticeable performance impact.
 
-We take the worst result for \texttt{433.milc} for discussion. For an exploration threshold value of one, we merge 58 functions for this
-benchmark. Through profiling, we discovered that a handful of them are hot, that is they are frequently executed. If we prevent these hot
+We take \texttt{433.milc}, which has the worst result, for discussion. For an exploration threshold value of one, we merge 58 functions for this
+benchmark. Through profiling, we discovered that a handful of them contain hot code, that is, they have basic blocks that are frequently executed. If we prevent these hot
 functions from merging, all performance impact is removed while still reducing code size. Specifically, our original results showed a
-5.11\% code size reduction and an 18\% performance overhead. By avoiding merging hot functions, we can obtain little performance impact and
-a code size reduction of 2.09\%. While almost 9$\times$ less, this is still almost twice as good as the state-of-the art. As with the
+5.11\% code size reduction and an 18\% performance overhead.
+%%RODRIGO: The performance impact goes actually to zero (no statistical difference)
+By avoiding merging hot functions, it results in effectively non-existant performance impact and
+a code size reduction of 2.09\%.
+%%RODRIGO: 9$\times$ is wrong. 18\% is performance overhead; 2.09\% is code reduction; the previous code reduction was 5.11\%.
+This code size reduction is still about twice as good as the state-of-the-art. As with the
 compilation overhead, this is a trade-off that the developer can control.
 
 %Note that the state-of-the-art has a reduction of only 1.09\% on this benchmark.
