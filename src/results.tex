@@ -77,7 +77,7 @@ threshold), while SoA and Identical had an average reduction of 2\% and 1.1\%, r
 proposed technique achieves impressive code size reduction compared to other merging approaches. Table~\ref{tab:reduction} highlights
 some of these results for both platforms. In two cases, \texttt{462.libquantum} and \texttt{482.sphinx3}, the state-of-the-art slightly
 increases code size, while FMSA shows reduces size significantly.  The only case where SOA outperforms FMSA is on the \texttt{445.gobmk}
-benchmark on the ARM platform. There are little opportunities for function merging on that benchmark and FSMA misses a few of them. 
+benchmark on the ARM platform. There are little opportunities for function merging on that benchmark and FSMA misses a few of them.
 However, we can easily fix this by increasing the exploration threshold. For exhaustive exploration, FMSA improves over the SoA,
 with a code size reduction of 1.33\%. In all other cases, FMSA is always equal or better than all other function-merging optimizations, usually by a significant margin.
 
@@ -113,13 +113,13 @@ with a code size reduction of 1.33\%. In all other cases, FMSA is always equal o
 \caption{Highlights of code reduction results (in percentages) on \textit{Intel / ARM} platforms. }
 \end{table}
 
-In most cases, LLVM's identical function merging has very little impact on code size. We see noticeable impact
-only on some of the C++ benchmarks, namely, \texttt{447.dealII}, \texttt{450.soplex}, and \texttt{471.omnetpp}.
-These are the cases that identical function merging was designed to handle, duplicate functions due to heavy
-use of templating. But even on these benchmarks FMSA outperforms LLVM, with an improvement of almost 6$\times$
-on the \texttt{471.omnetpp} benchmark. FMSA will by design merge a superset of the functions LLVM would merge,
-so it will never produce a worse result. Moreover, our technique also shows remarkable reductions on several of the C benchmarks, such as, \texttt{462.libquantum} and
-\texttt{482.sphinx3}, where other techniques have no real impact.
+In most cases, LLVM's identical function merging has very little impact on code size. We see noticeable impact only on some of the C++
+benchmarks, namely, \texttt{447.dealII}, \texttt{450.soplex}, and \texttt{471.omnetpp}. These are the cases that identical function merging
+was designed to handle, duplicate functions due to heavy use of templating. But even on these benchmarks FMSA outperforms LLVM, with an
+improvement of almost 6$\times$ on \texttt{471.omnetpp}. FMSA is designed to merge a superset of the functions that the LLVM identical
+function merging can handle, so it is able to achieve better results in most of the cases. Moreover, our technique also shows remarkable
+reductions on several of the C benchmarks, include \texttt{462.libquantum} and \texttt{482.sphinx3}, where other techniques have no real
+impact.
 
 %Figure~\ref{fig:libquantum-example} shows an example of two functions\footnote{We
 %have changed very lightly some of the names used in the functions so that the
