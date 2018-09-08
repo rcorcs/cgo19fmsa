@@ -171,7 +171,7 @@ so it will never produce a worse result. Moreover, our technique also shows rema
   \centering
   \includegraphics[width=\linewidth]{figs/compilation-time.pdf}
   \vspace{-4ex}
-	\caption{Compilation-time overhead on the Intel platform. For an exhaustive exploration (not shown) the average overhead is 25$\times$. Through ranking, we reduce the overhead by orders of magnitude. For an exploration threshold of one, FMSA has an overhead of only 20\%.}
+	\caption{Compilation-time overhead on the Intel platform. For exhaustive exploration (not shown) the average overhead is 25$\times$. Through ranking, we reduce overhead by orders of magnitude. For an exploration threshold of one, FMSA has an overhead of only 20\%.}
   \label{fig:compilation-time}
 \end{figure*}
 
@@ -198,7 +198,7 @@ can be up to 136$\times$ slower than the baseline.
   \centering
   \includegraphics[width=\linewidth]{figs/runtime-impact.pdf}
   \vspace{-4ex}
-  \caption{Runtime overhead on the Intel platform.}
+  \caption{Runtime overhead on the Intel platform. Performance impact is almost always statistically insignificant. For the few benchmarks affected, FMSA merges hot functions.}
   \label{fig:runtime-impact}
 \end{figure*}
 
