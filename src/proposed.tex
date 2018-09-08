@@ -557,7 +557,7 @@ to efficiently discard unpromising pairs of functions so that we perform the mor
 To this end, the fingerprint consists of: $(1)$ a map of instruction opcodes to their frequency in the function; $(2)$ the set of types
 manipulated by the function. While functions can have several thousands of instructions, an IR usually has just a few tens of opcodes,
 e.g., the LLVM IR has only about 64 different opcodes. This means that the fingerprint needs to store just a small integer array of the
-opcode frequencies and a set of types, which allows for an efficient similarty comparison.
+opcode frequencies and a set of types, which allows for an efficient similarity comparison.
 
 By comparing the opcode frequencies of two functions, we are able to estimate
 an upper bound of the merge between these functions, assuming that all
@@ -590,9 +590,9 @@ similar candidates based on their similarity, defined by $s(f_1,f_2)$, for all
 other functions $f_2$.
 We use an exploration threshold to limit how many top candidates we will
 evaluate for any given function.
-This cadidate exploration is then performed in a greedy fashion, where the first
+This candidate exploration is then performed in a greedy fashion, where the first
 candidate that actually results in a profitable merge ends the exploration and
-the merge operation is finally commited.
+the merge operation is finally committed.
 
 \begin{figure}[t!]
   \centering
@@ -605,12 +605,12 @@ the merge operation is finally commited.
 
 Ideally, the profitable candidate will be as close to the top of the rank as
 possible.
-Figure~\ref{fig:average-cdf-exploration-threshold} shows the cummulative
+Figure~\ref{fig:average-cdf-exploration-threshold} shows the cumulative
 distribution of the position of the profitable candidates in a top 10 rank.
 It shows that about 89\% of the merge operations occurred with the topmost
 candidate, where the top 5 covers over 98\% of the profitable candidates.
 These results suggest that the proposed fingerprint similarity is able to
-accuretly capture the real function similarity, while possibly reducing the
+accurately capture the real function similarity, while possibly reducing the
 exploration cost by a few orders of magnitudes, depending on the actual number
 and size of the functions.
 
@@ -651,7 +651,7 @@ We consider that the merge operation is profitable if $\Delta(\{f_1,f_2\},f_{1,2
 However, because we are operating on the IR level, one IR instruction does not
 necessarily translate to one machine instruction.
 Because of that, the profitability is measured with the help of the compiler's
-target-spcific cost model.
+target-specific cost model.
 The actual cost of each instruction comes from querying this compiler's built-in
 cost model, which provides a target-dependent cost estimation that approximates
 the code-size cost of an IR instruction when lowered to machine instructions.
