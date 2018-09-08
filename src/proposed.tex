@@ -253,7 +253,7 @@ between instructions and the equivalence between labels.
 
 In general, two instructions are equivalent if: $(1)$ their opcodes are semantically equivalent,
 but not necessarily the same; $(2)$ they both have equivalent types; and $(3)$ they have pairwise
-operands with equivalent types. Types are equivalent if they can be bitcasted in a lossless way from one to
+operands with equivalent types. Types are equivalent if they can be bitcast in a lossless way from one to
 the other. For pointers, we also need to make sure that there is no conflict regarding memory alignment.
 In the special case of function calls, type equivalence means that both instructions have identical
 function types, i.e. identical return types and identical list of parameters.
