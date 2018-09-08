@@ -2,7 +2,7 @@
 
 
 In this section, we evaluate the proposed optimization, where we analyze our
-improvements on code-size reduction, as well as its impact on the program's
+improvements on code size reduction, as well as its impact on the program's
 performance and compilation-time.
 
 
@@ -30,7 +30,9 @@ one of the targets, the Intel ISA.
   \vspace{-1.8ex}
   \includegraphics[width=\linewidth]{figs/reduction-obj-arm-label.pdf}
   \vspace{-4ex}
-  \caption{Reduction on the object file for both the Intel (top) and ARM (bottom) platforms.}
+	\caption{Object file size reduction for Intel (top) and ARM (bottom). We evaluate our approach (FMSA) under four different exploration thresholds, which
+      control how many potential merging pairs we examine for each function before making a decision. Even for a threshold of one, we outperform the state-of-the-art
+	  by 2.9$\times$(Intel) and 2.3$\times$ (ARM).}
   \label{fig:reduction-obj}
 \end{figure*}
 
@@ -62,23 +64,22 @@ up-bound performance.}
 %\end{figure*}
 
 
-Figure~\ref{fig:reduction-obj} reports the code-size reduction over the baseline for the linked object. %These results show how much we can improve over the existing techniques, by having a more powerful solution, and how close we
+Figure~\ref{fig:reduction-obj} reports the code size reduction over the baseline for the linked object. %These results show how much we can improve over the existing techniques, by having a more powerful solution, and how close we
 %can get to the oracle with our ranking-based exploration framework.
-We observe a similar pattern for code-size reduction for all benchmarks on the Intel and ARM architectures. This is expected because the
-optimizations are applied at the platform-independent IR level. However, some of the decisions may change due to the target-dependent cost
-model (LLVM's TTI) and, similarly, the final object files will also differ due to differences in the instruction set architecture (ISA),
-compiler backend, etc.
+We observe similar trends of code size reduction on both target architectures. This is expected because the
+optimizations are applied at the platform-independent IR level. Changing the target architecture introduces only second order effects,
+such as slightly different decisions due to the different cost model (LLVM's TTI) and differences in how the IR is encoded into binary.
 
-Our approach, FMSA, significantly improves over the state-of-the art (SoA). For the Intel platform, FMSA can achieve an average code-size
-reduction of up to 5.8\% (or 5.3\% with the lower configuration), while the SoA and Identical had an average reduction of 1.8\% and 0.9\%,
-respectively. Similarly, for the ARM platform, FMSA can achieve an average code-size reduction of up to 5.1\% (or 4.6\% with the lower
-configuration), while the SoA and Identical had an average reduction of 2\% and 1.1\%, respectively. For several of the benchmarks, the
-proposed technique shows some impressive code-size reductions compared to the other optimizations. Table~\ref{tab:reduction} highlights
-some of these results for both platforms. Although not noticeable in Figure~\ref{fig:reduction-obj}, the state-of-the-art slightly
-increases code-size in two benchmarks, namely, \texttt{462.libquantum} and \texttt{482.sphinx3}, while FMSA shows significant reductions in
-both cases. The only case where a configuration of FMSA results in slightly less code-size saving over the SoA is on the \texttt{445.gobmk}
-benchmark on the ARM platform. However, the FMSA (oracle) is able to improve over the SoA, with a code-size reduction of 1.33\%. In all
-other cases, FMSA is always equal or better than all other function-merging optimizations, usually by a significant margin.
+Our approach, FMSA, significantly improves over the state-of-the art (SoA). For the Intel platform, FMSA can achieve an average code size
+reduction of up to 5.8\% (or 5.3\% with the lowest exploration threshold), while the SoA and Identical had an average reduction of 1.8\% and 0.9\%,
+respectively. Similarly, for the ARM platform, FMSA can achieve an average code size reduction of up to 5.1\% (or 4.6\% with the lowest
+threshold), while SoA and Identical had an average reduction of 2\% and 1.1\%, respectively. For several of the benchmarks, the
+proposed technique achieves impressive code size reduction compared to other merging approaches. Table~\ref{tab:reduction} highlights
+some of these results for both platforms. In two cases, \texttt{462.libquantum} and \texttt{482.sphinx3}, the state-of-the-art slightly
+increases code size, while FMSA shows reduces size significantly.  The only case where SOA outperforms FMSA is on the \texttt{445.gobmk}
+benchmark on the ARM platform. There are little opportunities for function merging on that benchmark and FSMA misses a few of them. 
+However, we can easily fix this by increasing the exploration threshold. For exhaustive exploration, FMSA improves over the SoA,
+with a code size reduction of 1.33\%. In all other cases, FMSA is always equal or better than all other function-merging optimizations, usually by a significant margin.
 
 \begin{table}[]
 \label{tab:reduction}
@@ -112,18 +113,13 @@ other cases, FMSA is always equal or better than all other function-merging opti
 \caption{Highlights of code reduction results (in percentages) on \textit{Intel / ARM} platforms. }
 \end{table}
 
-
-%These results show that, although it has
-%little compilation-time overhead,
-%merging identical functions, in most cases, has a rather small impact on
-For most of the cases, the LLVM's identical function merging has a small impact on code-size reduction, with an average reduction of less
-than 1\%. The only few cases where it has a noticeable impact are on some of the C++ benchmarks, namely, \texttt{447.dealII},
-\texttt{450.soplex}, and \texttt{471.omnetpp}, which is mostly
-due to the heavy use of templating. %, as exemplified in Figure~\ref{fig:identical-example}.
-%However, the proposed technique (FMSA) can also perform much better on these
-By contrast, FMSA significantly outperforms LLVM on these benchmarks, with an improvement of almost 6$\times$ on the \texttt{471.omnetpp
-benchmark}. Moreover, our technique also shows remarkable reductions on several of the C benchmarks, such as, \texttt{462.libquantum} and
-\texttt{482.sphinx3}, especially when taking into account that the other techniques have no real impact on these benchmarks.
+In most cases, LLVM's identical function merging has very little impact on code size. We see noticeable impact
+only on some of the C++ benchmarks, namely, \texttt{447.dealII}, \texttt{450.soplex}, and \texttt{471.omnetpp}.
+These are the cases that identical function merging was designed to handle, duplicate functions due to heavy
+use of templating. But even on these benchmarks FMSA outperforms LLVM, with an improvement of almost 6$\times$
+on the \texttt{471.omnetpp} benchmark. FMSA will by design merge a superset of the functions LLVM would merge,
+so it will never produce a worse result. Moreover, our technique also shows remarkable reductions on several of the C benchmarks, such as, \texttt{462.libquantum} and
+\texttt{482.sphinx3}, where other techniques have no real impact.
 
 %Figure~\ref{fig:libquantum-example} shows an example of two functions\footnote{We
 %have changed very lightly some of the names used in the functions so that the
@@ -182,13 +178,11 @@ benchmark}. Moreover, our technique also shows remarkable reductions on several 
 
 Figure~\ref{fig:compilation-time} shows the compilation-time overhead for all
 optimizations.
-We are only showing results for the Intel machine, since the benchmarks were
-also cross-compiled from this Intel machine to the ARM platform.
-We are not presenting the results for the oracle exploration because its very
-large overhead would make it impossible to visualize the results properly.
-The oracle has an average compilation-time overhead of 25$\times$ compared to
-the baseline, with its largest overhead being of 136$\times$ on the 447.dealII
-benchmark.
+As explained in the experimental setup, we only present results for compiling
+for Intel. Since we cross-compile on the same machine for both targets, compilation
+times are very similar. We also do not include results for the oracle (exhaustive) exploration.
+It would be hard to visualize it in the same plot as the other configurations, since it
+can be up to 136$\times$ slower than the baseline.
 
 \begin{figure}[t]
   \centering
@@ -208,27 +202,22 @@ benchmark.
   \label{fig:runtime-impact}
 \end{figure*}
 
-Unlike the other more mature implementations, our optimization is a prototype
-implementation not yet highly tuned for compilation-time.
-For this reason, we believe that the compilation-time overhead can be reduced
-even further with enough egineering effort.
-Nevertheless, the proposed ranking infrastructure is already able to reduce the
-compilation-time overhead of the oracle by up to two orders of magnitude,
-resulting in  an average compilation-time overhead of only 20\% compared to the
-baseline, while still achieving a significant code-size reduction, very close to
-the oracle.
-We are able to close the gap between the ranking-based exploration and the
-oracle at the cost of also increasing a compilation-time overhead.
-However, note that the ranking-based exploration has a greedy strategy, while
-the oracle selects the actual best candidate.
-Therefore, even with an unlimited threshold, their results may still be slightly
-different.
+Unlike the other evaluated techniques, our optimization is a prototype
+implementation, not yet tuned for compilation-time.
+We believe that compilation-time can be further reduced with some additional engineering effort.
+Nevertheless, by using our ranking infrastructure to target only the single most promising equivalent function for each function we examine,
+we reduce compilation-time overhead by up to two orders of magnitude compared to the oracle.
+This brings the average compile-time overhead to only 20\% compared to the baseline, while
+still reducing code size almost as well as the oracle.
+Depending on the acceptable trade-off between compilation-time overhead and code size,
+the developer can change the exploration threshold to further shrink the binary or
+accelerate compilation.
 
 Figure~\ref{fig:compilation-time-breakdown} shows a detailed compilation-time
 breakdown.
 For each major step of the proposed optimization, we present the accumulated
 time spent across the whole program.
-In order to better understand the overhead of each one of the steps, we use
+To better understand the overhead of each one of the steps, we use
 an exploration threshold of one ($t = 1$).
 Because the ranking mechanism performs a quadratic operation on the number of
 functions, computing the similarity between all pairs of functions, it is
@@ -244,7 +233,7 @@ includes the time to optimize the merge of the parameters.
 The remaining steps take, in total, a very small percentage of all the
 compilation-time overhead.
 This analysis suggests that optimizing the sequence alignment algorithm and
-the ranking mechanism is key to reduce, even further, the overall
+the ranking mechanism is key to reducing even further the overall
 compilation-time overhead.
 
 \vspace{-1ex}
@@ -253,42 +242,28 @@ compilation-time overhead.
 
 The primary goal of function merging is to reduce code size.
 Nevertheless, it is also important to understand its impact on the programs'
-execution time and the trade-offs between performance and code-size reduction.
+execution time and the trade-offs between performance and code size reduction.
 Figure~\ref{fig:runtime-impact} shows the normalized execution time.
 Overall, our optimization has an average impact of about 3\% on programs' performance.
-For most of the programs, in the benchmark suite, there are no
-statistical differences between the version optimized with the proposed function
-merging or the baseline.
-There are only a few benchmarks with a noticeable performance impact, namely,
-433.milc, 447.dealII, and 464.h264ref.
-%There are only three cases with a noticeable performance impact, namely,
-%433.milc, 462.libquantum, and 464.h264ref.
-%In particular, the 462.libquantum benchmark shows a performance degradation of
-%about \todo{20\%}.
+For most benchmarks, there is no statistically significant difference between
+the baseline and the optimized binary. Only for \texttt{433.milc}, \texttt{447.dealII},
+and \texttt{464.h264ref} there is a noticeable performance impact.
 
-As a case study, we analyze the performance impact on the \text{433.milc}
-benchmark.
-We consider our function-merging optimization with exploration threshold equal
-to one.
-For this benchmark, a total of 58 functions were merged.
-After inspecting the program's execution with profiling information, we
-identified that only a handful of these functions are significantly hotter than
-the other ones.
-Hot basic blocks are determined based on the block frequencies recorded by
-instrumenting all basic blocks in the program~\cite{ball94}.
+We focus on out worst result for \texttt{433.milc}. For an exploration threshold
+value of one, we merge 58 functions. Through profiling, we discovered that a
+handful of them are hot, that is they are frequently executed. If we prevent
+these hot functions from merging, all performance impact is removed while still
+reducing code size. Specifically, our original results showed a 5.11\% code size
+reduction and an 18\% performance overhead. By avoiding merging hot functions,
+we have an effectively non-existant performance impact and a code size reduction
+of 2.09\%. While almost 9$\times$ less, this is still almost twice as good as
+the state-of-the-art. As with the compilation overhead, this is a trade-off that
+the developer can control.
 
-If, instead, we prevent these hot function of being merged, the performance
-impact goes away and we end up with a performance which is statistically
-equivalent to the baseline version, while still providing a good code-size
-reduction.
-Our original optimization results in a code-size reduction of 5.11\% and a
-performance overhead of about 18\%.
-Even when reducing the performance overhead to zero, we can still offer a
-code-size reduction of 2.09\%.
-Note that the state-of-the-art has a reduction of only 1.09\% on this benchmark.
-If we can be more permissive, allowing some of the hot functions to be merged,
-we can have a code-size reduction of 3.43\% while keeping the performance impact
-at about 4\%.
+%Note that the state-of-the-art has a reduction of only 1.09\% on this benchmark.
+%If we can be more permissive, allowing some of the hot functions to be merged,
+%we can have a code size reduction of 3.43\% while keeping the performance impact
+%at about 4\%.
 
 %However, \text{quantum\_gate1} is the largest function in the program,
 %which means that this merge operation greatly contributes
