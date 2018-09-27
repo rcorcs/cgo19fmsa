@@ -1070,7 +1070,7 @@
   \else
     \@latex@error{Cannot handle more than 12 authors}{}%
   \fi
-  \vspace{1.75pc}
+  %\vspace{1.75pc}
   \end{center}}
 
 \def \@settitlebanner {%

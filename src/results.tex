@@ -6,6 +6,19 @@ improvements on code size reduction, as well as its impact on the program's
 performance and compilation-time.
 
 
+\begin{figure*}[t!]
+  \centering
+  %\includegraphics[width=\linewidth]{figs/reduction-obj-intel-label.pdf} \\
+  %\vspace{-1.8ex}
+  %\includegraphics[width=\linewidth]{figs/reduction-obj-arm-label.pdf}
+  \includegraphics[width=\linewidth]{figs/reduction-results.pdf}
+  \vspace{-2ex}
+	\caption{Object file size reduction for Intel (top) and ARM (bottom). We evaluate our approach (FMSA) under four different exploration thresholds, which
+      control how many potential merging pairs we examine for each function before making a decision. Even for a threshold of one, we outperform the state-of-the-art
+	  by 3$\times$(Intel) and 2.3$\times$ (ARM).}
+  \label{fig:reduction-obj}
+\end{figure*}
+
 
 \subsection{Experimental Setup}
 We compare our optimization against the state-of-the-art function merging approach of Edler von Koch et al.~\cite{edler14} and LLVM's identical
@@ -22,20 +35,6 @@ identical for both targets. Changing the target only affects the behavior of the
 short part of the pipeline. Because of that, we only report compilation-time overhead results for
 one of the targets, the Intel ISA.
 
-\begin{figure*}[t!]
-  \centering
-  %\subfigure[Intel platform.]{\includegraphics[width=\linewidth]{figs/reduction-obj-intel-label.pdf}}
-  %\subfigure[ARM platform.]{\includegraphics[width=\linewidth]{figs/reduction-obj-arm-label.pdf}}
-  \includegraphics[width=\linewidth]{figs/reduction-obj-intel-label.pdf} \\
-  \vspace{-1.8ex}
-  \includegraphics[width=\linewidth]{figs/reduction-obj-arm-label.pdf}
-  \vspace{-4ex}
-	\caption{Object file size reduction for Intel (top) and ARM (bottom). We evaluate our approach (FMSA) under four different exploration thresholds, which
-      control how many potential merging pairs we examine for each function before making a decision. Even for a threshold of one, we outperform the state-of-the-art
-	  by 2.9$\times$(Intel) and 2.3$\times$ (ARM).}
-  \label{fig:reduction-obj}
-\end{figure*}
-
 For the proposed optimization, we vary the exploration threshold (Section~\ref{sec:framework})
 and we present the results for a range of threshold values. We also show the results for the oracle exploration strategy, which
 instead of using a rank-based greedy approach, merges a function with all candidates and chooses the best one.
@@ -47,6 +46,14 @@ Section~\ref{sec:framework}. \fixme{ZW: I suggest we call ``oracle" exhaustive-e
 up-bound performance.}
 
 
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\linewidth]{figs/compilation-time.pdf}
+  \vspace{-4ex}
+	\caption{Compilation-time overhead on the Intel platform. For exhaustive exploration (not shown) the average overhead is 25$\times$. Through ranking, we reduce overhead by orders of magnitude. For an exploration threshold of one, FMSA has an overhead of only 20\%.}
+  \label{fig:compilation-time}
+\end{figure*}
 
 \subsection{Code-Size Reduction}
 
@@ -167,19 +174,18 @@ impact.
 
 \subsection{Compilation Overhead}
 
-\begin{figure*}[t]
-  \centering
-  \includegraphics[width=\linewidth]{figs/compilation-time.pdf}
-  \vspace{-4ex}
-	\caption{Compilation-time overhead on the Intel platform. For exhaustive exploration (not shown) the average overhead is 25$\times$. Through ranking, we reduce overhead by orders of magnitude. For an exploration threshold of one, FMSA has an overhead of only 20\%.}
-  \label{fig:compilation-time}
-\end{figure*}
-
 
 Figure~\ref{fig:compilation-time} shows the compilation-time overhead for all optimizations. As explained in the experimental setup, we
 only present results when compiling for the Intel platform. Since we cross-compile on the same machine for both targets, compilation times
 are very similar. We also do not include results for the oracle (exhaustive) exploration. It would be hard to visualize it in the same plot
 as the other configurations, since it can be up to 136$\times$ slower than the baseline.
+
+Unlike the other evaluated techniques, our optimization is a prototype implementation, not yet tuned for compilation-time. We believe that
+compilation-time can be further reduced with some additional engineering effort. Nevertheless, by using our ranking infrastructure to
+target only the single most promising equivalent function for each function we examine, we reduce compilation-time overhead by up to two
+orders of magnitude compared to the oracle. This brings the average compile-time overhead to only 20\% compared to the baseline, while
+still reducing code size almost as well as the oracle. Depending on the acceptable trade-off between compilation-time overhead and code
+size, the developer can change the exploration threshold to exploit more opportunities for code reduction, or to accelerate compilation.
 
 \begin{figure}[t]
   \centering
@@ -198,13 +204,6 @@ as the other configurations, since it can be up to 136$\times$ slower than the b
 	\caption{Runtime overhead on the Intel platform. Performance impact is almost always statistically insignificant. For the few benchmarks affected, FMSA merges hot functions.}
   \label{fig:runtime-impact}
 \end{figure*}
-
-Unlike the other evaluated techniques, our optimization is a prototype implementation, not yet tuned for compilation-time. We believe that
-compilation-time can be further reduced with some additional engineering effort. Nevertheless, by using our ranking infrastructure to
-target only the single most promising equivalent function for each function we examine, we reduce compilation-time overhead by up to two
-orders of magnitude compared to the oracle. This brings the average compile-time overhead to only 20\% compared to the baseline, while
-still reducing code size almost as well as the oracle. Depending on the acceptable trade-off between compilation-time overhead and code
-size, the developer can change the exploration threshold to exploit more opportunities for code reduction, or to accelerate compilation.
 
 Figure~\ref{fig:compilation-time-breakdown} shows a detailed compilation-time breakdown. For each major step of the proposed optimization,
 we present the accumulated time spent across the whole program. To better understand the overhead of each one of the steps, we use an
@@ -226,6 +225,18 @@ execution time and the trade-offs between performance and code size reduction. F
 execution time. Overall, our optimization has an average impact of about 3\% on programs' runtime. For most benchmarks, there is no
 statistically significant difference between the baseline and the optimized binary. Only for \texttt{433.milc}, \texttt{447.dealII}, and
 \texttt{464.h264ref} there is a noticeable performance impact.
+
+
+
+
+\begin{figure}[t]
+  \centering
+  %\includegraphics[width=0.48\linewidth]{figs/obj-intel-n1-prof.pdf}
+  %\includegraphics[width=0.48\linewidth]{figs/runtime-intel-n1-prof.pdf}
+  \includegraphics[width=0.8\linewidth]{figs/profiling-results.pdf}
+  \caption{Profile-guided function merging.}
+  \label{fig:pgo-results}
+\end{figure}
 
 We take \texttt{433.milc}, which has the worst result, for discussion. For an exploration threshold value of one, we merge 58 functions for this
 benchmark. Through profiling, we discovered that a handful of them contain hot code, that is, they have basic blocks that are frequently executed. If we prevent these hot
