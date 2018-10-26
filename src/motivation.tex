@@ -27,7 +27,7 @@ a conditional branch predicated by the \texttt{func\_id}.
 Overall, merging these two functions reduces the total number of machine
 instructions by 18\% in the final object file for the Intel x86 architecture.
 
-Despite being so similar, neither GCC or LLVM can merge the two functions.
+Despite being so similar, neither GCC nor LLVM can merge the two functions.
 They can only handle identical functions, allowing only for type mismatches
 that can be removed by lossless bitcasting of the conflicting values.
 Similarly, the state-of-the-art~\cite{edler14}, while more powerful, cannot

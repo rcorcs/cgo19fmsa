@@ -89,7 +89,6 @@ However, we can easily fix this by increasing the exploration threshold. For exh
 with a code size reduction of 1.33\%. In all other cases, FMSA is always equal or better than all other function-merging optimizations, usually by a significant margin.
 
 \begin{table}[]
-\label{tab:reduction}
 \centering
 \scalebox{0.8}{
 \begin{tabular}{lccc}
@@ -118,6 +117,7 @@ with a code size reduction of 1.33\%. In all other cases, FMSA is always equal o
 \end{tabular}
 }
 \caption{Highlights of code reduction results (in percentages) on \textit{Intel / ARM} platforms. }
+\label{tab:reduction}
 \end{table}
 
 In most cases, LLVM's identical function merging has very little impact on code size. We see noticeable impact only on some of the C++
@@ -228,15 +228,12 @@ statistically significant difference between the baseline and the optimized bina
 
 
 
-
-\begin{figure}[t]
-  \centering
-  %\includegraphics[width=0.48\linewidth]{figs/obj-intel-n1-prof.pdf}
-  %\includegraphics[width=0.48\linewidth]{figs/runtime-intel-n1-prof.pdf}
-  \includegraphics[width=0.8\linewidth]{figs/profiling-results.pdf}
-  \caption{Profile-guided function merging.}
-  \label{fig:pgo-results}
-\end{figure}
+%\begin{figure}[t]
+%  \centering
+%  \includegraphics[width=0.8\linewidth]{figs/profiling-results.pdf}
+%  \caption{Profile-guided function merging on the \texttt{433.milc} benchmark.}
+%  \label{fig:pgo-results}
+%\end{figure}
 
 We take \texttt{433.milc}, which has the worst result, for discussion. For an exploration threshold value of one, we merge 58 functions for this
 benchmark. Through profiling, we discovered that a handful of them contain hot code, that is, they have basic blocks that are frequently executed. If we prevent these hot

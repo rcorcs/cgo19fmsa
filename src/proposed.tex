@@ -36,6 +36,7 @@ Intuitively, when we are manually merging two functions, in a textual format, we
 equivalent segments of code and the non-equivalent ones. Then, we use this understanding to create the merged function. In this paper, we
 propose a technique that follows this simple yet effective principle. At the core of our technique lies a sequence alignment algorithm,
 which is responsible for arranging the code in segments that are either equivalent or non-equivalent.
+We implement this technique at the level of the intermediate representation (IR).
 
 \begin{figure}[t!]
   \centering
@@ -67,7 +68,7 @@ The final step performs the code generation, actually merging the two functions.
 Aligned segments with equivalent code are merged, avoiding redundancy, %redundant code,
 while the remaining segments where the two functions differ have their code guarded by a function identifier.
 
-At this point, we create a merged list of parameters, including the extra function identifier if there any
+At this point, we create a merged list of parameters, including the extra function identifier if there are any
 dissimilar segments. 
 Arguments of the same type are shared between the functions, without necessarily keeping their original
 order.
@@ -78,6 +79,14 @@ so we replace all of their invocations with the new function.
 It should be noted that in the special case where we merge identical functions, the output is also identical, emulating
 the behavior of function merging in production compilers.
 
+After producing the merged function, the body of the original functions are
+replaced by a single call to this new function.
+The original functions can sometimes also be completely deleted and all their
+calls are replaced to a call to the merged function.
+Some of the facts that prohibit the complete removal of the original functions
+are the existance of indirect calls to them or when they are available for
+external linkage.
+ 
 \subsection{Linearization}
 
 \begin{figure}[t!]
@@ -146,7 +155,7 @@ the final sequences end up having the same size, where equivalent segments are a
 and non-equivalent segments are paired with blank characters.
 
 Formally, sequence alignment can be defined as follows:
-For a given alphabet $\alpha$, a sequence $S$ of $k$ characters is a subset of
+For a given alphabet $\alpha$, a sequence $S$ of $k$ characters is an element of
 $\alpha^k$, i.e., $S = (a_1, \ldots a_k)$.
 Let $S_1, \ldots, S_m$ be a set of sequences, possibly of different lengths but
 all derived from the same alphabet $\alpha$, where
@@ -224,14 +233,14 @@ for multi-sequences.
 %These algorithms range from optimal algorithms based on dynamic programming to
 %probabilistic models that do not guarantee
 %optimality~\cite{needleman70,smith81,carrillo88,hickey11}.
-Our work uses the Needleman-Wunsh algorithm~\cite{needleman70} to perform sequence alignment.
+Our work uses the Needleman-Wunsch algorithm~\cite{needleman70} to perform sequence alignment.
 This algorithm gives an alignment that is guaranteed to be optimal for a given scoring scheme~\cite{higgins89},
 however, other algorithm could also be used with different performance and memory usage trade-offs~\cite{needleman70,smith81,carrillo88,hickey11}.
 Different alignments would produce different but valid merged functions.
 
-The Needleman-Wunsh algorithm~\cite{needleman70} is based on dynamic programming and consists of two main steps. First, it builds a \textit{similarity matrix}, based on a scoring scheme, which assigns weights
+The Needleman-Wunsch algorithm~\cite{needleman70} is based on dynamic programming and consists of two main steps. First, it builds a \textit{similarity matrix}, based on a scoring scheme, which assigns weights
 for matches, mismatches, and \textit{gaps} (blank characters). Afterwards, a backward traversal is performed on the similarity matrix, in
-order to reconstruct the final alignment by maximizing the total score. We use a standard scoring scheme for the Needleman-Wunsh algorithm
+order to reconstruct the final alignment by maximizing the total score. We use a standard scoring scheme for the Needleman-Wunsch algorithm
 that rewards matches and equally penalizes mismatches and gaps.
 
 %\todo{Remove this paragraph.}
@@ -487,12 +496,19 @@ we need to branch to new basic blocks based on the function identifier.
 When transitioning back from non-matching segments to a matching segment, we need
 to reconnect both divergent points by branching back to a single new basic block
 where merged instructions will be added.
+This process generates a diamond shaped structures in the CFG. %%TODO add figure
 
-The second pass over the aligned sequence updates the operands of all the
-instructions and adds select instructions as necessary.
-Select instructions are created when a merged instruction has different operand
-values in the original functions, so the appropriate value needs to be
-selected based on the function identifier.
+
+The second pass over the aligned sequence creates the operands of all the instructions.
+%the operands of all the instructions and adds select instructions as necessary.
+%Select instructions are created when a merged instruction has different operand
+%values in the original functions, so the appropriate value needs to be
+%selected based on the function identifier.
+Operand mappings are performed as follows.
+%We first map the instructions from the original functions to the corresponding ones in the merged function. Then, we use this mapping to create...
+We use the previously created mapping in order to map the correct operands for each instruction in the merged function. The creation of operands can be divided in two main cases, non-matching and matching instructions. (1) Creating the operands for non-matching instructions (i.e. those that occur in just one function) is straightforward. In this case, we only need to use the value mapped by the original operand. (2) Matching instructions can have different values in corresponding operands in each one of the original functions. In this case, we need to use a select instruction to choose, at runtime, between these values. If the original operands map to different values $V_1$ and $V_2$, then we add a new select instruction ``select (func\_id==1), V\_1, V\_2", which computes the operand of the merged instruction. If these values are identical, we use this directly, without the need for a select.
+%%TODO create a small figure with an example of the select instruction
+
 If the operands are labels, instead of adding a select instruction, we perform
 operand selection through divergent control flow, using a new basic
 block and a conditional branch on the function identifier.
