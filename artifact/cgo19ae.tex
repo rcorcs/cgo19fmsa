@@ -36,7 +36,7 @@
 
 This artifact provides the source code that implements our function merging
 optimization as well as the other optimizations required for our evaluation.
-Our optimization is implemented on top of LLVM v7.
+Our optimization is implemented on top of LLVM v8.
 We also provide the source code for all benchmarks along with scripts
 required to reproduce the results presented in the paper. 
 To validate the results build our version of LLVM with the provided scripts,
@@ -90,6 +90,18 @@ The main source file that implements our optimization can be found in the path:
 \begin{figure}[h]
 \small \texttt{CGO19FMSA/llvm/lib/Transforms/IPO/FunctionMerging.cpp}
 \end{figure}
+
+The state-of-the-art and LLVM's identical function merging can be found,
+respectively, in the source files:
+\begin{figure}[h]
+\small \texttt{CGO19FMSA/llvm/lib/Transforms/IPO/MergeSimilarFunctions.cpp}
+\small \texttt{CGO19FMSA/llvm/lib/Transforms/IPO/MergeFunctions.cpp}
+\end{figure}
+
+We provide a detailed demonstration of how to reproduce this artifact in the video at the following URL:
+
+\href{https://www.youtube.com/watch?v=Uopoyj3mVeA}{\includegraphics[width=1.2em]{figs/youtube.png} https://www.youtube.com/watch?v=Uopoyj3mVeA}
+
 
 \subsubsection{Hardware dependencies}
 
