@@ -499,13 +499,16 @@ where merged instructions will be added.
 This process generates a diamond shaped structures in the CFG. %%TODO add figure
 
 
-The second pass over the aligned sequence creates the operands of all the instructions.
+
+%%TODO: remove begin here
+%The second pass over the aligned sequence updates
 %the operands of all the instructions and adds select instructions as necessary.
 %Select instructions are created when a merged instruction has different operand
 %values in the original functions, so the appropriate value needs to be
 %selected based on the function identifier.
+%%TODO: up to here
+The second pass over the aligned sequence creates the operands of all the instructions.
 Operand mappings are performed as follows.
-%We first map the instructions from the original functions to the corresponding ones in the merged function. Then, we use this mapping to create...
 We use the previously created mapping in order to map the correct operands for each instruction in the merged function. The creation of operands can be divided in two main cases, non-matching and matching instructions. (1) Creating the operands for non-matching instructions (i.e. those that occur in just one function) is straightforward. In this case, we only need to use the value mapped by the original operand. (2) Matching instructions can have different values in corresponding operands in each one of the original functions. In this case, we need to use a select instruction to choose, at runtime, between these values. If the original operands map to different values $V_1$ and $V_2$, then we add a new select instruction ``select (func\_id==1), V\_1, V\_2", which computes the operand of the merged instruction. If these values are identical, we use this directly, without the need for a select.
 %%TODO create a small figure with an example of the select instruction
 
