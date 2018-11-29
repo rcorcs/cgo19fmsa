@@ -56,10 +56,15 @@ and their CFGs isomorphic.
 Two function types are equivalent if they agree in the number, order, and types
 of their parameters as well as
 their return types, linkage type, and other compiler-specific properties.
-In addition to the structural similarity of the functions, they also require
-that corresponding basic blocks have exactly the same number of instructions
-and that corresponding instructions must have equivalent resulting types but may
-differ in their opcodes or in the number and type of their input operands.
+In addition to the structural similarity of the functions, their technique also
+requires that corresponding basic blocks have exactly the same number of instructions
+and that corresponding instructions must have equivalent resulting types.% but may
+%differ in their opcodes or in the number and type of their input operands.
+Mergeable functions are only allowed to differ in corresponding instructions,
+where they can differ in their opcodes or in the number and type of their input operands.
+%The only differences that are actually allowed is that
+%corresponding instructions can 
+%differ in their opcodes or in the number and type of their input operands.
 
 %If two corresponding instructions have different opcodes, they split the basic
 %block and insert a switch branch to select which instruction to execute

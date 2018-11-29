@@ -98,9 +98,10 @@ external linkage.
 
 Linearization\footnote{Although linearization of CFGs
 usually refers to a predicated representation, % resulting from an if-conversion,
-in this paper, we use a simpler definition.} is a key step for enabling the use of sequence alignment. It takes the CFG of the function,
-specifies a traversal order of the basic blocks, and for each block outputs its label and its instructions. Linearization
-maintains the original ordering of the instructions inside each basic block.
+in this paper, we use a simpler definition.} is a key step for enabling the use of sequence alignment.
+It takes the CFG of the function, specifies a traversal order of the basic blocks, and for each block outputs its label and its instructions.
+Linearization maintains the original ordering of the instructions inside each basic block.
+The edges of the CFG are implicitly represented with branch instructions having the target labels as operands.
 Figure~\ref{fig:linearization-example} shows a simplified example of linearizing the CFG of a
 real function extracted from the SPEC CPU2006 \texttt{400.perlbench} benchmark.
 
