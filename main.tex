@@ -1,6 +1,6 @@
 
-\documentclass[10pt,reprint]{sigplanconf}
-
+%\documentclass[10pt,reprint]{sigplanconf}
+\documentclass[conference,10pt]{IEEEtran}
 
 % CGO Format:
 % 10 Pages including everything
@@ -13,20 +13,20 @@
 
 %% This removes the copyright space from the first page.
 %% TODO: remove this for camera ready.
-\makeatletter
-\def \@copyrightspace {\relax}
-\makeatother
+%\makeatletter
+%\def \@copyrightspace {\relax}
+%\makeatother
 
 \begin{document}
 
-\special{papersize=8.5in,11in}
-\setlength{\pdfpageheight}{\paperheight}
-\setlength{\pdfpagewidth}{\paperwidth}
+%\special{papersize=8.5in,11in}
+%\setlength{\pdfpageheight}{\paperheight}
+%\setlength{\pdfpagewidth}{\paperwidth}
 
-\conferenceinfo{CONF 'yy}{Month d--d, 20yy, City, ST, Country}
-\copyrightyear{20yy}
-\copyrightdata{978-1-nnnn-nnnn-n/yy/mm}
-\doi{nnnnnnn.nnnnnnn}
+%\conferenceinfo{CONF 'yy}{Month d--d, 20yy, City, ST, Country}
+%\copyrightyear{20yy}
+%\copyrightdata{978-1-nnnn-nnnn-n/yy/mm}
+%\doi{nnnnnnn.nnnnnnn}
 
 
 \hypersetup{
@@ -43,7 +43,7 @@
 %% \titlebanner{banner above paper title}        % These are ignored unless
 %% \preprintfooter{short description of paper}   % 'preprint' option specified.
 \title{Function Merging by Sequence Alignment}
-\subtitle{An Interprocedural Code-Size Optimization}
+%\subtitle{An Interprocedural Code-Size Optimization}
 %\subtitle{}
 
 %\authorinfo{}
@@ -51,9 +51,9 @@
 %Rodrigo Rocha, Pavlos Petoumenos, Murray Cole, Zheng Wang, Hugh Leather
 
 
-\authorinfo{\text{Rodrigo Rocha, $\,$ Pavlos Petoumenos}}
-           {University of Edinburgh, UK}
-           {\url{r.rocha@ed.ac.uk}, \url{ppetoume@inf.ed.ac.uk}}
+%\authorinfo{\text{Rodrigo Rocha, $\,$ Pavlos Petoumenos}}
+%           {University of Edinburgh, UK}
+%           {\url{r.rocha@ed.ac.uk}, \url{ppetoume@inf.ed.ac.uk}}
 
 %\authorinfo{Rodrigo C. O. Rocha}
 %           {University of Edinburgh, UK}
@@ -63,9 +63,9 @@
 %           {University of Edinburgh, UK}
 %           {\url{ppetoume@inf.ed.ac.uk}}
 
-\authorinfo{Zheng Wang}
-           {Lancaster University, UK}
-           {\url{z.wang@lancaster.ac.uk}}
+%\authorinfo{Zheng Wang}
+%           {Lancaster University, UK}
+%           {\url{z.wang@lancaster.ac.uk}}
 
 %\authorinfo{Murray Cole}
 %           {University of Edinburgh, UK}
@@ -75,9 +75,26 @@
 %           {University of Edinburgh, UK}
 %           {\url{hleather@inf.ed.ac.uk}}
 
-\authorinfo{Murray Cole, $\,$ Hugh Leather}
-           {University of Edinburgh, UK}
-           {\url{mic@inf.ed.ac.uk}, \url{hleather@inf.ed.ac.uk}}
+%\authorinfo{Murray Cole, $\,$ Hugh Leather}
+%           {University of Edinburgh, UK}
+%           {\url{mic@inf.ed.ac.uk}, \url{hleather@inf.ed.ac.uk}}
+
+
+\author{
+\begin{tabular}{c c c}
+\large{ Rodrigo C. O. Rocha } & \large{ Pavlos Petoumenos } & \large{ Zheng Wang }\\
+\emph{ University of Edinburgh, UK } & \emph{ University of Edinburgh, UK } & \emph{ Lancaster University, UK }\\
+\url{r.rocha@ed.ac.uk} & \url{ppetoume@inf.ed.ac.uk} & \url{z.wang@lancaster.ac.uk}
+\end{tabular} \\
+\vspace{1ex}
+\\
+\begin{tabular}{c c}
+\large Murray Cole & \large Hugh Leather\\
+\emph{ University of Edinburgh, UK } & \emph{ University of Edinburgh, UK }\\
+\url{mic@inf.ed.ac.uk} & \url{hleather@inf.ed.ac.uk}
+\end{tabular}
+}
+
 
 \maketitle
 
@@ -95,8 +112,8 @@
 %% \terms
 %% term1, term2
 
-\keywords
-Code Size, Function Merging, IPO, LTO %, Sequence Alignment
+%\keywords
+%Code Size, Function Merging, IPO, LTO %, Sequence Alignment
 
 \input{src/introduction}
 %\input{src/background}
@@ -107,15 +124,18 @@ Code Size, Function Merging, IPO, LTO %, Sequence Alignment
 \input{src/conclusion}
 
 
-\begin{acks}
+%\begin{acks}
+\section*{Acknowledgment}
   We would like to thank Tobias Edler von Koch for providing the source
 code for the state-of-the-art implementation.
   \\
   This work has been supported by the UK Engineering and Physical Sciences Research Council (EPSRC) under grant EP/L01503X/1.
-\end{acks}
+%\end{acks}
 
 
-\bibliographystyle{abbrvnat}
+%\bibliographystyle{abbrvnat}
+
+\bibliographystyle{IEEEtran}
 
 
 % The bibliography should be embedded for final submission.
