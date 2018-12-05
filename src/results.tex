@@ -20,12 +20,20 @@ performance and compilation-time.
 \end{figure*}
 
 
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\linewidth]{figs/code-size-reduction-mibench.pdf}
+  %\vspace{-4ex}
+	\caption{Object file size reduction for Intel on the Mibench benchmark suite.}
+  \label{fig:code-size-reduction-mibench}
+\end{figure*}
+
 \subsection{Experimental Setup}
 We compare our optimization against the state-of-the-art function merging approach of Edler von Koch et al.~\cite{edler14} and LLVM's identical
-function merging. In our evaluation, we refer to identical function merging as \textit{Identical}, the state-of-the-art as \textit{SoA}, and our
+function merging. In our evaluation, we refer to identical function merging as \textit{Identical}, the state-of-the-art as \textit{SOA}, and our
 approach as \textit{FMSA}.
 
-All optimizations are implemented in LLVM v7 and evaluated on the C/C++ SPEC CPU2006~\cite{spec} benchmark suite. We target two different
+All optimizations are implemented in LLVM v8 and evaluated on the C/C++ SPEC CPU2006~\cite{spec} benchmark suite. We target two different
 instruction sets, the Intel x86-64 and the ARM Thumb. Our Intel test bench has a quad-core 3.4~GHz Intel Core i7 CPU with 16~GiB of RAM.
 %The operating system is openSUSE 42.2 with Linux kernel version 4.4.27.
 The ARM test bench has a Cortex-A53 ARMv8 CPU of 1.4~GHz with 1~GiB of RAM.
@@ -186,6 +194,27 @@ techniques.
 %  \label{fig:identical-example}
 %\end{figure*}
 
+\subsubsection{MiBench: Embedded Benchmark Suite}
+
+We have shown that our technique provides good results not only on templated C++
+benchmarks but also on C benchmarks.
+In order to supplement our evaluation, we also provide results of code-size
+reductions for the embedded benchmark suite called MiBench, which contains only
+small C programs.
+
+Figure~\ref{fig:code-size-reduction-mibench} shows that 
+
+For the \texttt{rijndael} benchmark, which implements the well-known AES
+encryption, our technique is able to merge the two largest functions, namely,
+\texttt{encrypt} and \texttt{decrypt}.
+Inspecting the LLVM IR for the \texttt{rijndael} benchmark, we observe that
+these two functions represent over 70\% of the whole program, in number of
+instructions, excluding global data.
+The two functions, which contains a total of 2494 instructions, are merged into
+a single function with a total of 1445 instruction, i.e., a 42\% reduction in
+the number of instructions at the IR level.
+
+\textbf{talk about the benchmarks that have no effect}
 
 \subsection{Compilation Overhead}
 

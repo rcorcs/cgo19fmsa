@@ -79,7 +79,7 @@ so we replace all of their invocations with the new function.
 It should be noted that in the special case where we merge identical functions, the output is also identical, emulating
 the behavior of function merging in production compilers.
 
-After producing the merged function, the body of the original functions are
+After producing the merged function, the bodies of the original functions are
 replaced by a single call to this new function, creating what is sometimes
 called a \textit{thunk}.
 In some cases, it may also be valid and profitable to completely delete the
@@ -87,7 +87,7 @@ original functions, remapping all their original calls to the merged function.
 %The original functions can sometimes also be completely deleted and all their
 %calls are replaced by a call to the merged function.
 Two of the key facts that prohibit the complete removal of the original functions
-are the existance of indirect calls or when they are available for
+are the existence of indirect calls or when they are available for
 external linkage.
  
 \subsection{Linearization}
@@ -416,7 +416,7 @@ Before a return instruction, we bitcast the values to the base return type and
 at the call-site, we reverse the casting to the original type.
 Having identical types or void return are just special cases where casting is
 unnecessary.
-In the case void types, we can just return \textit{undefined} values since they
+In the case of void types, we can just return \textit{undefined} values since they
 will be discarded at the corresponding call-sites.
 
 After generating the merged list of parameters and return type, we produce the
