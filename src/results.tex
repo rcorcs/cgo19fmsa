@@ -12,7 +12,7 @@ performance and compilation-time.
   %\vspace{-1.8ex}
   %\includegraphics[width=\linewidth]{figs/reduction-obj-arm-label.pdf}
   \includegraphics[width=\linewidth]{figs/reduction-results.pdf}
-  \vspace{-2ex}
+  %\vspace{-2ex}
 	\caption{Object file size reduction for Intel (top) and ARM (bottom). We evaluate our approach (FMSA) under four different exploration thresholds, which
       control how many potential merging pairs we examine for each function before making a decision. Even for a threshold of one, we outperform the state-of-the-art
 	  by 3$\times$(Intel) and 2.3$\times$ (ARM).}
@@ -50,7 +50,7 @@ up-bound performance.}
 \begin{figure*}[t]
   \centering
   \includegraphics[width=\linewidth]{figs/compilation-time.pdf}
-  \vspace{-4ex}
+  %\vspace{-4ex}
 	\caption{Compilation-time overhead on the Intel platform. For exhaustive exploration (not shown) the average overhead is 25$\times$. Through ranking, we reduce overhead by orders of magnitude. For an exploration threshold of one, FMSA has an overhead of only 20\%.}
   \label{fig:compilation-time}
 \end{figure*}
@@ -120,13 +120,28 @@ with a code size reduction of 1.33\%. In all other cases, FMSA is always equal o
 \label{tab:reduction}
 \end{table}
 
-In most cases, LLVM's identical function merging has very little impact on code size. We see noticeable impact only on some of the C++
-benchmarks, namely, \texttt{447.dealII}, \texttt{450.soplex}, and \texttt{471.omnetpp}. These are the cases that identical function merging
-was designed to handle, duplicate functions due to heavy use of templating. But even on these benchmarks FMSA outperforms LLVM, with an
-improvement of almost 6$\times$ on \texttt{471.omnetpp}. FMSA is designed to merge a superset of the functions that the LLVM identical
-function merging can handle, so it is able to achieve better results in most of the cases. Moreover, our technique also shows remarkable
-reductions on several of the C benchmarks, especially \texttt{462.libquantum} and \texttt{482.sphinx3}, where other techniques have no real
-impact.
+In most cases, LLVM's identical function merging has very little impact on code
+size.
+We see noticeable impact only on some of the C++ benchmarks, namely,
+\texttt{447.dealII}, \texttt{450.soplex}, and \texttt{471.omnetpp}.
+These are the cases that identical function merging was designed to handle,
+duplicate functions due to heavy use of templating.
+But even on these benchmarks FMSA outperforms LLVM, with an improvement of
+almost 6$\times$ on \texttt{471.omnetpp}.
+FMSA is designed to merge a superset of the functions that the LLVM identical
+function merging can handle, so it is able to achieve better results in most of
+the cases.
+Moreover, our technique also shows remarkable reductions on several of the
+C benchmarks, especially \texttt{462.libquantum} and \texttt{482.sphinx3}, where
+other techniques have no real impact.
+
+In Section~ref{sec:motivation}, we show two examples extracted from
+\texttt{462.libquantum} and \texttt{482.sphinx3}, where we detail how existing
+techniques fail to merge similar functions in these benchmarks.
+Our function-merging technique is the \textit{first} technique able to
+merge these functions, as we overcome major limitations from the existing
+techniques.
+%%TODO: add some statistics about these two benchmarks
 
 %Figure~\ref{fig:libquantum-example} shows an example of two functions\footnote{We
 %have changed very lightly some of the names used in the functions so that the
@@ -191,7 +206,7 @@ size, the developer can change the exploration threshold to exploit more opportu
   \centering
   %\hspace{-2ex}
   \includegraphics[width=1.0\linewidth]{figs/compilation-time-breakdown-sqrd.pdf}
-  \vspace{-8.5ex}
+  %\vspace{-8.5ex}
   \caption{A compilation-time breakdown isolating the percentage for each major
            step of the optimization (t=1).}%, with an exploration threshold of one.}
   \label{fig:compilation-time-breakdown}
@@ -200,7 +215,7 @@ size, the developer can change the exploration threshold to exploit more opportu
 \begin{figure*}[t]
   \centering
   \includegraphics[width=\linewidth]{figs/runtime-impact.pdf}
-  \vspace{-4ex}
+  %\vspace{-4ex}
 	\caption{Runtime overhead on the Intel platform. Performance impact is almost always statistically insignificant. For the few benchmarks affected, FMSA merges hot functions.}
   \label{fig:runtime-impact}
 \end{figure*}
