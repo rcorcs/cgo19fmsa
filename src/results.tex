@@ -11,7 +11,7 @@ performance and compilation-time.
   %\includegraphics[width=\linewidth]{figs/reduction-obj-intel-label.pdf} \\
   %\vspace{-1.8ex}
   %\includegraphics[width=\linewidth]{figs/reduction-obj-arm-label.pdf}
-  \includegraphics[width=\linewidth]{figs/reduction-results.pdf}
+  \includegraphics[width=\linewidth]{figs/code-size-reduction-spec.pdf}
   %\vspace{-2ex}
 	\caption{Object file size reduction for Intel (top) and ARM (bottom). We evaluate our approach (FMSA) under four different exploration thresholds, which
       control how many potential merging pairs we examine for each function before making a decision. Even for a threshold of one, we outperform the state-of-the-art
@@ -20,21 +20,15 @@ performance and compilation-time.
 \end{figure*}
 
 
-\begin{figure*}[t]
-  \centering
-  \includegraphics[width=\linewidth]{figs/code-size-reduction-mibench.pdf}
-  %\vspace{-4ex}
-	\caption{Object file size reduction for Intel on the Mibench benchmark suite.}
-  \label{fig:code-size-reduction-mibench}
-\end{figure*}
-
 \subsection{Experimental Setup}
 We compare our optimization against the state-of-the-art function merging approach of Edler von Koch et al.~\cite{edler14} and LLVM's identical
 function merging. In our evaluation, we refer to identical function merging as \textit{Identical}, the state-of-the-art as \textit{SOA}, and our
 approach as \textit{FMSA}.
+We also run LLVM's identical function merging before both \textit{SOA} and \textit{FMSA}, as this helps to reduce
+compilation time by efficiently reducing the number of trivially mergeable functions.
 
-All optimizations are implemented in LLVM v8 and evaluated on the C/C++ SPEC CPU2006~\cite{spec} benchmark suite. We target two different
-instruction sets, the Intel x86-64 and the ARM Thumb. Our Intel test bench has a quad-core 3.4~GHz Intel Core i7 CPU with 16~GiB of RAM.
+All optimizations are implemented in LLVM v8 and evaluated on two benchmark suites: the C/C++ SPEC CPU2006~\cite{spec} and MiBench~\cite{mibench01}.
+We target two different instruction sets, the Intel x86-64 and the ARM Thumb. Our Intel test bench has a quad-core 3.4~GHz Intel Core i7 CPU with 16~GiB of RAM.
 %The operating system is openSUSE 42.2 with Linux kernel version 4.4.27.
 The ARM test bench has a Cortex-A53 ARMv8 CPU of 1.4~GHz with 1~GiB of RAM.
 %The operating system of the ARM platform is a Raspbian.
@@ -54,13 +48,12 @@ Section~\ref{sec:framework}. \fixme{ZW: I suggest we call ``oracle" exhaustive-e
 up-bound performance.}
 
 
-
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=\linewidth]{figs/compilation-time.pdf}
+  \includegraphics[width=\linewidth]{figs/code-size-reduction-mibench.pdf}
   %\vspace{-4ex}
-	\caption{Compilation-time overhead on the Intel platform. For exhaustive exploration (not shown) the average overhead is 25$\times$. Through ranking, we reduce overhead by orders of magnitude. For an exploration threshold of one, FMSA has an overhead of only 20\%.}
-  \label{fig:compilation-time}
+	\caption{Object file size reduction for Intel on the Mibench benchmark suite.}
+  \label{fig:code-size-reduction-mibench}
 \end{figure*}
 
 \subsection{Code-Size Reduction}
@@ -143,12 +136,21 @@ Moreover, our technique also shows remarkable reductions on several of the
 C benchmarks, especially \texttt{462.libquantum} and \texttt{482.sphinx3}, where
 other techniques have no real impact.
 
-In Section~ref{sec:motivation}, we show two examples extracted from
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\linewidth]{figs/compilation-time.pdf}
+  %\vspace{-4ex}
+	\caption{Compilation-time overhead on the Intel platform. For exhaustive exploration (not shown) the average overhead is 25$\times$. Through ranking, we reduce overhead by orders of magnitude. For an exploration threshold of one, FMSA has an overhead of only 20\%.}
+  \label{fig:compilation-time}
+\end{figure*}
+
+In Section~\ref{sec:motivation}, we show two examples extracted from
 \texttt{462.libquantum} and \texttt{482.sphinx3}, where we detail how existing
 techniques fail to merge similar functions in these benchmarks.
-Our function-merging technique is the \textit{first} technique able to
-merge these functions, as we overcome major limitations from the existing
-techniques.
+Our technique is the \textit{first} that can handle these examples, producing
+merged functions equivalent to the handwritten ones shown in
+Figures~\ref{fig:sphinx-example} and~\ref{fig:libquantum-example}.
+%as we overcome major limitations from the existing techniques.
 %%TODO: add some statistics about these two benchmarks
 
 %Figure~\ref{fig:libquantum-example} shows an example of two functions\footnote{We
@@ -210,9 +212,19 @@ these two functions represent over 70\% of the whole program, in number of
 instructions, excluding global data.
 The two functions, which contains a total of 2494 instructions, are merged into
 a single function with a total of 1445 instruction, i.e., a 42\% reduction in
-the number of instructions at the IR level.
+the number of instructions at the IR level. All variations of FMSA have the same
+resulting code, with a total of 20.6\% reduction in the linked object file.
 
-\textbf{talk about the benchmarks that have no effect}
+%Note that while we had significant reductions in some of the MiBench programs,
+%some of the programs were not amenable to function merging by any of the
+%techniques.
+%However, our technique was the only one able to provide any significant
+%reduction on these real embedded benchmarks.
+
+Because these embedded benchmarks are much smaller than those in the SPEC suite, it is unlikely that we can find trivially similar functions.
+This is why neither the state-of-the-art nor LLVM's identical function merging technique was able to have any real effect on these benchmarks, and a more powerful technique was needed.
+Our technique was the only one able to provide any significant reduction on these real embedded benchmarks.
+Although we were able to find orders of magnitude fewer profitable merge operations on MiBench, any profitable merge found has a much greater effect relative to the final size of the binary.
 
 \subsection{Compilation Overhead}
 

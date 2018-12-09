@@ -729,7 +729,8 @@ as internal or private to the compilation unit.
 
 Figure~\ref{fig:opt-pipeline} shows an overview of the compilation pipeline used
 throughout our evaluation.
-First, we apply early code-size optimizations to each compilation unit.
+First, we apply early code-size optimizations (\texttt{-Os}) to each compilation
+unit.
 Then, function merging and further code-size optimizations are applied during
 monolithic link-time optimization~(LTO).
 With LTO, object file generation is delayed until all input modules are known,
