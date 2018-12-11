@@ -196,6 +196,45 @@ Figures~\ref{fig:sphinx-example} and~\ref{fig:libquantum-example}.
 %  \label{fig:identical-example}
 %\end{figure*}
 
+
+
+
+\begin{table}[]
+\centering
+\scalebox{0.8}{
+\begin{tabular}{lcccc}
+\toprule
+\multicolumn{1}{c}{\textbf{Benchmarks}} & \textbf{\#Functions} & \textbf{Identical} & \textbf{SOA}  & \textbf{FMSA {[}t=1{]}} \\
+\midrule
+                     400.perlbench      & 1699   & 12     & 103   & 175    \\
+\rowcolor{evencolor} 401.bzip2          & 73     & 0      & 0     & 7      \\
+                     403.gcc            & 4541   & 136    & 341   & 614    \\
+\rowcolor{evencolor} 429.mcf            & 24     & 0      & 1     & 1      \\
+                     433.milc           & 235    & 0      & 6     & 26     \\
+\rowcolor{evencolor} 444.namd           & 99     & 1      & 1     & 5      \\
+                     445.gobmk          & 2511   & 183    & 485   & 436    \\
+\rowcolor{evencolor} 447.dealII         & 7380   & 1835   & 2785  & 2974   \\
+                     450.soplex         & 1035   & 27     & 125   & 156    \\
+\rowcolor{evencolor} 453.povray         & 1585   & 60     & 112   & 193    \\
+                     456.hmmer          & 487    & 3      & 16    & 45     \\
+\rowcolor{evencolor} 458.sjeng          & 134    & 0      & 5     & 11     \\
+                     462.libquantum     & 95     & 0      & 1     & 9      \\
+\rowcolor{evencolor} 464.h264ref        & 523    & 3      & 22    & 50     \\
+                     470.lbm            & 17     & 0      & 0     & 0      \\
+\rowcolor{evencolor} 471.omnetpp        & 1406   & 45     & 69    & 227    \\
+                     473.astar          & 101    & 0      & 2     & 4      \\
+\rowcolor{evencolor} 482.sphinx3        & 326    & 2      & 6     & 24     \\
+                     483.xalancbmk      & 14191  & 3057   & 4573  & 4342   \\
+\bottomrule
+\end{tabular}
+}
+\caption{Highlights of code reduction results (in percentages) on \textit{Intel / ARM} platforms. }
+\label{tab:reduction}
+\end{table}
+
+
+
+
 \subsubsection{MiBench: Embedded Benchmark Suite}
 
 We have shown that our technique provides good results not only on templated C++
