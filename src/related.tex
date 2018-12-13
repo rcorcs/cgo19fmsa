@@ -58,8 +58,8 @@ of their parameters as well as
 their return types, linkage type, and other compiler-specific properties.
 In addition to the structural similarity of the functions, their technique also
 requires that corresponding basic blocks have exactly the same number of instructions
-and that corresponding instructions must have equivalent resulting types.% but may
-%differ in their opcodes or in the number and type of their input operands.
+and that corresponding instructions must have equivalent resulting types.
+% but may differ in their opcodes or in the number and type of their input operands.
 Mergeable functions are only allowed to differ in corresponding instructions,
 where they can differ in their opcodes or in the number and type of their input operands.
 %The only differences that are actually allowed is that
@@ -128,8 +128,9 @@ In this section, we describe some of these applications.
 
 Coutinho~et~al.~\cite{coutinho11} proposed an optimization that uses instruction
 alignment to reduce divergent code for GPU.
-They are able to fuse divergent branches with single basic blocks, reducing
-SIMD idle cores.
+They are able to fuse divergent branches that contain single basic blocks,
+improving GPU utilization.
+%reducing idle cores.
 
 Similarly, analogous algorithms have also been suggested to identify the
 differences between two programs, helping developers with source-code
