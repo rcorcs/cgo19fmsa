@@ -5,7 +5,7 @@
 %Most of the classic optimizations try to find semantically equivalent programs
 %that require fewer instructions to execute, such as dead code elimination,
 %common subexpression elimination, and others~\cite{cocke70,massalin87,knoop94}.
-Compiler optimizations for code-size reduction exist since the very beginning
+Compiler optimizations for code-size reduction have existed since the very beginning
 of optimizing compilers.
 These optimizations can be divided in two main categories:
 those that replace a piece of code by a smaller but semantically equivalent code,
@@ -19,8 +19,8 @@ Function merging falls in the latter category.
 Google developed an optimization for the \textit{gold} linker that merges
 identical functions on a bit-level~\cite{tallam10,kwan12}.
 After placing each function in a separate ELF section, they identify functions
-sections that have their \textit{text} bit-identical and also their
-relocations point to identical sections.
+sections that have their \textit{text} bit-identical and also have their
+relocations pointing to identical sections.
 Similar machine-level implementations are also offered by other production compilers
 and linkers, such as MSVC~\cite{msvc-icf}.
 %A simpler version of this optimization was also offered by the MSVC linker~\cite{msvc-icf};
@@ -47,8 +47,7 @@ Its simplicity allows for an efficient exploration approach based on computing
 the hash of the functions and then using a tree structure to group equivalent
 functions based on their hash values.
 
-The state-of-the-art function-merging technique, proposed by Edler von
-Koch~et~al.~\cite{edler14}, exploits structural similarity among functions.
+The state-of-the-art function-merging technique exploits structural similarity among functions~\cite{edler14}.
 Their optimization is able to merge similar functions that are not necessarily
 identical.
 Two functions are structurally similar if both their function types are equivalent
@@ -113,7 +112,7 @@ occurrences with a function call~\cite{loki04,dreweke07}.
 Procedural abstraction differs from function merging as it usually works on
 single basic blocks or single-entry single-exit regions.
 Moreover, it only works for identical segments of code, and every identical
-segment of code is extracted into a separately new function.
+segment of code is extracted into a separate new function.
 Function merging, on the other hand, works on whole functions, which can be
 identical or just partially similar, producing a single merged function.
 
@@ -136,14 +135,14 @@ Similarly, analogous algorithms have also been suggested to identify the
 differences between two programs, helping developers with source-code
 management and maintenance~\cite{yang91,miller85}.
 These techniques are applied in tools for source-code management, such as
-\textit{diff} command~\cite{miller85}.
+the \textit{diff} command~\cite{miller85}.
 
 Similar techniques have also been applied to code editors and IDEs~\cite{toomim04,sajnani16}.
 For example,
 SourcererCC~\cite{sajnani16} detects possible clones, at the source level, by
 dividing the programs into a set of code blocks where each code block is itself
 represented by a bag-of-tokens, i.e., a set of tokens and their frequencies.
-Tokens are keywords, literals, and identifiers, but no operators.
+Tokens are keywords, literals, and identifiers, but not operators.
 Code blocks are considered clones if their degree of similarity is higher than
 a given threshold.
 In order to reduce the number of blocks compared, candidate blocks are filtered

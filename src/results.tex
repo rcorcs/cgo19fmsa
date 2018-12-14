@@ -16,8 +16,9 @@ improvements on code size reduction, as well as its impact on the program's
 performance and compilation-time.
 
 \subsection{Experimental Setup}
-We compare our optimization against the state-of-the-art function merging approach of Edler von Koch et al.~\cite{edler14} and LLVM's identical
-function merging. In our evaluation, we refer to identical function merging as \textit{Identical}, the state-of-the-art as \textit{SOA}, and our
+We compare our optimization against the state-of-the-art~\cite{edler14}
+%function merging approach of Edler von Koch et al.~\cite{edler14}
+and LLVM's identical~\cite{llvm-fm} function merging techniques. In our evaluation, we refer to identical function merging as \textit{Identical}, the state-of-the-art as \textit{SOA}, and our
 approach as \textit{FMSA}.
 We also run LLVM's identical function merging before both \textit{SOA} and \textit{FMSA}, as this helps to reduce
 compilation time by efficiently reducing the number of trivially mergeable functions.
@@ -208,13 +209,13 @@ each technique.
 
 Table~\ref{tab:stats} shows statistics extracted from the SPEC CPU2006.
 In particular, we show how many functions are present in the linked program
-just before executing the function merging techniques, as well as what is
-the average and maximum size of these functions, in number of instructions, at
+just before executing the function merging techniques, as well as
+the average, minimum, and maximum size of these functions, in number of instructions, at
 this same point in the compilation pipeline.
-Additionally, this table also report how many pair-wise merge operations are
+Additionally, this table also reports how many pair-wise merge operations are
 performed by each one of the function merging techniques.
 
-\subsubsection{MiBench: Embedded Benchmark Suite}
+\subsubsection*{MiBench: Embedded Benchmark Suite}
 
 We have shown that our technique provides good results not only on templated C++
 benchmarks but also on C benchmarks.
@@ -338,12 +339,11 @@ size, the developer can change the exploration threshold to exploit more opportu
 \end{figure*}
 
 Figure~\ref{fig:compilation-time-breakdown} shows a detailed compilation-time breakdown. For each major step of the proposed optimization,
-we present the accumulated time spent across the whole program. To better understand the overhead of each one of the steps, we use an
-exploration threshold of one ($t = 1$). Because the ranking mechanism performs a quadratic operation on the number of functions, computing
+we present the accumulated time spent across the whole program. To better understand the overhead of each step, we use an exploration threshold of one ($t = 1$). Because the ranking mechanism performs a quadratic operation on the number of functions, computing
 the similarity between all pairs of functions, it is expected that ranking would be amongst the most costly steps. However, it is
 interesting to notice that the sequence alignment dominates most of the compilation-time overhead, especially considering that this
-operation is performed only once per function, when $t = 1$. Although this operation is linear on the number of functions, the
-Needleman-Wunsh algorithm~\cite{needleman70} is quadratic on the size of the functions being aligned, both in time and space.
+operation is performed only once per function, when $t = 1$. Although this operation is linear in the number of functions, the
+Needleman-Wunsh algorithm~\cite{needleman70} is quadratic in the size of the functions being aligned, both in time and space.
 Unsurprisingly, code generation is the third most costly step, which also includes the time to optimize the merge of the parameters. The
 remaining steps contribute, in total, a small percentage of all the compilation-time overhead. This analysis suggests that optimizing the
 sequence alignment algorithm and the ranking mechanism is key to reducing even further the overall compilation-time overhead.
@@ -366,11 +366,11 @@ statistically significant difference between the baseline and the optimized bina
 %  \label{fig:pgo-results}
 %\end{figure}
 
-We take \texttt{433.milc}, which has the worst result, for discussion. For an exploration threshold value of one, we merge 58 functions for this
-benchmark. Through profiling, we discovered that a handful of them contain hot code, that is, they have basic blocks that are frequently executed. If we prevent these hot
+We take \texttt{433.milc}, which has the worst result, for discussion. For an exploration threshold value of one, we merge 58 functions.
+Through profiling, we discovered that a handful of them contain hot code, that is, they have basic blocks that are frequently executed. If we prevent these hot
 functions from merging, all performance impact is removed while still reducing code size. Specifically, our original results showed a
 5.11\% code size reduction and an 18\% performance overhead.
-By avoiding merging hot functions, it results in effectively non-existent performance impact and
+Avoiding merging hot functions results in effectively non-existent performance impact and
 a code size reduction of 2.09\%.
 This code size reduction is still about twice as good as the state-of-the-art. As with the
 compilation overhead, this is a trade-off that the developer can control.

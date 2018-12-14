@@ -57,7 +57,7 @@ The proposed technique consists of three major steps, as depicted in
 Figure~\ref{fig:func-merge-overview}.
 First, we linearize each function, representing the CFG as a sequence of
 labels and instructions.
-The second step consists in applying a sequence alignment algorithm, borrowed
+The second step consists of applying a sequence alignment algorithm, borrowed
 from bioinformatics, which identifies regions of similarity between sequences.
 The sequence alignment algorithm allows us to arrange two linearized functions
 into segments that are equivalent between the two functions and segments where
@@ -66,8 +66,7 @@ The final step performs the code generation, actually merging the two functions.
 Aligned segments with equivalent code are merged, avoiding redundancy, %redundant code,
 while the remaining segments where the two functions differ have their code guarded by a function identifier.
 
-At this point, we create a merged list of parameters, including the extra function identifier if there are any
-dissimilar segments. 
+During code generation, we create a merged list of parameters, including the extra function identifier if there are any dissimilar segments. 
 Arguments of the same type are shared between the functions, without necessarily keeping their original
 order.
 We also allow for the return types to be different, in which case we use an aggregate type to return values of both types.
@@ -85,8 +84,7 @@ original functions, remapping all their original calls to the merged function.
 %The original functions can sometimes also be completely deleted and all their
 %calls are replaced by a call to the merged function.
 Two of the key facts that prohibit the complete removal of the original functions
-are the existence of indirect calls or when they are available for
-external linkage.
+are the existence of indirect calls or the possibility of external linkage.
  
 \subsection{Linearization}
 
@@ -144,14 +142,14 @@ This strategy leads to good performance in our experiments.
 \subsection{Sequence Alignment}
 
 When merging two functions, the goal is to identify which segments of the code are equivalent (and therefore can be merged) and which ones are different.
-To avoid breaking the semantics of the original program, we also need to maintain the order of the instructions for each one of the functions.
+To avoid breaking the semantics of the original program, we also need to maintain the order of the instructions for each of the functions.
 
 %%definition of "reduce": present a problem or subject in a simplified form.
 After linearization, we reduce the problem of merging functions to the problem of \textit{sequence alignment}. Sequence alignment is important in many scientific areas, most notably in molecular biology~\cite{needleman70,smith81,carrillo88,wang94} where it is used for identifying homologous subsequences of amino acid in proteins.
 Figure~\ref{fig:opcode-align} shows an example of
 the sequence alignment between two linearized functions extracted from the \texttt{400.perlbench} benchmark, including the one used in
 Figure~\ref{fig:linearization-example}.
-Essentially, sequence alignment algorithms insert blank characters in both input sequences in a way that
+Essentially, sequence alignment algorithms insert blank characters in both input sequences so that
 the final sequences end up having the same size, where equivalent segments are aligned with their matching segments from the other sequence
 and non-equivalent segments are paired with blank characters.
 
@@ -188,8 +186,7 @@ Finally, for all $j\in\{1,\ldots,l\}$, there is at least one value of $i$ for
 which $b_j^{(i)}$ is not a blank character.
 %and for any pair of sequences that have a non-blank character at position $j$,
 %these characters are equivalent.
-Note that two aligned sequences may contain both non-blank and non-equivalent characters at any given position, in which case it contains a
-mismatch.
+Note that two aligned sequences may contain both non-blank and non-equivalent characters at any given position, in which case there is a mismatch.
 
 %\fixme{ZW: This formal definition is so confusing. Perhaps consider using Figure 5 to describe how sequence alignment works in
 %the laymen terms?}
@@ -236,7 +233,7 @@ for multi-sequences.
 %optimality~\cite{needleman70,smith81,carrillo88,hickey11}.
 Our work uses the Needleman-Wunsch algorithm~\cite{needleman70} to perform sequence alignment.
 This algorithm gives an alignment that is guaranteed to be optimal for a given scoring scheme~\cite{higgins89},
-however, other algorithm could also be used with different performance and memory usage trade-offs~\cite{needleman70,smith81,carrillo88,hickey11}.
+however, other algorithms could also be used with different performance and memory usage trade-offs~\cite{needleman70,smith81,carrillo88,hickey11}.
 Different alignments would produce different but valid merged functions.
 
 The Needleman-Wunsch algorithm~\cite{needleman70} is based on dynamic programming and consists of two main steps. First, it builds a \textit{similarity matrix}, based on a scoring scheme, which assigns weights
@@ -283,9 +280,7 @@ same for landing blocks. We describe how we handle such blocks in more detail in
 %%% on the benchmarks 447.dealII, 482.omnetpp, etc.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Most modern compilers implement the zero-cost Itanium ABI for exception
-handling~\cite{dinechin00}, including GCC and LLVM, sometimes called the
-\textit{landing-pad} model.
+Most modern compilers, including GCC and LLVM, implement the zero-cost Itanium ABI for exception handling~\cite{dinechin00} sometimes called the \textit{landing-pad} model.
 %In this model, landing-pad instructions are used to encode which action is taken
 %when an exception has been thrown.
 This model consists of:
@@ -384,7 +379,7 @@ benefits:
 %(1) it allows for a simpler function call, with fewer values to pass to the
 %called function, reducing code size;
 %(2) similarly, it reduces the frame of the merged function;
-(1) it reduces the overheads associated with function call abstractions, such as,
+(1) it reduces the overheads associated with function call abstractions, such as
 reducing the number of values required to be communicated between functions.
 (2) if both functions use merged parameters in similar ways, it will remove some
 of the cases where we need select instructions to distinguish between the functions.
@@ -583,7 +578,7 @@ Figure~\ref{fig:func-merge-opt-arch} for our optimization.
 
 The proposed framework is based on a light-weight ranking infrastructure that uses a \textit{fingerprint} of the functions to evaluate
 their similarity. It starts by precomputing and caching fingerprints for all functions. The purpose of fingerprints is to make it easy
-to discard unpromising pairs of functions so that we perform the more expensive evaluation only on the most similar pairs.
+to discard unpromising pairs of functions so that we perform the more expensive evaluation only on the most promising pairs.
 To this end, the fingerprint consists of: $(1)$ a map of instruction opcodes to their frequency in the function; $(2)$ the set of types
 manipulated by the function. While functions can have several thousands of instructions, an IR usually has just a few tens of opcodes,
 e.g., the LLVM IR has only about 64 different opcodes. This means that the fingerprint needs to store just a small integer array of the
@@ -705,7 +700,7 @@ making of most optimizations.
 
 There are different ways of applying this optimization, with different trade-offs.
 We can apply our optimization on a per compilation-unit basis, which usually
-results in lower compilation-time overheads, because only a small part of the
+results in lower compilation-time overheads because only a small part of the
 whole program is being considered at each moment.
 However, this also limits the optimization opportunities, since only pairs of
 functions within the same translation unit would be merged.

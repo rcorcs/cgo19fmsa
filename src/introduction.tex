@@ -63,8 +63,8 @@ As a result, we achieve our code size savings while introducing little compilati
 overhead.
 
 Compared to identical function merging, we introduce extra code to be executed,
-namely the code that chooses dissimilar sequences in merged functions. A naive
-implementation could easily hurt performance, e.g by merging two hot functions
+namely the code that chooses between dissimilar sequences in merged functions.
+A naive implementation could easily hurt performance, e.g by merging two hot functions
 with only few similarities. Our implementation can avoid this by incorporating
 profiling information to identify blocks of hot code and effectively minimize 
 the overhead in this portion of the code.
