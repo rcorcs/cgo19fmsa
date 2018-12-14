@@ -25,7 +25,7 @@ libraries~\cite{keoh14} or hand-optimizing their code~\cite{weaver09}.
 %tailored for these low-end devices with limited memory sizes~\cite{androidGo,hahm16}.
 
 Function merging reduces replicated code by combining multiple identical
-functions into a single one. 
+functions into a single one~\cite{llvm-fm,livska14}. 
 Although a simple and intuitive concept, it is crucial for making high-level
 abstractions usable, when they introduce duplicate code~\cite{tallam10,kwan12}.
 For example, some C++ ABIs may end up creating multiple identical constructors
@@ -39,7 +39,7 @@ the semantics of the original functions. This is particularly important for
 handling specialized template functions with small differences in their
 compiled form.
 
-While an improvement, even the state-of-the-art often fails to produce any
+While an improvement, even the state-of-the-art often usually fails to produce any
 noticeable code size reduction. In this paper, we introduce a novel way to merge
 functions that overcomes the major limitations of the state-of-the-art. Our
 insight is that the weak results of existing function merging implementations
@@ -52,8 +52,8 @@ different DNA or RNA sequences. Similarly, we use sequence alignment to find
 areas of functional similarity in arbitrary function pairs. Aligned segments
 with equivalent code are merged. The remaining segments where the two functions
 differ are added to the new function too but have their code guarded by a
-function identifier. This approach leads to significant code size reduction,
-more than three times better than the state-of-the-art can achieve.
+function identifier. This approach leads to significant code size reduction.
+%more than three times better than the state-of-the-art can achieve.
 
 Applying sequence alignment to all pairs of functions is prohibitively expensive
 even for medium sized programs. To counter this, our technique is integrated with
@@ -65,9 +65,10 @@ overhead.
 Compared to identical function merging, we introduce extra code to be executed,
 namely the code that chooses dissimilar sequences in merged functions. A naive
 implementation could easily hurt performance, e.g by merging two hot functions
-with only few similarities. Our implementation avoids this by incorporating
-profiling information to identify hot code blocks and effectively disable code
-size optimizations for them. 
+with only few similarities. Our implementation can avoid this by incorporating
+profiling information to identify blocks of hot code and effectively minimize 
+the overhead in this portion of the code.
+%disable code size optimizations for them. 
 
 In this paper, we make the following contributions:
 \begin{itemize}[noitemsep,topsep=3pt]
