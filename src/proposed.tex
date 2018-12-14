@@ -147,8 +147,7 @@ When merging two functions, the goal is to identify which segments of the code a
 To avoid breaking the semantics of the original program, we also need to maintain the order of the instructions for each one of the functions.
 
 %%definition of "reduce": present a problem or subject in a simplified form.
-After linearization, we reduce the problem of merging functions to the problem of \textit{sequence alignment}. Sequence alignment is an important technique to many areas of science, most notably in molecular biology~\cite{needleman70,smith81,carrillo88,wang94} where, for
-example, it is used for identifying homologous subsequences of amino acid in proteins.
+After linearization, we reduce the problem of merging functions to the problem of \textit{sequence alignment}. Sequence alignment is important in many scientific areas, most notably in molecular biology~\cite{needleman70,smith81,carrillo88,wang94} where it is used for identifying homologous subsequences of amino acid in proteins.
 Figure~\ref{fig:opcode-align} shows an example of
 the sequence alignment between two linearized functions extracted from the \texttt{400.perlbench} benchmark, including the one used in
 Figure~\ref{fig:linearization-example}.
@@ -274,7 +273,8 @@ Labels can represent both normal basic blocks and landing blocks used in excepti
 Labels of normal basic blocks are ignored during code equivalence evaluation, but we cannot do the
 same for landing blocks. We describe how we handle such blocks in more detail in the following section.
 
-\subsubsection{Exception Handling Code}
+%\subsubsection{Exception Handling Code}
+\subsubsection*{Exception Handling Code}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% RODRIGO: I think that we need to talk about landing blocks, not only landing pad instructions,
@@ -338,7 +338,7 @@ type and also encode identical lists of exception and cleanup handlers.
 
 \subsection{Code Generation}
 The code generation phase is responsible for producing a new function from the output of the sequence alignment.
-Our four main objectives are: merging the parameter lists; merging return type; generating select instructions to choose the appropriate
+Our four main objectives are: merging the parameter lists; merging the return types; generating select instructions to choose the appropriate
 operands in merged instructions; and constructing the CFG of the merged function.
 
 Our approach can effectively handle multiple different function merging scenarios:
@@ -407,11 +407,10 @@ merging them, improves code-size reduction of individual benchmarks by up to 7\%
 %\subsubsection{Control-Flow Graph Reconstruction}
 
 Our technique is able to merge any return types.
-When merging the return types, we select the largest return type, in the number
-of bits, as the base type.
+When merging return types, we select the largest one as the base type.
 Then, we use bitcast instructions to convert between the types.
-Before a return instruction, we bitcast the values to the base return type and
-at the call-site, we reverse the casting to the original type.
+Before a return instruction, we bitcast the values to the base return type.
+We reverse this at the call-site, where we cast back to the original type.
 Having identical types or void return are just special cases where casting is
 unnecessary.
 In the case of void types, we can just return \textit{undefined} values since they
@@ -509,20 +508,19 @@ we need to branch to new basic blocks based on the function identifier.
 When transitioning back from non-matching segments to a matching segment, we need
 to reconnect both divergent points by branching back to a single new basic block
 where merged instructions will be added.
-This process generates a diamond shaped structures in the CFG. %%TODO add figure
+This process generates diamond shaped structures in the CFG. %%TODO add figure
 
 
 
-%%TODO: remove begin here
-%The second pass over the aligned sequence updates
-%the operands of all the instructions and adds select instructions as necessary.
-%Select instructions are created when a merged instruction has different operand
-%values in the original functions, so the appropriate value needs to be
-%selected based on the function identifier.
-%%TODO: up to here
-The second pass over the aligned sequence creates the operands of all the instructions.
-Operand mappings are performed as follows.
-We use the previously created mapping in order to map the correct operands for each instruction in the merged function. The creation of operands can be divided in two main cases, non-matching and matching instructions. (1) Creating the operands for non-matching instructions (i.e. those that occur in just one function) is straightforward. In this case, we only need to use the value mapped by the original operand. (2) Matching instructions can have different values in corresponding operands in each one of the original functions. In this case, we need to use a select instruction to choose, at runtime, between these values. If the original operands map to different values $V_1$ and $V_2$, then we add a new select instruction ``select (func\_id==1), V\_1, V\_2", which computes the operand of the merged instruction. If these values are identical, we use this directly, without the need for a select.
+The second pass over the aligned sequence creates the operands of all instructions.
+We use the previously created mapping in order to identify the correct operands for each instruction in the merged function.
+There are two main cases:
+(1) Creating the operands for non-matching instructions (i.e. those that occur in just one function) is straightforward.
+In this case, we only need to use the values on which the operands of the original instruction map.
+(2) Matching instructions can have different values in corresponding operands in each one of the original functions.
+If this is the case and the original operands map to different values $V_1$ and $V_2$, then we need to choose at runtime the correct value based on the function identifier.
+We do with an extra select instruction ``\texttt{select (func\_id==1), V\_1, V\_2}", which computes the operand of the merged instruction.
+If the two values are identical, then we do not need a select.
 %%TODO create a small figure with an example of the select instruction
 
 If the operands are labels, instead of adding a select instruction, we perform
@@ -554,7 +552,7 @@ identifier.
 %function merging optimization.
 Although the proposed technique is able to merge any two functions, it is not always profitable to merge them. In fact, as it is only
 profitable to merge functions that are sufficiently similar, for most pairs of functions, merging them increases code size.
-In this section, we propose our framework for efficiently exploring the
+In this section, we introduce our framework for efficiently exploring the
 optimization space, focusing on pairs of functions that are profitable to merge. 
 
 %Therefore,
@@ -584,27 +582,31 @@ Figure~\ref{fig:func-merge-opt-arch} for our optimization.
 \end{figure}
 
 The proposed framework is based on a light-weight ranking infrastructure that uses a \textit{fingerprint} of the functions to evaluate
-their similarity. It starts by first precomputing and caching the fingerprint of all functions. The goal of the fingerprint is to allow us
-to efficiently discard unpromising pairs of functions so that we perform the more expensive evaluation only on the topmost similar pairs.
+their similarity. It starts by precomputing and caching fingerprints for all functions. The purpose of fingerprints is to make it easy
+to discard unpromising pairs of functions so that we perform the more expensive evaluation only on the most similar pairs.
 To this end, the fingerprint consists of: $(1)$ a map of instruction opcodes to their frequency in the function; $(2)$ the set of types
 manipulated by the function. While functions can have several thousands of instructions, an IR usually has just a few tens of opcodes,
 e.g., the LLVM IR has only about 64 different opcodes. This means that the fingerprint needs to store just a small integer array of the
 opcode frequencies and a set of types, which allows for an efficient similarity comparison.
 
 By comparing the opcode frequencies of two functions, we are able to estimate
-an upper bound of the merge between these functions, assuming that all
-instructions with the same opcode would always result in a match.
-This assumption provides an upper bound on the actual number of matches, since
-it may be affected by the instruction types and the order they appear in the
-linearized functions.
+the best case merge, which would happen if all instructions with the same opcode could match.
+This is a very optimistic estimation. It would be possible only if instruction types and order
+did not matter. We refine it further by estimating another best case merge, this time based
+on type frequencies, which would happen if all instructions with the same data type could match.
+
+
+%This assumption provides an upper bound on the actual number of matches, since
+%it may be affected by the instruction types and the order they appear in the
+%linearized functions.
 %As a way to refine this estimate, we weight this upper bound by the Jaccard
 %similarity coefficient~\cite{jaccard} of the sets of types, i.e., a
 %type-similarity ratio between the two functions.
 %Formally, let $T_1$ and $T_2$ be the set of types of the functions $f_1$ and
 %$f_2$, respectively.
-In order to refine this upper-bound estimate, we also compare the type frequencies
-of the two functions, this time assuming that all instructions with the same
-data type would always result in a match.
+%In order to refine this upper-bound estimate, we also compare the type frequencies
+%of the two functions, this time assuming that all instructions with the same
+%data type would always result in a match.
 Therefore, the upper-bound reduction, computed as a ratio, can be generally defined as
 %\[
 %   U\!B(f_1,f_2) = \frac{\sum\limits_{op \in Ops} \min\{freq(op,f_1),freq(op,f_2)\}}{\sum\limits_{op \in Ops} freq(op,f_1)+freq(op,f_2)}
@@ -629,9 +631,9 @@ similar candidates based on their similarity, defined by $s(f_1,f_2)$, for all
 other functions $f_2$.
 We use an exploration threshold to limit how many top candidates we will
 evaluate for any given function.
-This candidate exploration is then performed in a greedy fashion, where the first
-candidate that actually results in a profitable merge ends the exploration and
-the merge operation is finally committed.
+We then perform this candidate exploration in a greedy fashion, terminating after
+finding the first candidate that results in a profitable merge and committing that
+merge operation.
 
 \begin{figure}[t!]
   \centering
@@ -642,15 +644,15 @@ the merge operation is finally committed.
   \label{fig:average-cdf-exploration-threshold}
 \end{figure}
 
-Ideally, the profitable candidate will be as close to the top of the rank as
+Ideally, profitable candidates will be as close to the top of the rank as
 possible.
 Figure~\ref{fig:average-cdf-exploration-threshold} shows the cumulative
 distribution of the position of the profitable candidates in a top 10 rank.
 It shows that about 89\% of the merge operations occurred with the topmost
 candidate, while the top 5 cover over 98\% of the profitable candidates.
-These results suggest that the proposed fingerprint similarity is able to
+These results suggest that fingerprint similarity is able to
 accurately capture the real function similarity, while reducing the exploration
-cost by a few orders of magnitudes, depending on the actual number and size of
+cost by orders of magnitudes, depending on the actual number and size of
 the functions.
 
 When a profitable candidate is found, we first replace the body of the two
