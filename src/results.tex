@@ -172,6 +172,11 @@ Figures~\ref{fig:sphinx-example} and~\ref{fig:libquantum-example}.
 
 \begin{table}[h]
 \centering
+\caption{
+Statistics from the SPEC CPU2006 benchmark suite.
+We report the number of functions present in the benchmarks just before function merging is applied. We also perform report how many pair-wise merge operations were performed by
+each technique.
+}
 \scalebox{0.8}{
 \begin{tabular}{llllll}
 \toprule
@@ -198,11 +203,6 @@ Figures~\ref{fig:sphinx-example} and~\ref{fig:libquantum-example}.
                      483.xalancbmk      & 14191  & 1 / 38.58 / 3809   & 3057   & 4573  & 4342   \\
 \bottomrule
 \end{tabular}
-}
-\caption{
-Statistics from the SPEC CPU2006 benchmark suite.
-We report the number of functions present in the benchmarks just before function merging is applied. We also perform report how many pair-wise merge operations were performed by
-each technique.
 }
 \label{tab:stats}
 \end{table}
@@ -242,6 +242,11 @@ resulting code, with a total of 20.6\% reduction in the linked object file.
 
 \begin{table}[h]
 \centering
+\caption{
+Statistics from the MiBench benchmark suite.
+We report the number of functions present in the benchmarks just before function merging is applied. We also report how many pair-wise merge operations were performed by
+each technique.
+}
 \scalebox{0.8}{
 \begin{tabular}{llllll}
 \toprule
@@ -272,11 +277,6 @@ resulting code, with a total of 20.6\% reduction in the linked object file.
                      typeset       & 362   & 1 / 354.47 / 12125   & 1     & 4   & 31   \\
 \bottomrule
 \end{tabular}
-}
-\caption{
-Statistics from the MiBench benchmark suite.
-We report the number of functions present in the benchmarks just before function merging is applied. We also report how many pair-wise merge operations were performed by
-each technique.
 }
 \label{tab:stats-mibench}
 \end{table}

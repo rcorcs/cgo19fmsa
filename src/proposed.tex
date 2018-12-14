@@ -63,7 +63,7 @@ The sequence alignment algorithm allows us to arrange two linearized functions
 into segments that are equivalent between the two functions and segments where
 they differ from one another.
 The final step performs the code generation, actually merging the two functions.
-Aligned segments with equivalent code are merged, avoiding redundancy, %redundant code,
+Aligned segments with equivalent code are merged, avoiding redundancy,
 while the remaining segments where the two functions differ have their code guarded by a function identifier.
 
 During code generation, we create a merged list of parameters, including the extra function identifier if there are any dissimilar segments. 
@@ -81,8 +81,6 @@ replaced by a single call to this new function, creating what is sometimes
 called a \textit{thunk}.
 In some cases, it may also be valid and profitable to completely delete the
 original functions, remapping all their original calls to the merged function.  
-%The original functions can sometimes also be completely deleted and all their
-%calls are replaced by a call to the merged function.
 Two of the key facts that prohibit the complete removal of the original functions
 are the existence of indirect calls or the possibility of external linkage.
  
@@ -270,15 +268,7 @@ Labels can represent both normal basic blocks and landing blocks used in excepti
 Labels of normal basic blocks are ignored during code equivalence evaluation, but we cannot do the
 same for landing blocks. We describe how we handle such blocks in more detail in the following section.
 
-%\subsubsection{Exception Handling Code}
 \subsubsection*{Exception Handling Code}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% RODRIGO: I think that we need to talk about landing blocks, not only landing pad instructions,
-%%% because labels that represent landing blocks are treated differently from normal basic blocks,
-%%% and this is essential handling this kind of code, which is the key for some of the huge reduction
-%%% on the benchmarks 447.dealII, 482.omnetpp, etc.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Most modern compilers, including GCC and LLVM, implement the zero-cost Itanium ABI for exception handling~\cite{dinechin00} sometimes called the \textit{landing-pad} model.
 %In this model, landing-pad instructions are used to encode which action is taken
