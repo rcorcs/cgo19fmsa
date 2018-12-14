@@ -706,7 +706,7 @@ We can apply our optimization on a per compilation-unit basis, which usually
 results in lower compilation-time overheads, because only a small part of the
 whole program is being considered at each moment.
 However, this also limits the optimization opportunities, since only pairs of
-functions within the same compilation unit would be merged.
+functions within the same translation unit would be merged.
 
 On the other hand, our optimization can also be applied in the whole program,
 for example, during link-time optimization (LTO).
@@ -725,9 +725,9 @@ It allows us to merge functions across modules.
 In addition to the benefit of being able to merge more functions, when optimizing
 the whole program, we can also be more aggressive when removing the original functions,
 since we know that there will be no external reference to them.
-However, if the optimization is applied per compilation unit, then extra
+However, if the optimization is applied per translation unit, then extra
 conditions must be guaranteed, e.g., the function must be explicitly defined
-as internal or private to the compilation unit.
+as internal or private to the translation unit.
 
 Figure~\ref{fig:opt-pipeline} shows an overview of the compilation pipeline used
 throughout our evaluation.
@@ -736,5 +736,5 @@ unit.
 Then, function merging and further code-size optimizations are applied during
 monolithic link-time optimization~(LTO).
 With LTO, object file generation is delayed until all input modules are known,
-instead of being generated per compilation unit, which enables more powerful
+instead of being generated per translation unit, which enables more powerful
 optimizations based on whole-program analyses.
