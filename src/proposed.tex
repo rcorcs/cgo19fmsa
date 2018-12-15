@@ -37,6 +37,8 @@ equivalent segments of code and the non-equivalent ones. Then, we use this under
 propose a technique that follows this simple yet effective principle. At the core of our technique lies a sequence alignment algorithm,
 which is responsible for arranging the code in segments that are either equivalent or non-equivalent.
 We implement this technique at the level of the intermediate representation (IR).
+Our current implementation assumes that the input functions have all their $\phi$-functions demoted to memory operations,
+simplifying our code generation.
 
 \begin{figure}[t!]
   \centering
