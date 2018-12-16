@@ -44,14 +44,17 @@ We provide two options to reproduce our experiments:
 \begin{itemize}
   \item Download the source code and benchmark suite, building everything locally on your own machine.
 
-\url{http://bit.ly/cgo19fmsa-llvm}
+%\url{http://bit.ly/cgo19fmsa-llvm}
+[redacted]
 
-\url{http://bit.ly/cgo19fmsa-benchmarks}
+%\url{http://bit.ly/cgo19fmsa-benchmarks}
+[redacted]
 
   \item Download our pre-packaged VirtualBox image with the LLVM built and ready
 to run the benchmarking scripts.
 
-\url{http://bit.ly/cgo19fmsa-vbox}
+%\url{http://bit.ly/cgo19fmsa-vbox}
+[redacted]
 
 The password for this system is \texttt{cgo19fmsa}, the same as the username.
 
@@ -151,18 +154,22 @@ Datasets are provided as part of the artifact with the benchmark suite.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Installation}
 
-Download both the source code (\url{http://bit.ly/cgo19fmsa}) and the benchmark suite
-(\url{http://bit.ly/cgo19fmsa-benchmark}).
+Download both the source code ([redacted]) %(\url{http://bit.ly/cgo19fmsa})
+and the benchmark suite
+([redacted]). %(\url{http://bit.ly/cgo19fmsa-benchmark}).
 The source code has a root directory called CGO19FMSA.
 Unzip all the content comprising the benchmark suite inside the CGO19FMSA root directory.
 At this point, your CGO19FMSA directory should contain:
+
 \begin{figure}[h]
 \includegraphics[scale=0.5]{figs/artifact/tree.png}
+%\vspace{-1em}
 \end{figure}
 
 In order to install all dependencies described above, run the \texttt{setup.sh}
 script with \textit{sudo} privileges. That is, assuming that you are in the
 CGO19FMSA directory, run the following command:
+
 \begin{figure}[h]
 \texttt{sudo sh setup.sh}
 \end{figure}
@@ -173,6 +180,7 @@ merging optimization as well as both the state-of-the-art optimization and LLVM'
 identical function merging optimization.
 Again, assuming that you are in the CGO19FMSA directory, run the following
 command:
+\newpage
 \begin{figure}[h]
 \texttt{sh build-all.sh}
 \end{figure}
@@ -183,7 +191,7 @@ root directory.
 
 This two scripts set up all the environment necessary to run all our experiments.
 
-Our pre-packaged VirtualBox image (\url{http://bit.ly/cgo19fmsa-vm})
+Our pre-packaged VirtualBox image ([redacted]) %(\url{http://bit.ly/cgo19fmsa-vm})
 has all this environment setup and ready to run the experiments, as described
 in the next section.
 
@@ -221,7 +229,6 @@ The automated process may take several hours since it involves running all follo
 \end{itemize}
 \end{itemize}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Evaluation and expected result}
 
@@ -248,14 +255,15 @@ The reviewers can compare their results with the ones provided in the
 \subsection{Notes}
 
 To reduce the overall time required to run the full set of experiments, we have
-set a small number of repetition, which may result in large error bars for some
+set a small number of repetitions, which may result in large error bars for some
 of the benchmarks. This effect will depend on the noise of your environment.
 In order to reduce the noise in the measurements, you just need to update
 the \texttt{REPEAT} variable in the \textit{CGO19FMSA/run-all.sh} script,
 changing it to a bigger number.
 
 Because SPEC 2006 requires private access, in the final version, we will
-change \url{http://bit.ly/cgo19fmsa-benchmark} to provide only the scripts for
+change ([redacted]) %\url{http://bit.ly/cgo19fmsa-benchmark}
+to provide only the scripts for
 running the experiments.
-The source code in \url{http://bit.ly/cgo19fmsa} will remain the same.
+%The source code in \url{http://bit.ly/cgo19fmsa} will remain the same.
 

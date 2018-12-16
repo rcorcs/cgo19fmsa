@@ -507,7 +507,7 @@ In this case, we only need to use the values on which the operands of the origin
 (2) Matching instructions can have different values in corresponding operands in each one of the original functions.
 If this is the case and the original operands map to different values $V_1$ and $V_2$, then we need to choose at runtime the correct value based on the function identifier.
 We do with an extra select instruction ``\texttt{select (func\_id==1), V\_1, V\_2}", which computes the operand of the merged instruction.
-If the two values are identical, then we do not need a select.
+If the two values are statically identical, then we do not need a select.
 %%TODO create a small figure with an example of the select instruction
 
 If the operands are labels, instead of adding a select instruction, we perform
@@ -563,7 +563,7 @@ overhead. In order to avoid the quadratic exploration of all possible merges, we
 Figure~\ref{fig:func-merge-opt-arch} for our optimization.
 \begin{figure}[t!]
   \centering
-  \includegraphics[width=0.65\linewidth]{figs/func-merge-opt-arch.pdf}
+  \includegraphics[width=0.7\linewidth]{figs/func-merge-opt-arch.pdf}
   \caption{Overview of our exploration framework.}
   \label{fig:func-merge-opt-arch}
 \end{figure}
@@ -625,7 +625,8 @@ merge operation.
 \begin{figure}[t!]
   \centering
   \includegraphics[width=0.8\linewidth]{figs/average-cdf-exploration-threshold.pdf}
-  \caption{Average CDF for the exploration threshold and the percentage of merged operations covered.
+  \caption{Average CDF for the position of the profitable candidate and the percentage of merged operations covered.
+           %Average CDF for the exploration threshold and the percentage of merged operations covered.
            89\% of the merge operations happen with the topmost candidate.}
            %A merge operation happens with the topmost candidate in about 89\% of the cases.}
   \label{fig:average-cdf-exploration-threshold}
