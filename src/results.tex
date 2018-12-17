@@ -244,10 +244,17 @@ the average, minimum, and maximum size of these functions, in number of instruct
 this same point in the compilation pipeline.
 We also report how many pair-wise merge operations are
 performed by each one of the function merging techniques.
-Note that in all cases FMSA performs many more merge operations than the other
+Note that in almost all cases FMSA performs significantly more merge operations than the other
 techniques.
-There are two cases where FMSA with exploration threshold of one finds fewer
-profitable merges than the state-of-the-art, however, this is not the case when
+There are only two cases where FMSA with exploration threshold of one finds fewer
+profitable merges than the state-of-the-art. This is due to our aggressive pruning
+of the search space with our ranking mechanism. Simply increasing the threshold, e.g. to ten,
+allows FMSA to merge more functions. In any case, these extra merge operations of the state-of-the-art
+have little effect on the overall code size reduction. The state-of-the-art is more likely to fail to
+merge large functions and succeed with small ones, so even when merging more functions, it does not
+reduce code size as much as FMSA.
+
+this is not the case when
 we set the exploration threshold to ten.
 This is due to our aggressive pruning of the search space with our ranking
 mechanism.
@@ -330,8 +337,8 @@ Table~\ref{tab:stats-mibench} provides more detailed statistics for MiBench.
 LLVM achieves very limited results, reducing \texttt{jpeg\_c} by just 0.13\%,
 \texttt{jpeg\_d} by 0.1\%, and \texttt{ghostscript} by 0.02\%, while having no effect on \texttt{typeset}.
 This happens because all the functions merged by LLVM's identical technique are tiny functions relative to the overall size of the program.
-Most of these functions comprise of just a few IR instructions, e.g., in the \texttt{typeset} benchmark,
-while it is able to merge only a pair of functions with 5 instructions, the largest function that FMSA merges has 537 instructions.
+Most of these functions comprise of just a few IR instructions. For example, in the \texttt{typeset} benchmark,
+while it is able to merge a pair of functions, they only have five instruction. For the same benchmark, FMSA merges two functions with 537 instructions.
 The state-of-the-art does slightly better than LLVM's identical technique but even in its best case it cannot reduce code size more than 0.7\%.
 
 Because these embedded benchmarks are much smaller than those in the SPEC suite, trivially similar functions are much less frequent.
