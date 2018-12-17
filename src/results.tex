@@ -254,13 +254,6 @@ have little effect on the overall code size reduction. The state-of-the-art is m
 merge large functions and succeed with small ones, so even when merging more functions, it does not
 reduce code size as much as FMSA.
 
-this is not the case when
-we set the exploration threshold to ten.
-This is due to our aggressive pruning of the search space with our ranking
-mechanism.
-However, these extra merge operations has little effect on the overall code size reduction,
-since the size of the functions being merged is at least as important as the number of merged functions.
-
 \subsubsection*{MiBench: Embedded Benchmark Suite}
 
 We have shown that our technique achieves good results when applied on the SPEC
