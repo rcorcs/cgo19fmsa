@@ -12,10 +12,7 @@ of about 6\%, while introducing an average compilation-time overhead of only 15\
 Coupled with profiling information, our optimization introduces no statistically
 significant impact on performance.
 
-For future work, we plan to focus on improving the ranking mechanism to reduce
-compilation time.
-We can achieve further improvements by integrating the
-function-merging optimization to a summary-based parallel link-time optimization
-framework, such as ThinLTO in LLVM.
-We also plan to work on the linearization of the candidate functions, allowing
-instruction reordering to maximize the number of matches between the functions.
+For future work, we plan to focus on improving the ranking mechanism to reduce compilation time. We envisage further improvements can be
+achieved by integrating the function-merging optimization to a summary-based  link-time optimization framework, such as ThinLTO in LLVM. We
+also plan to work on the linearization of the candidate functions, allowing instruction reordering to maximize the number of matches
+between the functions.
