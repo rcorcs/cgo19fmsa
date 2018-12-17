@@ -105,9 +105,8 @@ duplicate functions due to heavy use of templating.
 %But even on these benchmarks FMSA outperforms LLVM, with an improvement of
 %almost 6$\times$ on \texttt{471.omnetpp}.
 Although the state-of-the-art improves over LLVM's identical function merging,
-most of its significant reductions also result from these same C++ benchmarks
-that make heavy use of templating.
-In addition of achieving better results in all these cases, our technique
+it still gets most of its code size reduction for benchmarks with heavy use of templating.
+In addition to achieving better results in all of these cases, our technique
 %On the other hand, FMSA is able to achieve better results in all these cases.
 %FMSA is designed to merge a superset of the functions that the LLVM identical
 %function merging can handle while having much less restrictions than the
@@ -172,11 +171,7 @@ Figures~\ref{fig:sphinx-example} and~\ref{fig:libquantum-example}.
 
 \begin{table}[h]
 \centering
-\caption{
-Statistics from the SPEC CPU2006 benchmark suite.
-We report the number of functions present in the benchmarks just before function merging is applied. We also perform report how many pair-wise merge operations were performed by
-each technique.
-}
+\caption{Number and size of functions present in each SPEC CPU2006 benchmark just before function merging, as well as number of merge operations applied by each technique.}
 \scalebox{0.8}{
 \begin{tabular}{llllll}
 \toprule
@@ -207,32 +202,32 @@ each technique.
 \label{tab:stats}
 \end{table}
 
-Table~\ref{tab:stats} shows statistics extracted from the SPEC CPU2006.
-In particular, we show how many functions are present in the linked program
-just before executing the function merging techniques, as well as
+Table~\ref{tab:stats} provides detailed statistics for the SPEC CPU2006.
+We show how many functions are present in the linked program
+just before the merging pass, as well as
 the average, minimum, and maximum size of these functions, in number of instructions, at
 this same point in the compilation pipeline.
-Additionally, this table also reports how many pair-wise merge operations are
+We also report how many pair-wise merge operations are
 performed by each one of the function merging techniques.
 
 \subsubsection*{MiBench: Embedded Benchmark Suite}
 
-We have shown that our technique provides good results not only on templated C++
-benchmarks but also on C benchmarks.
-In order to supplement our evaluation, we also provide results of code-size
-reductions for the embedded benchmark suite called MiBench, which contains only
-small C programs (see Figure~\ref{fig:code-size-reduction-mibench}).
+We have shown that our technique achieves good results when applied on the SPEC
+CPU suite. It reduces size not only on templated C++ benchmarks, like other
+techniques, but also on C benchmarks where merging opportunities should
+be almost non-existant. Here, we further explore how FMSA handles such
+cases by applying it on the MiBench suite, a collection of small C programs
+each one composed of a small number of functions. 
 
-For the \texttt{rijndael} benchmark, which implements the well-known AES
-encryption, our technique is able to merge the two largest functions, namely,
+Figure~\ref{fig:code-size-reduction-mibench} shows the object file reduction
+for the MiBench programs on the Intel platform. Our best result is for the \texttt{rijndael} benchmark,
+which implements the well-known AES encryption. FMSA merges the two largest functions, namely,
 \texttt{encrypt} and \texttt{decrypt}.
 Inspecting the LLVM IR for the \texttt{rijndael} benchmark, we observe that
-these two functions represent over 70\% of the whole program, in number of
-instructions, excluding global data.
-The two functions, which contains a total of 2494 instructions, are merged into
-a single function with a total of 1445 instruction, i.e., a 42\% reduction in
-the number of instructions at the IR level. All variations of FMSA have the same
-resulting code, with a total of 20.6\% reduction in the linked object file.
+the two functions contain a total of 2494 instructions, over 70\% of the code.
+When we merge them by sequence alignment, we create a single function with
+only 1445 instruction, a 42\% reduction in the number of IR instructions. This
+translates into a 20.6\% reduction in the linked object file.
 
 %Note that while we had significant reductions in some of the MiBench programs,
 %some of the programs were not amenable to function merging by any of the
@@ -242,11 +237,7 @@ resulting code, with a total of 20.6\% reduction in the linked object file.
 
 \begin{table}[h]
 \centering
-\caption{
-Statistics from the MiBench benchmark suite.
-We report the number of functions present in the benchmarks just before function merging is applied. We also report how many pair-wise merge operations were performed by
-each technique.
-}
+\caption{Number and size of functions present in each MiBench benchmark just before function merging, as well as number of merge operations applied by each technique.}
 \scalebox{0.8}{
 \begin{tabular}{llllll}
 \toprule
@@ -290,16 +281,14 @@ each technique.
   \label{fig:code-size-reduction-mibench}
 \end{figure*}
 
-Table~\ref{tab:stats-mibench} shows statistics extracted from MiBench.
+Table~\ref{tab:stats-mibench} provides more detailed statistics for MiBench.
 LLVM achieves very limited results, reducing \texttt{jpeg\_c} by just 0.13\%,
 \texttt{jpeg\_d} by 0.1\%, and \texttt{ghostscript} by 0.02\%.
-The state-of-the-art is able to improve slightly over LLVM's identical technique,
-but it is also still very limited, with only reductions strictly less than 1\%.
+The state-of-the-art does slightly better but even in its best case it cannot reduce code size more than 0.7\%.
 
 Because these embedded benchmarks are much smaller than those in the SPEC suite, trivially similar functions are much less frequent.
-This is why neither the state-of-the-art nor LLVM's identical function merging technique was able to have any real effect on these benchmarks, and a more powerful technique was needed.
-Our technique was the only one able to provide any significant reduction on these real embedded benchmarks.
-%Although we were able to find orders of magnitude fewer profitable merge operations on MiBench, any profitable merge found has a much greater effect relative to the final size of the binary.
+This is why neither the state-of-the-art nor LLVM's identical function merging technique had any real effect on these benchmarks.
+Our technique can look beyond trivially similar functions which allowed it to achieve significant code size reduction on these real embedded benchmarks.
 
 \subsection{Compilation Overhead}
 
