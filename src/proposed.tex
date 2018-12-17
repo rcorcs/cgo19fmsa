@@ -517,7 +517,7 @@ If the two labels represent landing blocks, we hoist the landing-pad
 instruction to the new common basic block, converting it to a landing block and
 converting the two landing blocks to normal basic blocks.
 This is required for the correctness of the landing-pad model.
-Similar to previous work on vectorization~\cite{porpodas18}, we
+Similar to previous work on vectorization~\cite{porpodas18a}, we
 also exploit commutative instructions in order to maximize similarity.
 When assigning operands to commutative instructions, we perform operand
 reordering to maximize the number of matching operands and reduce the total
@@ -687,7 +687,7 @@ the code-size cost of an IR instruction when lowered to machine instructions.
 Our implementation makes use of the code-size costs provided by LLVM's
 target-transformation interface (TTI), which is widely used in the decision
 %making by most of the LLVM's optimizations.
-making of most optimizations.
+making of most optimizations~\cite{porpodas18a,porpodas18b,pohl18}.
 
 \subsection{Link-Time Optimization}
 
