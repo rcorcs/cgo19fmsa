@@ -169,33 +169,68 @@ Figures~\ref{fig:sphinx-example} and~\ref{fig:libquantum-example}.
 %  \label{fig:identical-example}
 %\end{figure*}
 
+
+
+%\begin{table}[h]
+%\centering
+%\caption{Number and size of functions present in each SPEC CPU2006 benchmark just before function merging, as well as number of merge operations applied by each technique.}
+%\scalebox{0.8}{
+%\begin{tabular}{llllll}
+%\toprule
+%\multicolumn{1}{c}{\textbf{Benchmarks}} & \textbf{\#Functions} & \textbf{Min/Avg/Max Size} &\textbf{Identical} & \textbf{SOA}  & \textbf{FMSA {[}t=1{]}} \\
+%\midrule
+%                     400.perlbench      & 1699   & 1 / 125 / 12501    & 12     & 103   & 175    \\
+%\rowcolor{evencolor} 401.bzip2          & 74     & 1 / 206 / 5997     & 0      & 0     & 7      \\
+%                     403.gcc            & 4541   & 1 / 127.7 / 20688  & 136    & 341   & 614    \\
+%\rowcolor{evencolor} 429.mcf            & 24     & 18 / 87.25 / 297   & 0      & 1     & 1      \\
+%                     433.milc           & 235    & 1 / 67.69 / 416    & 0      & 6     & 26     \\
+%\rowcolor{evencolor} 444.namd           & 99     & 1 / 570.64 / 1698  & 1      & 1     & 5      \\
+%                     445.gobmk          & 2511   & 1 / 43.22 / 3140   & 183    & 485   & 436    \\
+%\rowcolor{evencolor} 447.dealII         & 7380   & 1 / 60.63 / 4856   & 1835   & 2785  & 2974   \\
+%                     450.soplex         & 1035   & 1 / 73.27 / 1719   & 27     & 125   & 156    \\
+%\rowcolor{evencolor} 453.povray         & 1585   & 1 / 98.05 / 5324   & 60     & 112   & 193    \\
+%                     456.hmmer          & 487    & 1 / 99.98 / 1511   & 3      & 16    & 45     \\
+%\rowcolor{evencolor} 458.sjeng          & 134    & 1 / 145.06 / 1252  & 0      & 5     & 11     \\
+%                     462.libquantum     & 95     & 1 / 56.64 / 626    & 0      & 1     & 9      \\
+%\rowcolor{evencolor} 464.h264ref        & 523    & 1 / 171.42 / 5445  & 3      & 22    & 50     \\
+%                     470.lbm            & 17     & 6 / 123.41 / 680   & 0      & 0     & 0      \\
+%\rowcolor{evencolor} 471.omnetpp        & 1406   & 1 / 26.9 / 611     & 45     & 69    & 227    \\
+%                     473.astar          & 101    & 1 / 67.11 / 584    & 0      & 2     & 4      \\
+%\rowcolor{evencolor} 482.sphinx3        & 326    & 1 / 80 / 924       & 2      & 6     & 24     \\
+%                     483.xalancbmk      & 14191  & 1 / 38.58 / 3809   & 3057   & 4573  & 4342   \\
+%\bottomrule
+%\end{tabular}
+%}
+%\label{tab:stats}
+%\end{table}
+
 \begin{table}[h]
 \centering
 \caption{Number and size of functions present in each SPEC CPU2006 benchmark just before function merging, as well as number of merge operations applied by each technique.}
-\scalebox{0.8}{
-\begin{tabular}{llllll}
+\scalebox{0.71}{
+\begin{tabular}{lllllll}
 \toprule
-\multicolumn{1}{c}{\textbf{Benchmarks}} & \textbf{\#Functions} & \textbf{Min/Avg/Max Size} &\textbf{Identical} & \textbf{SOA}  & \textbf{FMSA {[}t=1{]}} \\
+\multicolumn{1}{c}{\textbf{Benchmarks}} & \textbf{\#Fns} & \textbf{Min/Avg/Max Size} &\textbf{Identical} & \textbf{SOA}  & \textbf{FMSA{[}t=1{]}} & \textbf{FMSA{[}t=10{]}} \\
 \midrule
-                     400.perlbench      & 1699   & 1 / 125 / 12501    & 12     & 103   & 175    \\
-\rowcolor{evencolor} 401.bzip2          & 74     & 1 / 206 / 5997     & 0      & 0     & 7      \\
-                     403.gcc            & 4541   & 1 / 127.7 / 20688  & 136    & 341   & 614    \\
-\rowcolor{evencolor} 429.mcf            & 24     & 18 / 87.25 / 297    & 0      & 1     & 1     \\
-                     433.milc           & 235    & 1 / 67.69 / 416    & 0      & 6     & 26     \\
-\rowcolor{evencolor} 444.namd           & 99     & 1 / 570.64 / 1698  & 1      & 1     & 5      \\
-                     445.gobmk          & 2511   & 1 / 43.22 / 3140   & 183    & 485   & 436    \\
-\rowcolor{evencolor} 447.dealII         & 7380   & 1 / 60.63 / 4856   & 1835   & 2785  & 2974   \\
-                     450.soplex         & 1035   & 1 / 73.27 / 1719   & 27     & 125   & 156    \\
-\rowcolor{evencolor} 453.povray         & 1585   & 1 / 98.05 / 5324   & 60     & 112   & 193    \\
-                     456.hmmer          & 487    & 1 / 99.98 / 1511   & 3      & 16    & 45     \\
-\rowcolor{evencolor} 458.sjeng          & 134    & 1 / 145.06 / 1252  & 0      & 5     & 11     \\
-                     462.libquantum     & 95     & 1 / 56.64 / 626    & 0      & 1     & 9      \\
-\rowcolor{evencolor} 464.h264ref        & 523    & 1 / 171.42 / 5445  & 3      & 22    & 50     \\
-                     470.lbm            & 17     & 6 / 123.41 / 680   & 0      & 0     & 0      \\
-\rowcolor{evencolor} 471.omnetpp        & 1406   & 1 / 26.9 / 611     & 45     & 69    & 227    \\
-                     473.astar          & 101    & 1 / 67.11 / 584    & 0      & 2     & 4      \\
-\rowcolor{evencolor} 482.sphinx3        & 326    & 1 / 80 / 924       & 2      & 6     & 24     \\
-                     483.xalancbmk      & 14191  & 1 / 38.58 / 3809   & 3057   & 4573  & 4342   \\
+                     400.perlbench      & 1699   & 1 / 125 / 12501    & \small 12     & \small 103   & \small 175  & \small 200  \\
+\rowcolor{evencolor} 401.bzip2          & 74     & 1 / 206 / 5997     & \small 0      & \small 0     & \small 7    & \small 7    \\
+                     403.gcc            & 4541   & 1 / 127.7 / 20688  & \small 136    & \small 341   & \small 614  & \small 710  \\
+\rowcolor{evencolor} 429.mcf            & 24     & 18 / 87.25 / 297   & \small 0      & \small 1     & \small 1    & \small 1    \\
+                     433.milc           & 235    & 1 / 67.69 / 416    & \small 0      & \small 6     & \small 26   & \small 34   \\
+\rowcolor{evencolor} 444.namd           & 99     & 1 / 570.64 / 1698  & \small 1      & \small 1     & \small 5    & \small 5    \\
+                     445.gobmk          & 2511   & 1 / 43.22 / 3140   & \small 183    & \small 485   & \small 436  & \small 605  \\
+\rowcolor{evencolor} 447.dealII         & 7380   & 1 / 60.63 / 4856   & \small 1835   & \small 2785  & \small 2974 & \small 3315 \\
+                     450.soplex         & 1035   & 1 / 73.27 / 1719   & \small 27     & \small 125   & \small 156  & \small 163  \\
+\rowcolor{evencolor} 453.povray         & 1585   & 1 / 98.05 / 5324   & \small 60     & \small 112   & \small 193  & \small 212  \\
+                     456.hmmer          & 487    & 1 / 99.98 / 1511   & \small 3      & \small 16    & \small 45   & \small 47   \\
+\rowcolor{evencolor} 458.sjeng          & 134    & 1 / 145.06 / 1252  & \small 0      & \small 5     & \small 11   & \small 11   \\
+                     462.libquantum     & 95     & 1 / 56.64 / 626    & \small 0      & \small 1     & \small 9    & \small 9    \\
+\rowcolor{evencolor} 464.h264ref        & 523    & 1 / 171.42 / 5445  & \small 3      & \small 22    & \small 50   & \small 52   \\
+                     470.lbm            & 17     & 6 / 123.41 / 680   & \small 0      & \small 0     & \small 0    & \small 0    \\
+\rowcolor{evencolor} 471.omnetpp        & 1406   & 1 / 26.9 / 611     & \small 45     & \small 69    & \small 227  & \small 270  \\
+                     473.astar          & 101    & 1 / 67.11 / 584    & \small 0      & \small 2     & \small 4    & \small 4    \\
+\rowcolor{evencolor} 482.sphinx3        & 326    & 1 / 80 / 924       & \small 2      & \small 6     & \small 24   & \small 26   \\
+                     483.xalancbmk      & 14191  & 1 / 38.58 / 3809   & \small 3057   & \small 4573  & \small 4342 & \small 4887 \\
 \bottomrule
 \end{tabular}
 }
@@ -209,6 +244,16 @@ the average, minimum, and maximum size of these functions, in number of instruct
 this same point in the compilation pipeline.
 We also report how many pair-wise merge operations are
 performed by each one of the function merging techniques.
+Note that in all cases FMSA performs many more merge operations than the other
+techniques.
+There are two cases where FMSA with exploration threshold of one finds fewer
+profitable merges than the state-of-the-art, however, this is not the case when
+we set the exploration threshold to ten.
+This is due to our aggressive pruning of the search space with our ranking
+mechanism based on the fingerprint similarity.
+However, this difference does not change significantly the final code size reduction,
+as it is also influenced by the size of the functions being merged, and not only
+the number of merged functions.
 
 \subsubsection*{MiBench: Embedded Benchmark Suite}
 
@@ -283,8 +328,11 @@ translates into a 20.6\% reduction in the linked object file.
 
 Table~\ref{tab:stats-mibench} provides more detailed statistics for MiBench.
 LLVM achieves very limited results, reducing \texttt{jpeg\_c} by just 0.13\%,
-\texttt{jpeg\_d} by 0.1\%, and \texttt{ghostscript} by 0.02\%.
-The state-of-the-art does slightly better but even in its best case it cannot reduce code size more than 0.7\%.
+\texttt{jpeg\_d} by 0.1\%, and \texttt{ghostscript} by 0.02\%, while having no effect on \texttt{typeset}.
+This happens because all the functions merged by LLVM's identical technique are tiny functions relative to the overall size of the program.
+Most of these functions comprise of just a few IR instructions, e.g., in the \texttt{typeset} benchmark,
+while it is able to merge only a pair of functions with 5 instructions, the largest function that FMSA merges has 537 instructions.
+The state-of-the-art does slightly better than LLVM's identical technique but even in its best case it cannot reduce code size more than 0.7\%.
 
 Because these embedded benchmarks are much smaller than those in the SPEC suite, trivially similar functions are much less frequent.
 This is why neither the state-of-the-art nor LLVM's identical function merging technique had any real effect on these benchmarks.
