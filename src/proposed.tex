@@ -601,12 +601,12 @@ Therefore, the upper-bound reduction, computed as a ratio, can be generally defi
 \[
    U\!B(f_1,f_2, K) = \frac{\sum\limits_{k \in K} \min\{freq(k,f_1),freq(k,f_2)\}}{\sum\limits_{k \in K} freq(k,f_1)+freq(k,f_2)}
 \]
-where $U\!B(f_1,f_2, Operands)$ computes the operand-based upper bound and
+where $U\!B(f_1,f_2, Opcodes)$ computes the opcode-based upper bound and
 $U\!B(f_1,f_2, Types)$ computes the type-based upper bound.
 The final estimate selects the minimum upper bound between the two, i.e.,
 \[
 %     s(f_1,f_2) = U\!B(f_1,f_2) \frac{|T_1 \cap T_2|}{|T_1 \cup T_2|}.
-     s(f_1,f_2) = \min\{U\!B(f_1,f_2, Operands), U\!B(f_1,f_2, Types)\}
+     s(f_1,f_2) = \min\{U\!B(f_1,f_2, Opcodes), U\!B(f_1,f_2, Types)\}
 \]
 This estimate results in a value in the range $[0,0.5]$,
 which encodes a description that favors maximizing both the opcode and type
