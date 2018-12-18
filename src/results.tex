@@ -331,7 +331,7 @@ LLVM achieves very limited results, reducing \texttt{jpeg\_c} by just 0.13\%,
 \texttt{jpeg\_d} by 0.1\%, and \texttt{ghostscript} by 0.02\%, while having no effect on \texttt{typeset}.
 This happens because all the functions merged by LLVM's identical technique are tiny functions relative to the overall size of the program.
 Most of these functions comprise of just a few IR instructions. For example, in the \texttt{typeset} benchmark,
-while it is able to merge a pair of functions, they only have five instruction. For the same benchmark, FMSA merges two functions with 537 instructions.
+while it is able to merge a pair of functions, they only have five instructions. For the same benchmark, FMSA performs several merge operations, one of them between two functions with over 500 instructions.
 The state-of-the-art does slightly better than LLVM's identical technique but even in its best case it cannot reduce code size more than 0.7\%.
 
 Because these embedded benchmarks are much smaller than those in the SPEC suite, trivially similar functions are much less frequent.
