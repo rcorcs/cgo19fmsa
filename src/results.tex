@@ -18,7 +18,7 @@ performance and compilation-time.
 \subsection{Experimental Setup}
 We compare our optimization against the state-of-the-art~\cite{edler14}
 %function merging approach of Edler von Koch et al.~\cite{edler14}
-and LLVM's identical~\cite{llvm-fm} function merging techniques. In our evaluation, we refer to identical function merging as \textit{Identical}, the state-of-the-art as \textit{SOA}, and our
+and LLVM's identical~\cite{llvm-fm} function merging techniques. In our evaluation, we refer to the identical function merging as \textit{Identical}, the state-of-the-art as \textit{SOA}, and our
 approach as \textit{FMSA}.
 We also run LLVM's identical function merging before both \textit{SOA} and \textit{FMSA}, as this helps to reduce
 compilation time by efficiently reducing the number of trivially mergeable functions.
@@ -315,7 +315,8 @@ translates into a 20.6\% reduction in the linked object file.
   \centering
   \includegraphics[width=\linewidth]{figs/code-size-reduction-mibench.pdf}
   \caption{Object file size reduction for Intel on the Mibench benchmark suite.
-   Our approach (FMSA) is the only one able to achieve a meaningful reduction on these benchmarks.}
+   Our approach (FMSA) is the only one able to achieve a meaningful reduction on these benchmarks.
+   }
   \label{fig:code-size-reduction-mibench}
 \end{figure*}
 
