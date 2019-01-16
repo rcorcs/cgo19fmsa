@@ -14,7 +14,7 @@ To validate the results build our version of LLVM with the provided scripts,
 run the benchmarks and, finally, the plotting script to reproduce the main
 results in the paper.
 
-\subsection{Artifact check-list}
+\subsection{Artifact Check-List}
 
 %{\em Obligatory. Use just a few informal keywords in all fields applicable to your artifacts
 %and remove the rest. This information is needed to find appropriate reviewers and gradually 
@@ -36,13 +36,13 @@ results in the paper.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Description}
 
-\subsubsection{How delivered}
+\subsubsection{How Delivered}
 
 The artifact is publicly available.
-We provide two options to reproduce our experiments:
+We provide the following option to reproduce our experiments:
 
 \begin{itemize}
-  \item Download the source code and benchmark suite, building everything locally on your own machine.
+  \item[] Download the source code and benchmark suite, building everything locally on your own machine.
 
 \url{https://doi.org/10.6084/m9.figshare.7473260}
 %[redacted]
@@ -51,13 +51,11 @@ We provide two options to reproduce our experiments:
 \url{https://doi.org/10.6084/m9.figshare.7476149}
 %[redacted]
 
-  \item Download our pre-packaged VirtualBox image with the LLVM built and ready
-to run the benchmarking scripts.
-
+%  \item Download our pre-packaged VirtualBox image with the LLVM built and ready
+%to run the benchmarking scripts.
 %\url{http://bit.ly/cgo19fmsa-vbox}
-[redacted]
-
-The password for this system is \texttt{cgo19fmsa}, the same as the username.
+%[redacted]
+%The password for this system is \texttt{cgo19fmsa}, the same as the username.
 
 \end{itemize}
 
@@ -78,7 +76,7 @@ We provide a detailed demonstration of how to reproduce this artifact in the vid
 \href{http://bit.ly/cgo19fmsa-video}{\includegraphics[width=1.2em]{figs/artifact/youtube.png} http://bit.ly/cgo19fmsa-demo}
 
 
-\subsubsection{Hardware dependencies}
+\subsubsection{Hardware Dependencies}
 
 %This artifact reproduces the experiments for the Intel machine.
 
@@ -90,7 +88,7 @@ with Intel Core i7-4770 CPU at 3.40~GHz, and 16~GiB of RAM.
 %However, in our workflow we cross-compile it from an Intel machine an automatically
 %send and test the compiled programs on an ARM machine.
 
-\subsubsection{Software dependencies}
+\subsubsection{Software Dependencies}
 
 In this section, we describe the softwares and packages that must be installed 
 in order to build the LLVM compiler, the benchmark suite, and produce the plots with the results.
@@ -148,7 +146,7 @@ Below, we list all Linux and Python packages that must be installed. We also spe
 We provide a script, called \texttt{setup.sh}, which automatically installs
 all the necessary dependencies. This script uses the \texttt{apt} tool and is the only one that requires \textit{sudo} privileges.
 
-\subsubsection{Data sets}
+\subsubsection{Data Sets}
 
 Datasets are provided as part of the artifact with the benchmark suite.
 
@@ -162,7 +160,7 @@ Unzip all the content comprising the benchmark suite inside the CGO19FMSA root d
 At this point, your CGO19FMSA directory should contain:
 
 \begin{figure}[h]
-\includegraphics[scale=0.5]{figs/artifact/tree.png}
+\hspace{2em}\includegraphics[scale=0.9]{figs/artifact/tree.pdf}
 %\vspace{-1em}
 \end{figure}
 
@@ -180,7 +178,7 @@ merging optimization as well as both the state-of-the-art optimization and LLVM'
 identical function merging optimization.
 Again, assuming that you are in the CGO19FMSA directory, run the following
 command:
-\newpage
+
 \begin{figure}[h]
 \texttt{sh build-all.sh}
 \end{figure}
@@ -191,12 +189,12 @@ root directory.
 
 This two scripts set up all the environment necessary to run all our experiments.
 
-Our pre-packaged VirtualBox image ([redacted]) %(\url{http://bit.ly/cgo19fmsa-vm})
-has all this environment setup and ready to run the experiments, as described
-in the next section.
+%Our pre-packaged VirtualBox image ([redacted]) %(\url{http://bit.ly/cgo19fmsa-vm})
+%has all this environment setup and ready to run the experiments, as described
+%in the next section.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Experiment workflow}
+\subsection{Experiment Workflow}
 
 To run our experiments all you need to do is to execute the \texttt{run-all.sh} script
 with the following command:
@@ -230,12 +228,12 @@ The automated process may take several hours since it involves running all follo
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Evaluation and expected result}
+\subsection{Evaluation and Expected Result}
 
 After executing the automated process described above, the \texttt{results} directory should have the following content:
 
 \begin{figure}[h]
-\includegraphics[scale=0.5]{figs/artifact/results.png}
+\hspace{2em}\includegraphics[scale=0.9]{figs/artifact/results.pdf}
 \end{figure}
 
 The main files to consider are the PDF files, which represent the plots with the

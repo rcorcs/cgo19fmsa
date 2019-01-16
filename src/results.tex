@@ -51,10 +51,10 @@ We observe similar trends of code size reduction on both target architectures. T
 optimizations are applied at the platform-independent IR level. Changing the target architecture introduces only second order effects,
 such as slightly different decisions due to the different cost model (LLVM's TTI) and differences in how the IR is encoded into binary.
 
-Our approach, FMSA, significantly improves over the state-of-the art (SoA). For the Intel platform, FMSA can achieve an average code size
-reduction of up to 5.8\% (or 5.3\% with the lowest exploration threshold), while the SoA and Identical had an average reduction of 1.8\% and 0.9\%,
-respectively. Similarly, for the ARM platform, FMSA can achieve an average code size reduction of up to 5.1\% (or 4.6\% with the lowest
-threshold), while SoA and Identical had an average reduction of 2\% and 1.1\%, respectively. For several of the benchmarks, the
+Our approach, FMSA, significantly improves over the state-of-the art (SOA). For the Intel platform, FMSA can achieve an average code size
+reduction of up to 6.3\% (or 6\% with the lowest exploration threshold), while the SOA and Identical had an average reduction of 2.5\% and 1.4\%,
+respectively. Similarly, for the ARM platform, FMSA can achieve an average code size reduction of up to 6.1\% (or 5.7\% with the lowest
+threshold), while SOA and Identical had an average reduction of 3\% and 1.8\%, respectively. For several of the benchmarks, the
 proposed technique achieves impressive code size reduction compared to other merging approaches.
 
 %Table~\ref{tab:reduction} highlights some of these results for both platforms. In two cases, \texttt{462.libquantum} and \texttt{482.sphinx3}, the state-of-the-art slightly
