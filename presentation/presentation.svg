@@ -25,11 +25,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="291.74973"
-     inkscape:cy="361.93775"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="744.09291"
+     inkscape:cy="260.02128"
      inkscape:document-units="mm"
-     inkscape:current-layer="g2784"
+     inkscape:current-layer="g1019"
      showgrid="false"
      inkscape:window-width="1533"
      inkscape:window-height="845"
@@ -44,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -92,7 +92,7 @@
          height="36.82737"
          width="113.64126"
          id="rect2420"
-         style="display:inline;opacity:1;fill:#9be07f;fill-opacity:0.63106791;fill-rule:nonzero;stroke:#50c34a;stroke-width:0.39687499;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.76780892" />
+         style="display:inline;opacity:1;fill:#9bdf80;fill-opacity:0.63106791;fill-rule:nonzero;stroke:#50c34a;stroke-width:0.39700001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.76780892" />
       <rect
          ry="0"
          y="206.88478"
@@ -581,7 +581,7 @@
     </g>
   </g>
   <g
-     style="display:none"
+     style="display:inline"
      transform="translate(0,-87)"
      id="g2776"
      inkscape:groupmode="layer"
@@ -603,7 +603,7 @@
          style="display:inline;opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2461364;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.76780892" />
     </g>
     <g
-       style="display:none"
+       style="display:inline"
        inkscape:label="Difference"
        id="g2764"
        inkscape:groupmode="layer"
@@ -648,6 +648,42 @@
      inkscape:groupmode="layer"
      id="layer6"
      inkscape:label="Text">
+    <g
+       inkscape:label="Mismatch"
+       id="g1019"
+       inkscape:groupmode="layer"
+       style="display:none"
+       sodipodi:insensitive="true">
+      <text
+         id="text1017"
+         y="90.257126"
+         x="130.29681"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.11666656px;line-height:1.25;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, Bold';letter-spacing:0px;word-spacing:0px;display:inline;fill:#ff2828;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.76111126px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, Bold';fill:#ff2828;fill-opacity:1;stroke-width:0.26458332"
+           y="90.257126"
+           x="130.29681"
+           id="tspan1015"
+           sodipodi:role="line">Mismatch</tspan></text>
+    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="layer1"
+       inkscape:label="Match"
+       style="display:inline"
+       sodipodi:insensitive="true">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.11666656px;line-height:1.25;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, Bold';letter-spacing:0px;word-spacing:0px;display:inline;fill:#3b7a1f;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         x="134.81311"
+         y="90.257126"
+         id="text2955-3"><tspan
+           sodipodi:role="line"
+           id="tspan2953-6"
+           x="134.81311"
+           y="90.257126"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8.46666622px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, Bold';fill:#3b7a1f;fill-opacity:1;stroke-width:0.26458332">Match</tspan></text>
+    </g>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11666656px;line-height:1.25;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"

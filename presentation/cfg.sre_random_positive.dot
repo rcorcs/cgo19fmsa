@@ -1,0 +1,11 @@
+digraph "CFG for 'sre_random_positive' function" {
+
+	Node0x49a8760 [shape=record,label="{entry:\l  %call.reg2mem = alloca double\l  %\"reg2mem alloca point\" = bitcast i32 0 to i32\l  br label %do.body\l}"];
+	Node0x49a8760 -> Node0x49a9af0;
+	Node0x49a9af0 [shape=record,label="{do.body:                                          \l  %call = tail call double @sre_random() #17\l  store double %call, double* %call.reg2mem\l  %call.reload1 = load double, double* %call.reg2mem\l  %cmp = fcmp oeq double %call.reload1, 0.000000e+00\l  br i1 %cmp, label %do.body.do.body_crit_edge, label %do.end\l|{<s0>T|<s1>F}}"];
+	Node0x49a9af0:s0 -> Node0x49a6030;
+	Node0x49a9af0:s1 -> Node0x49a9b40;
+	Node0x49a6030 [shape=record,label="{do.body.do.body_crit_edge:                        \l  br label %do.body\l}"];
+	Node0x49a6030 -> Node0x49a9af0;
+	Node0x49a9b40 [shape=record,label="{do.end:                                           \l  %call.reload = load double, double* %call.reg2mem\l  ret double %call.reload\l}"];
+}
